@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     template: "%s — PartsHub",
   },
   description:
-    "PartsHub — оптовый склад автозапчастей: каталог, наличие, самовывоз и доставка по городу.",
+    "PartsHub — оптовый склад автозапчастей: каталог, наличие, самовывоз и доставка по области.",
 };
 
 export default function RootLayout({

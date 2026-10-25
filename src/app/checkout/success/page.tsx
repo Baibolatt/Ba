@@ -49,7 +49,7 @@ export default function CheckoutSuccessPage() {
       <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-6">
         <div className="space-y-4">
           <section className="rounded-card border border-line bg-surface p-5 text-center shadow-card sm:p-8">
-            <span className="mx-auto flex size-16 items-center justify-center rounded-full bg-accent-soft text-brand">
+            <span className="mx-auto flex size-16 items-center justify-center rounded-full bg-tint text-brand">
               <Icon name="check" className="size-8" strokeWidth={2.5} />
             </span>
             <h1 className="mt-4 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
@@ -70,7 +70,7 @@ export default function CheckoutSuccessPage() {
                   Получение
                 </p>
                 <p className="mt-1 text-xs font-medium text-ink">
-                  Самовывоз · Складская, 12
+                  Самовывоз · Жибек Жолы, 12
                 </p>
               </div>
               <div className="rounded-control bg-page p-3 text-left">
@@ -110,7 +110,7 @@ export default function CheckoutSuccessPage() {
                   <span
                     className={
                       index === 0
-                        ? "flex size-7 shrink-0 items-center justify-center rounded-full bg-accent text-xs font-bold text-brand"
+                        ? "flex size-7 shrink-0 items-center justify-center rounded-full bg-brand text-xs font-bold text-white"
                         : "flex size-7 shrink-0 items-center justify-center rounded-full border border-line bg-surface text-xs font-bold text-muted"
                     }
                   >

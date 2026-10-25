@@ -20,19 +20,19 @@ const contacts: Array<{
   {
     icon: "phone",
     title: "Телефон",
-    value: "+7 (495) 123-45-67",
-    href: "tel:+74951234567",
+    value: "+7 (700) 000-00-00",
+    href: "tel:+77000000000",
   },
   {
     icon: "mail",
     title: "Почта",
-    value: "zakaz@partshub.ru",
-    href: "mailto:zakaz@partshub.ru",
+    value: "zakaz@partshub.kz",
+    href: "mailto:zakaz@partshub.kz",
   },
   {
     icon: "mapPin",
     title: "Склад",
-    value: "Москва, ул. Складская, 12",
+    value: "Тараз, ул. Жибек Жолы, 12",
   },
   {
     icon: "clock",
@@ -65,7 +65,7 @@ export default function FeedbackPage() {
             <ul className="mt-3 space-y-3">
               {contacts.map((contact) => (
                 <li key={contact.title} className="flex items-start gap-2.5">
-                  <span className="flex size-8 shrink-0 items-center justify-center rounded-control bg-accent-soft text-brand">
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-control bg-tint text-brand">
                     <Icon name={contact.icon} className="size-4" />
                   </span>
                   <div className="min-w-0">
@@ -112,7 +112,7 @@ export default function FeedbackPage() {
             </ul>
           </div>
 
-          <div className="rounded-card border border-accent/40 bg-accent-soft/60 p-4">
+          <div className="rounded-card border border-line bg-tint/60 p-4">
             <p className="text-xs leading-relaxed text-muted">
               Для оптовых заказов приложите список позиций и реквизиты
               компании — подготовим счёт.

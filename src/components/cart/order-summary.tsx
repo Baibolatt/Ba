@@ -53,7 +53,7 @@ export function OrderSummary({
         </div>
         <div className="flex items-center justify-between gap-3">
           <dt className="text-muted">Доставка</dt>
-          <dd className="font-medium text-ink">Бесплатно</dd>
+          <dd className="font-medium text-ink">По области</dd>
         </div>
         <div className="flex items-center justify-between gap-3 border-t border-line pt-3 text-base">
           <dt className="font-bold text-ink">Итого</dt>

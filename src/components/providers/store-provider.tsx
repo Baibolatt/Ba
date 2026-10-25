@@ -151,7 +151,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       >
         {toast ? (
           <div className="flex items-center gap-2 rounded-full bg-brand px-4 py-2.5 text-sm font-medium text-white shadow-float">
-            <span className="flex size-5 items-center justify-center rounded-full bg-accent text-brand">
+            <span className="flex size-5 items-center justify-center rounded-full bg-white/15 text-white">
               <Icon name="check" className="size-3.5" strokeWidth={2.5} />
             </span>
             {toast}

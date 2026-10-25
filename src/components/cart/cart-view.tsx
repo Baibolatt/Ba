@@ -102,7 +102,7 @@ export function CartView() {
               value={promo}
               onChange={(event) => setPromo(event.target.value)}
               placeholder="Введите промокод"
-              className="h-11 min-w-0 flex-1 rounded-control border border-line-strong bg-surface px-3 text-sm text-ink placeholder:text-muted/70 focus:border-brand focus:outline-none focus:ring-2 focus:ring-accent/25"
+              className="h-11 min-w-0 flex-1 rounded-control border border-line-strong bg-surface px-3 text-sm text-ink placeholder:text-muted/70 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
             />
             <button
               type="submit"

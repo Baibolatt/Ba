@@ -31,7 +31,7 @@ export function Accordion({ items, defaultOpen = 0 }: AccordionProps) {
               {item.title}
               <Icon
                 name={isOpen ? "minus" : "plus"}
-                className="size-4 shrink-0 text-accent"
+                className="size-4 shrink-0 text-icon"
                 strokeWidth={2}
               />
             </button>

@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 
 export function LoginForm() {
   const router = useRouter();
-  const [email, setEmail] = useState("alexey@example.ru");
+  const [email, setEmail] = useState("alexey@example.kz");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(true);
   const [loading, setLoading] = useState(false);

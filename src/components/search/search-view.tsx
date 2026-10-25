@@ -49,12 +49,12 @@ export function SearchView() {
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Введите артикул, название или бренд"
             aria-label="Поисковый запрос"
-            className="h-12 w-full rounded-control border border-line-strong bg-surface pl-11 pr-28 text-sm text-ink placeholder:text-muted/80 focus:border-brand focus:outline-none focus:ring-2 focus:ring-accent/25"
+            className="h-12 w-full rounded-control border border-line-strong bg-surface pl-11 pr-28 text-sm text-ink placeholder:text-muted/80 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
           />
           <Button
             type="submit"
-            variant="accent"
-            className="absolute right-1.5 top-1.5 h-9 px-4 text-xs"
+            variant="primary"
+            className="absolute right-0.5 top-0.5 h-11 px-4 text-xs"
           >
             Найти
           </Button>
@@ -69,7 +69,7 @@ export function SearchView() {
               <Link
                 key={item.query}
                 href={`/search?q=${encodeURIComponent(item.query)}`}
-                className="rounded-full border border-line bg-surface px-3.5 py-2 text-sm text-brand transition-colors hover:border-accent hover:bg-accent-soft/40"
+                className="inline-flex min-h-11 items-center rounded-full border border-line bg-surface px-3.5 py-2 text-sm text-brand transition-colors hover:border-brand/40 hover:bg-tint/40"
               >
                 {item.label}
               </Link>
@@ -101,13 +101,13 @@ export function SearchView() {
               <div className="flex flex-wrap justify-center gap-2">
                 <Link
                   href="/catalog"
-                  className="inline-flex h-10 items-center rounded-control bg-brand px-4 text-sm font-semibold text-white transition-colors hover:bg-brand-800"
+                  className="inline-flex h-11 items-center rounded-control bg-brand px-4 text-sm font-semibold text-white transition-colors hover:bg-brand-800"
                 >
                   Открыть каталог
                 </Link>
                 <Link
                   href="/feedback"
-                  className="inline-flex h-10 items-center rounded-control border border-line-strong bg-surface px-4 text-sm font-semibold text-ink transition-colors hover:bg-brand-50"
+                  className="inline-flex h-11 items-center rounded-control border border-line-strong bg-surface px-4 text-sm font-semibold text-ink transition-colors hover:bg-brand-50"
                 >
                   Написать нам
                 </Link>

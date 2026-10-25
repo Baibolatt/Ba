@@ -92,7 +92,7 @@ export default async function OrderPage({ params }: OrderPageProps) {
 
       {order.status === "cancelled" ? (
         <div className="mt-4 flex items-start gap-2.5 rounded-card border border-line bg-surface p-4">
-          <Icon name="alertCircle" className="mt-0.5 size-4 shrink-0 text-accent" />
+          <Icon name="alertCircle" className="mt-0.5 size-4 shrink-0 text-danger" />
           <p className="text-sm text-muted">
             Заказ отменён. Если это ошибка, напишите в обратную связь — проверим
             детали.
@@ -113,7 +113,7 @@ export default async function OrderPage({ params }: OrderPageProps) {
                       done
                         ? "flex size-7 shrink-0 items-center justify-center rounded-full bg-brand text-white"
                         : current
-                          ? "flex size-7 shrink-0 items-center justify-center rounded-full bg-accent text-brand"
+                          ? "flex size-7 shrink-0 items-center justify-center rounded-full bg-brand text-white"
                           : "flex size-7 shrink-0 items-center justify-center rounded-full border border-line bg-surface text-muted"
                     }
                   >

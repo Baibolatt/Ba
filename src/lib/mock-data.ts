@@ -133,8 +133,8 @@ export const products: Product[] = [
     brand: "ТехноЛайн",
     article: "TL-2418",
     categorySlug: "brakes",
-    price: 3290,
-    oldPrice: 3990,
+    price: 12900,
+    oldPrice: 14900,
     stock: 24,
     unit: "комплект",
     description:
@@ -154,7 +154,7 @@ export const products: Product[] = [
     brand: "АвтоЭра",
     article: "AE-5520",
     categorySlug: "brakes",
-    price: 5490,
+    price: 21900,
     stock: 8,
     unit: "шт.",
     description:
@@ -173,7 +173,7 @@ export const products: Product[] = [
     brand: "МоторКрафт",
     article: "MK-1130",
     categorySlug: "brakes",
-    price: 12900,
+    price: 54000,
     stock: 2,
     unit: "шт.",
     description:
@@ -191,7 +191,7 @@ export const products: Product[] = [
     brand: "ГрандФильтр",
     article: "GF-1042",
     categorySlug: "filters",
-    price: 690,
+    price: 2200,
     stock: 56,
     unit: "шт.",
     description:
@@ -210,7 +210,7 @@ export const products: Product[] = [
     brand: "ГрандФильтр",
     article: "GF-2205",
     categorySlug: "filters",
-    price: 1150,
+    price: 4500,
     stock: 14,
     unit: "шт.",
     description:
@@ -228,8 +228,8 @@ export const products: Product[] = [
     brand: "ОйлПро",
     article: "OP-540",
     categorySlug: "oils",
-    price: 3890,
-    oldPrice: 4490,
+    price: 14900,
+    oldPrice: 16900,
     stock: 32,
     unit: "канистра",
     description:
@@ -248,7 +248,7 @@ export const products: Product[] = [
     brand: "ОйлПро",
     article: "OP-G12",
     categorySlug: "oils",
-    price: 1490,
+    price: 5200,
     stock: 3,
     unit: "канистра",
     description:
@@ -266,7 +266,7 @@ export const products: Product[] = [
     brand: "ТехноЛайн",
     article: "TL-8802",
     categorySlug: "engine",
-    price: 2750,
+    price: 11500,
     stock: 0,
     unit: "шт.",
     description:
@@ -284,7 +284,7 @@ export const products: Product[] = [
     brand: "АвтоЭра",
     article: "AE-7701",
     categorySlug: "electric",
-    price: 890,
+    price: 2600,
     stock: 120,
     unit: "шт.",
     description:
@@ -303,7 +303,7 @@ export const products: Product[] = [
     brand: "МоторКрафт",
     article: "MK-3310",
     categorySlug: "suspension",
-    price: 7950,
+    price: 27900,
     stock: 6,
     unit: "шт.",
     description:
@@ -321,7 +321,7 @@ export const products: Product[] = [
     brand: "СевероПартс",
     article: "SP-6120",
     categorySlug: "suspension",
-    price: 4200,
+    price: 18500,
     stock: 2,
     unit: "шт.",
     description:
@@ -339,8 +339,8 @@ export const products: Product[] = [
     brand: "СевероПартс",
     article: "SP-600",
     categorySlug: "electric",
-    price: 9800,
-    oldPrice: 10900,
+    price: 42000,
+    oldPrice: 46000,
     stock: 5,
     unit: "шт.",
     description:
@@ -359,10 +359,10 @@ export const brands = Array.from(new Set(products.map((product) => product.brand
 export const profile: Profile = {
   name: "Алексей",
   lastName: "Смирнов",
-  email: "alexey@example.ru",
-  phone: "+7 (900) 123-45-67",
-  city: "Москва",
-  address: "ул. Складская, 12, кв. 45",
+  email: "alexey@example.kz",
+  phone: "+7 (700) 000-00-00",
+  city: "Тараз",
+  address: "ул. Жибек Жолы, 12, кв. 45",
 };
 
 export const orders: Order[] = [
@@ -375,8 +375,8 @@ export const orders: Order[] = [
       { productId: "ae-5520", qty: 1 },
       { productId: "ae-7701", qty: 4 },
     ],
-    total: 9050,
-    address: "Москва, ул. Складская, 12, кв. 45",
+    total: 32300,
+    address: "Тараз, ул. Жибек Жолы, 12, кв. 45",
     delivery: "Курьером",
     payment: "Счёт для юрлица",
   },
@@ -389,8 +389,8 @@ export const orders: Order[] = [
       { productId: "op-540", qty: 1 },
       { productId: "gf-2205", qty: 1 },
     ],
-    total: 5040,
-    address: "Москва, пункт выдачи «Складская, 12»",
+    total: 19400,
+    address: "Тараз, пункт выдачи «Жибек Жолы, 12»",
     delivery: "Самовывоз",
     payment: "При получении",
   },
@@ -403,8 +403,8 @@ export const orders: Order[] = [
       { productId: "tl-2418", qty: 2 },
       { productId: "gf-1042", qty: 1 },
     ],
-    total: 7270,
-    address: "Москва, ул. Складская, 12, кв. 45",
+    total: 28000,
+    address: "Тараз, ул. Жибек Жолы, 12, кв. 45",
     delivery: "Курьером",
     payment: "Картой при получении",
   },
@@ -430,7 +430,7 @@ export const notifications: NotificationItem[] = [
   {
     id: "n-3",
     title: "Заказ PH-241022-01 собран",
-    text: "Заказ ждёт вас в пункте выдачи «Складская, 12».",
+    text: "Заказ ждёт вас в пункте выдачи «Жибек Жолы, 12».",
     date: "22 октября, 18:40",
     read: true,
     href: "/account/orders/ph-241022-01",
@@ -453,7 +453,7 @@ export const orderStatusLabels: Record<OrderStatus, string> = {
 };
 
 export function formatPrice(value: number): string {
-  return `${new Intl.NumberFormat("ru-RU").format(value)} ₽`;
+  return `${new Intl.NumberFormat("ru-RU").format(value)} ₸`;
 }
 
 export function productCountLabel(count: number): string {

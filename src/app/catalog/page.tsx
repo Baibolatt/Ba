@@ -99,7 +99,7 @@ export default function CatalogPage() {
       </div>
 
       <div className="mt-8 flex items-start gap-3 rounded-card border border-line bg-surface p-4 shadow-card">
-        <span className="flex size-10 shrink-0 items-center justify-center rounded-control bg-success-soft text-success">
+        <span className="flex size-10 shrink-0 items-center justify-center rounded-control bg-tint text-brand">
           <Icon name="truck" className="size-5" />
         </span>
         <div>

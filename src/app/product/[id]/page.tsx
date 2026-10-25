@@ -76,7 +76,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 product={product}
                 className={
                   index === 0
-                    ? "aspect-square ring-2 ring-accent"
+                    ? "aspect-square ring-2 ring-brand"
                     : "aspect-square opacity-80"
                 }
               />
@@ -124,7 +124,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </p>
               ) : null}
               {discount ? (
-                <span className="mb-1 rounded-full bg-accent-soft px-2 py-0.5 text-xs font-bold text-brand">
+                <span className="mb-1 rounded-full bg-tint px-2 py-0.5 text-xs font-bold text-brand">
                   −{discount}%
                 </span>
               ) : null}
@@ -138,14 +138,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
           <ul className="mt-4 space-y-2.5">
             <li className="flex items-start gap-2.5 text-sm text-muted">
-              <Icon name="box" className="mt-0.5 size-4 shrink-0 text-accent" />
+              <Icon name="box" className="mt-0.5 size-4 shrink-0 text-icon" />
               <span>
                 <span className="font-medium text-ink">Со склада.</span>{" "}
                 Самовывоз сегодня после подтверждения заказа.
               </span>
             </li>
             <li className="flex items-start gap-2.5 text-sm text-muted">
-              <Icon name="shield" className="mt-0.5 size-4 shrink-0 text-accent" />
+              <Icon name="shield" className="mt-0.5 size-4 shrink-0 text-icon" />
               <span>
                 <span className="font-medium text-ink">Гарантия 12 месяцев</span>{" "}
                 на товар и документы при получении.
@@ -154,7 +154,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <li className="flex items-start gap-2.5 text-sm text-muted">
               <Icon
                 name="rotateCcw"
-                className="mt-0.5 size-4 shrink-0 text-accent"
+                className="mt-0.5 size-4 shrink-0 text-icon"
               />
               <span>
                 <span className="font-medium text-ink">Возврат 14 дней</span>,
@@ -195,7 +195,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             {product.description}
           </p>
           <p className="mt-3 text-sm leading-relaxed text-muted">
-            Товар хранится на складе в Москве. Наличие на странице обновляется
+            Товар хранится на складе в Таразе. Наличие на странице обновляется
             по данным склада; перед крупным заказом уточните количество у
             менеджера.
           </p>

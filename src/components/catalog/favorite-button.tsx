@@ -27,14 +27,14 @@ export function FavoriteButton({
         className={cn(
           "inline-flex h-11 items-center justify-center gap-2 rounded-control border px-4 text-sm font-semibold transition-colors",
           active
-            ? "border-accent bg-accent-soft text-brand"
+            ? "border-brand bg-tint text-brand"
             : "border-line-strong bg-surface text-ink hover:bg-brand-50",
           className,
         )}
       >
         <Icon
           name="heart"
-          className={cn("size-4", active && "fill-accent text-accent")}
+          className={cn("size-4", active && "fill-brand text-brand")}
         />
         {active ? "В избранном" : "В избранное"}
       </button>
@@ -48,14 +48,14 @@ export function FavoriteButton({
       aria-pressed={active}
       aria-label={active ? "Убрать из избранного" : "Добавить в избранное"}
       className={cn(
-        "flex size-9 items-center justify-center rounded-full bg-surface/95 text-muted shadow-sm ring-1 ring-line/80 backdrop-blur transition-colors hover:text-brand",
-        active && "text-accent",
+        "flex size-11 items-center justify-center rounded-full bg-surface/95 text-muted shadow-sm ring-1 ring-line/80 backdrop-blur transition-colors hover:text-brand",
+        active && "text-brand",
         className,
       )}
     >
       <Icon
         name="heart"
-        className={cn("size-4", active && "fill-accent text-accent")}
+        className={cn("size-4", active && "fill-brand text-brand")}
       />
     </button>
   );

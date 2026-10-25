@@ -8,15 +8,17 @@
   --color-brand-50: #eef1f7;
   --color-accent: #f28c28;
   --color-accent-600: #dd7a17;
-  --color-accent-soft: #fdecd9;
+  --color-tint: #eef1f7;
   --color-page: #f4f5f7;
   --color-surface: #ffffff;
   --color-line: #e3e6eb;
   --color-line-strong: #cdd2db;
   --color-ink: #14213d;
   --color-muted: #5b6475;
+  --color-icon: #5f6b80;
   --color-success: #157347;
   --color-success-soft: #e7f4ec;
+  --color-danger: #b42318;
 
   --radius-control: 10px;
   --radius-card: 14px;
@@ -48,12 +50,12 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-accent);
+    outline: 2px solid var(--color-brand);
     outline-offset: 2px;
   }
 
   ::selection {
-    background: var(--color-accent-soft);
+    background: var(--color-tint);
     color: var(--color-ink);
   }
 

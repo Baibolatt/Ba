@@ -110,7 +110,7 @@ export function ProfileForm() {
         </p>
         <div className="flex items-center gap-3">
           {saved ? (
-            <span className="flex items-center gap-1.5 rounded-full bg-accent-soft px-3 py-1.5 text-xs font-semibold text-brand">
+            <span className="flex items-center gap-1.5 rounded-full bg-tint px-3 py-1.5 text-xs font-semibold text-brand">
               <Icon name="check" className="size-3.5" strokeWidth={2.5} />
               Сохранено
             </span>

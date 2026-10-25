@@ -27,10 +27,10 @@ export function Footer() {
             <Logo />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">
               Оптовый склад автозапчастей: подбор по каталогу, самовывоз в день
-              заказа и доставка по городу.
+              заказа и доставка по области.
             </p>
-            <p className="mt-4 flex items-center gap-1.5 text-xs font-medium text-success">
-              <span className="size-1.5 rounded-full bg-success" />
+            <p className="mt-4 flex items-center gap-1.5 text-xs font-medium text-muted">
+              <span className="size-1.5 rounded-full bg-muted" />
               Со склада · самовывоз сегодня
             </p>
           </div>
@@ -82,18 +82,18 @@ export function Footer() {
               ))}
             </ul>
             <a
-              href="tel:+74951234567"
+              href="tel:+77000000000"
               className="mt-4 flex items-center gap-2 text-sm font-semibold text-ink"
             >
-              <Icon name="phone" className="size-4 text-accent" />
-              +7 (495) 123-45-67
+              <Icon name="phone" className="size-4 text-icon" />
+              +7 (700) 000-00-00
             </a>
             <a
-              href="mailto:zakaz@partshub.ru"
+              href="mailto:zakaz@partshub.kz"
               className="mt-2 flex items-center gap-2 text-sm text-muted transition-colors hover:text-ink"
             >
               <Icon name="mail" className="size-4" />
-              zakaz@partshub.ru
+              zakaz@partshub.kz
             </a>
           </div>
         </div>

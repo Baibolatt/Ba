@@ -31,7 +31,7 @@ export function AuthLayout({
             aria-hidden="true"
           />
           <div className="relative flex items-center gap-2">
-            <span className="flex size-8 items-center justify-center rounded-[10px] bg-accent text-brand">
+            <span className="flex size-8 items-center justify-center rounded-[10px] bg-white/10 text-white">
               <Icon name="wrench" className="size-4" strokeWidth={2} />
             </span>
             <span className="text-lg font-extrabold tracking-tight">
@@ -50,7 +50,7 @@ export function AuthLayout({
               >
                 <Icon
                   name="check"
-                  className="mt-0.5 size-4 shrink-0 text-accent"
+                  className="mt-0.5 size-4 shrink-0 text-white/70"
                   strokeWidth={2.5}
                 />
                 {benefit}

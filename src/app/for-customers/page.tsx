@@ -28,14 +28,14 @@ const deliveryOptions: Array<{
   {
     icon: "mapPin",
     title: "Самовывоз со склада",
-    text: "Москва, ул. Складская, 12. Заберите заказ в день оформления после подтверждения сборки.",
-    note: "Сегодня · бесплатно",
+    text: "Тараз, ул. Жибек Жолы, 12. Заберите заказ в день оформления после подтверждения сборки.",
+    note: "Сегодня",
   },
   {
     icon: "truck",
     title: "Доставка курьером",
-    text: "По Москве и ближайшему пригороду. Курьер приезжает после сборки заказа, время согласуем по телефону.",
-    note: "На следующий день · бесплатно",
+    text: "По Таразу и Жамбылской области. Курьер приезжает после сборки заказа, время согласуем по телефону.",
+    note: "На следующий день",
   },
 ];
 
@@ -57,7 +57,7 @@ const paymentOptions: Array<{
   {
     icon: "fileText",
     title: "По счёту для юрлица",
-    text: "Счёт, УПД и закрывающие документы.",
+    text: "Счёт, накладные и закрывающие документы.",
   },
 ];
 
@@ -110,7 +110,7 @@ export default function ForCustomersPage() {
             <Link
               key={anchor.href}
               href={anchor.href}
-              className="rounded-full border border-line bg-surface px-3.5 py-2 text-xs font-semibold text-muted transition-colors hover:border-accent hover:bg-accent-soft/40 hover:text-ink"
+              className="inline-flex min-h-11 items-center rounded-full border border-line bg-surface px-3.5 py-2 text-xs font-semibold text-muted transition-colors hover:border-brand/40 hover:bg-tint/40 hover:text-ink"
             >
               {anchor.label}
             </Link>
@@ -121,7 +121,7 @@ export default function ForCustomersPage() {
       <section id="delivery" className="mt-8 scroll-mt-24">
         <h2 className="text-lg font-bold text-ink sm:text-xl">Доставка</h2>
         <p className="mt-1 text-sm text-muted">
-          Заказы собираются на складе в Москве. Срок зависит от наличия.
+          Заказы собираются на складе в Таразе. Срок зависит от наличия.
         </p>
         <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
           {deliveryOptions.map((option) => (
@@ -129,7 +129,7 @@ export default function ForCustomersPage() {
               key={option.title}
               className="rounded-card border border-line bg-surface p-4 shadow-card"
             >
-              <span className="flex size-10 items-center justify-center rounded-control bg-accent-soft text-brand">
+              <span className="flex size-10 items-center justify-center rounded-control bg-tint text-brand">
                 <Icon name={option.icon} className="size-5" />
               </span>
               <h3 className="mt-3 text-sm font-bold text-ink">
@@ -138,7 +138,7 @@ export default function ForCustomersPage() {
               <p className="mt-1.5 text-xs leading-relaxed text-muted">
                 {option.text}
               </p>
-              <p className="mt-3 inline-flex rounded-full bg-success-soft px-2.5 py-1 text-[11px] font-semibold text-success">
+              <p className="mt-3 inline-flex rounded-full bg-tint px-2.5 py-1 text-[11px] font-semibold text-brand">
                 {option.note}
               </p>
             </div>
@@ -158,7 +158,7 @@ export default function ForCustomersPage() {
               key={option.title}
               className="rounded-card border border-line bg-surface p-4 shadow-card"
             >
-              <Icon name={option.icon} className="size-5 text-accent" />
+              <Icon name={option.icon} className="size-5 text-icon" />
               <h3 className="mt-3 text-sm font-bold text-ink">
                 {option.title}
               </h3>
@@ -206,7 +206,7 @@ export default function ForCustomersPage() {
         </div>
       </section>
 
-      <div className="mt-8 flex flex-col gap-3 rounded-card border border-accent/40 bg-accent-soft/60 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+      <div className="mt-8 flex flex-col gap-3 rounded-card border border-line bg-tint/60 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
         <div>
           <h2 className="text-sm font-bold text-ink">Остались вопросы?</h2>
           <p className="mt-1 text-xs text-muted">

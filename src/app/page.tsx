@@ -38,61 +38,67 @@ export default function HomePage() {
   return (
     <div className="pb-8">
       <Container className="pt-4 sm:pt-6">
-        <section className="relative overflow-hidden rounded-[22px] bg-brand px-5 py-6 text-white sm:px-8 sm:py-9 lg:px-10 lg:py-12">
+        <section className="relative overflow-hidden rounded-[22px] bg-brand px-4 py-5 text-white sm:px-8 sm:py-9 lg:px-10 lg:py-12">
           <div
             className="pointer-events-none absolute -right-20 -top-24 size-72 rounded-full border border-white/10"
             aria-hidden="true"
           />
           <div
-            className="pointer-events-none absolute -bottom-24 right-16 size-56 rounded-full bg-accent/10 blur-2xl"
+            className="pointer-events-none absolute -bottom-24 right-16 size-56 rounded-full bg-white/10 blur-2xl"
             aria-hidden="true"
           />
 
           <div className="relative grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-10">
             <div>
               <p className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/80">
-                <span className="size-1.5 rounded-full bg-accent" />
+                <span className="size-1.5 rounded-full bg-white/70" />
                 Оптовый склад автозапчастей
               </p>
-              <h1 className="mt-4 text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl lg:text-[42px]">
+              <h1 className="mt-3 text-2xl font-extrabold leading-tight tracking-tight sm:mt-4 sm:text-4xl lg:text-[42px]">
                 Запчасти, которые
                 <br className="hidden sm:block" /> уже на складе
               </h1>
-              <p className="mt-3 max-w-lg text-sm leading-relaxed text-white/75 sm:text-base">
+              <p className="mt-2.5 max-w-lg text-sm leading-relaxed text-white/75 sm:mt-3 sm:text-base">
                 Подберите деталь по категории или автомобилю. Покажем наличие,
                 цену и сроки самовывоза без лишних звонков.
               </p>
-              <div className="mt-5 flex flex-wrap gap-2.5">
+              <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 sm:mt-5 sm:gap-2.5">
                 <ButtonLink href="/catalog" variant="accent" size="lg">
                   Перейти в каталог
                   <Icon name="arrowRight" className="size-4" />
                 </ButtonLink>
                 <Link
                   href="/for-customers"
-                  className="inline-flex h-12 items-center justify-center rounded-control border border-white/25 px-5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+                  className="inline-flex h-11 items-center gap-1.5 px-1 text-sm font-semibold text-white underline-offset-4 transition-colors hover:text-white/80 hover:underline sm:h-12 sm:px-2"
                 >
                   Условия доставки
                 </Link>
               </div>
-              <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-white/70">
+              <div className="mt-4 hidden flex-wrap items-center gap-x-5 gap-y-2 text-xs text-white/70 sm:mt-5 sm:flex">
                 <span className="flex items-center gap-1.5">
-                  <Icon name="check" className="size-3.5 text-accent" />
+                  <Icon name="check" className="size-3.5 text-white/70" />
                   Со склада
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <Icon name="check" className="size-3.5 text-accent" />
+                  <Icon name="check" className="size-3.5 text-white/70" />
                   Самовывоз сегодня
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <Icon name="check" className="size-3.5 text-accent" />
+                  <Icon name="check" className="size-3.5 text-white/70" />
                   Оплата при получении
                 </span>
               </div>
             </div>
 
-            <CarSelector />
+            <div className="hidden lg:block">
+              <CarSelector />
+            </div>
           </div>
         </section>
+
+        <div className="mt-3 lg:hidden">
+          <CarSelector />
+        </div>
       </Container>
 
       <Container className="mt-8 sm:mt-10">
@@ -148,7 +154,7 @@ export default function HomePage() {
               key={item.title}
               className="flex gap-3 rounded-card border border-line bg-surface p-4 shadow-card"
             >
-              <span className="flex size-10 shrink-0 items-center justify-center rounded-control bg-accent-soft text-brand">
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-control bg-tint text-brand">
                 <Icon name={item.icon} className="size-5" />
               </span>
               <div>
@@ -173,9 +179,9 @@ export default function HomePage() {
       </Container>
 
       <Container className="mt-8 sm:mt-10">
-        <div className="flex flex-col gap-4 rounded-card border border-accent/40 bg-accent-soft/60 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+        <div className="flex flex-col gap-4 rounded-card border border-line bg-tint/60 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
           <div className="flex items-start gap-3">
-            <span className="flex size-10 shrink-0 items-center justify-center rounded-control bg-accent text-brand">
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-control bg-brand text-white">
               <Icon name="wrench" className="size-5" />
             </span>
             <div>

@@ -117,12 +117,12 @@ export function CatalogView({
             <button
               type="button"
               onClick={() => setSheetOpen(true)}
-              className="inline-flex h-9 items-center gap-1.5 rounded-control border border-line-strong bg-surface px-3 text-xs font-semibold text-ink lg:hidden"
+              className="inline-flex h-11 items-center gap-1.5 rounded-control border border-line-strong bg-surface px-3 text-xs font-semibold text-ink lg:hidden"
             >
               <Icon name="filter" className="size-3.5" />
               Фильтры
               {activeCount > 0 ? (
-                <span className="flex size-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-brand">
+                <span className="flex size-4 items-center justify-center rounded-full bg-brand text-[10px] font-bold text-white">
                   {activeCount}
                 </span>
               ) : null}
@@ -138,7 +138,7 @@ export function CatalogView({
                 setSort(event.target.value as SortKey);
                 setPage(1);
               }}
-              className="h-9 rounded-control border border-line-strong bg-surface pl-3 pr-7 text-xs font-medium text-ink focus:border-brand focus:outline-none focus:ring-2 focus:ring-accent/25"
+              className="h-11 rounded-control border border-line-strong bg-surface pl-3 pr-7 text-xs font-medium text-ink focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
             >
               {sortOptions.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -192,7 +192,7 @@ export function CatalogView({
                     brands: filters.brands.filter((item) => item !== brand),
                   })
                 }
-                className="inline-flex items-center gap-1 rounded-full bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand"
+                className="inline-flex min-h-11 items-center gap-1 rounded-full bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand"
               >
                 {brand}
                 <Icon name="close" className="size-3" />
@@ -204,7 +204,7 @@ export function CatalogView({
                 onClick={() =>
                   handleFilters({ ...filters, minPrice: "", maxPrice: "" })
                 }
-                className="inline-flex items-center gap-1 rounded-full bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand"
+                className="inline-flex min-h-11 items-center gap-1 rounded-full bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand"
               >
                 Цена {filters.minPrice || "0"}—{filters.maxPrice || "∞"}
                 <Icon name="close" className="size-3" />
@@ -216,7 +216,7 @@ export function CatalogView({
                 onClick={() =>
                   handleFilters({ ...filters, inStockOnly: false })
                 }
-                className="inline-flex items-center gap-1 rounded-full bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand"
+                className="inline-flex min-h-11 items-center gap-1 rounded-full bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand"
               >
                 В наличии
                 <Icon name="close" className="size-3" />

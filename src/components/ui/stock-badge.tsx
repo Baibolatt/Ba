@@ -9,7 +9,7 @@ type StockBadgeProps = {
 
 const styles: Record<StockLevel, string> = {
   in: "bg-success-soft text-success",
-  low: "bg-accent-soft text-brand",
+  low: "bg-tint text-brand",
   out: "border border-line bg-page text-muted",
 };
 

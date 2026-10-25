@@ -12,7 +12,7 @@ const carMarks = [
   "Ford",
   "Hyundai",
   "Kia",
-  "Lada",
+  "Nissan",
   "Renault",
   "Skoda",
   "Toyota",
@@ -27,7 +27,7 @@ const carModels = [
   "Sportage",
   "Focus",
   "Octavia",
-  "Vesta",
+  "Cobalt",
   "Duster",
 ];
 
@@ -37,7 +37,7 @@ const years = [
 ];
 
 const selectClass =
-  "h-10 w-full cursor-pointer appearance-none rounded-control border border-line-strong bg-surface px-3 pr-8 text-sm text-ink focus:border-brand focus:outline-none focus:ring-2 focus:ring-accent/25";
+  "h-10 w-full cursor-pointer appearance-none rounded-control border border-line-strong bg-surface px-3 pr-8 text-sm text-ink focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20";
 
 export function CarSelector() {
   const router = useRouter();
@@ -58,7 +58,7 @@ export function CarSelector() {
   return (
     <div className="rounded-card border border-line bg-surface p-3 shadow-card sm:p-4">
       <div className="mb-2.5 flex items-center gap-2 text-sm font-semibold text-ink">
-        <Icon name="car" className="size-4 text-accent" />
+        <Icon name="car" className="size-4 text-icon" />
         Подбор по автомобилю
       </div>
       <form

@@ -7,7 +7,7 @@ type StatusBadgeProps = {
 };
 
 const styles: Record<OrderStatus, string> = {
-  processing: "bg-accent-soft text-brand",
+  processing: "bg-tint text-brand",
   assembling: "bg-brand-50 text-brand",
   delivered: "bg-brand text-white",
   cancelled: "border border-line bg-page text-muted",

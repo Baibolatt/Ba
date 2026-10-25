@@ -32,7 +32,7 @@ export function PasswordField({
     <div className="space-y-1.5">
       <label htmlFor={name} className="block text-sm font-medium text-ink">
         {label}
-        {required ? <span className="ml-0.5 text-accent">*</span> : null}
+        {required ? <span className="ml-0.5 text-danger">*</span> : null}
       </label>
       <div className="relative">
         <input
@@ -53,14 +53,14 @@ export function PasswordField({
           onClick={() => setVisible((current) => !current)}
           aria-label={visible ? "Скрыть пароль" : "Показать пароль"}
           aria-pressed={visible}
-          className="absolute right-1 top-1 flex size-9 items-center justify-center rounded-[8px] text-muted transition-colors hover:bg-brand-50 hover:text-ink"
+          className="absolute right-1 top-1 flex size-11 items-center justify-center rounded-[8px] text-muted transition-colors hover:bg-brand-50 hover:text-ink"
         >
           <Icon name={visible ? "eyeOff" : "eye"} className="size-4" />
         </button>
       </div>
       {error ? (
         <p className="flex items-start gap-1.5 text-xs font-medium text-brand">
-          <Icon name="alertCircle" className="mt-0.5 size-3.5 shrink-0 text-accent" />
+          <Icon name="alertCircle" className="mt-0.5 size-3.5 shrink-0 text-danger" />
           {error}
         </p>
       ) : hint ? (

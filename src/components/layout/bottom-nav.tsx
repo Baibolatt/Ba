@@ -58,7 +58,7 @@ export function BottomNav() {
               <span
                 className={cn(
                   "absolute top-0 h-0.5 w-8 rounded-full transition-colors",
-                  active ? "bg-accent" : "bg-transparent",
+                  active ? "bg-brand" : "bg-transparent",
                 )}
               />
               <span className="relative">

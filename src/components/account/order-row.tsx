@@ -18,7 +18,7 @@ export function OrderRow({ order }: OrderRowProps) {
       className="flex flex-col gap-3 rounded-control border border-line p-3.5 transition-colors hover:border-brand/30 hover:bg-brand-50/40 sm:flex-row sm:items-center sm:justify-between"
     >
       <div className="flex items-start gap-3">
-        <span className="flex size-10 shrink-0 items-center justify-center rounded-control bg-accent-soft text-brand">
+        <span className="flex size-10 shrink-0 items-center justify-center rounded-control bg-tint text-brand">
           <Icon name="box" className="size-5" />
         </span>
         <div>

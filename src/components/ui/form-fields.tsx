@@ -14,8 +14,8 @@ export function fieldControlClass(hasError: boolean): string {
   return cn(
     controlBase,
     hasError
-      ? "border-accent focus:border-accent focus:ring-accent/25"
-      : "border-line-strong focus:border-brand focus:ring-accent/25",
+      ? "border-danger focus:border-danger focus:ring-danger/20"
+      : "border-line-strong focus:border-brand focus:ring-brand/20",
   );
 }
 
@@ -42,12 +42,12 @@ function FieldShell({
     <div className={cn("space-y-1.5", className)}>
       <label htmlFor={htmlFor} className="block text-sm font-medium text-ink">
         {label}
-        {required ? <span className="ml-0.5 text-accent">*</span> : null}
+        {required ? <span className="ml-0.5 text-danger">*</span> : null}
       </label>
       {children}
       {error ? (
         <p className="flex items-start gap-1.5 text-xs font-medium text-brand">
-          <Icon name="alertCircle" className="mt-0.5 size-3.5 shrink-0 text-accent" />
+          <Icon name="alertCircle" className="mt-0.5 size-3.5 shrink-0 text-danger" />
           {error}
         </p>
       ) : hint ? (
@@ -219,7 +219,7 @@ export function CheckboxField({
       </label>
       {error ? (
         <p className="flex items-start gap-1.5 pl-6 text-xs font-medium text-brand">
-          <Icon name="alertCircle" className="mt-0.5 size-3.5 shrink-0 text-accent" />
+          <Icon name="alertCircle" className="mt-0.5 size-3.5 shrink-0 text-danger" />
           {error}
         </p>
       ) : null}

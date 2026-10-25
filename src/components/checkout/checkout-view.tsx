@@ -50,7 +50,7 @@ export function CheckoutView() {
     phone: profile.phone,
     email: profile.email,
     city: profile.city,
-    street: "ул. Складская",
+    street: "ул. Жибек Жолы",
     house: "12",
     flat: "45",
     comment: "",
@@ -74,7 +74,7 @@ export function CheckoutView() {
     if (target === 1) {
       if (!form.name.trim()) next.name = "Укажите имя и фамилию";
       if (form.phone.replace(/\D/g, "").length < 10) {
-        next.phone = "Укажите телефон в формате +7 (900) 000-00-00";
+        next.phone = "Укажите телефон в формате +7 (700) 000-00-00";
       }
       if (!/^\S+@\S+\.\S+$/.test(form.email)) {
         next.email = "Укажите корректный email";
@@ -113,7 +113,7 @@ export function CheckoutView() {
   if (placing) {
     return (
       <div className="flex flex-col items-center justify-center rounded-card border border-line bg-surface py-20 shadow-card">
-        <span className="size-8 animate-spin rounded-full border-2 border-line border-t-accent" />
+        <span className="size-8 animate-spin rounded-full border-2 border-line border-t-brand" />
         <p className="mt-4 text-sm font-medium text-ink">Оформляем заказ…</p>
       </div>
     );
@@ -148,7 +148,7 @@ export function CheckoutView() {
                     className={cn(
                       "flex size-7 shrink-0 items-center justify-center rounded-full text-xs font-bold",
                       done && "bg-brand text-white",
-                      current && "bg-accent text-brand",
+                      current && "bg-brand text-white",
                       !done && !current && "border border-line bg-surface text-muted",
                     )}
                   >
@@ -232,7 +232,7 @@ export function CheckoutView() {
                   className={cn(
                     "flex cursor-pointer gap-3 rounded-card border p-3 transition-colors",
                     form.delivery === "pickup"
-                      ? "border-accent bg-accent-soft/40"
+                      ? "border-brand bg-brand-50"
                       : "border-line hover:border-brand/30",
                   )}
                 >
@@ -249,7 +249,7 @@ export function CheckoutView() {
                       Самовывоз
                     </span>
                     <span className="mt-0.5 block text-xs text-muted">
-                      Москва, ул. Складская, 12 · сегодня
+                      Тараз, ул. Жибек Жолы, 12 · сегодня
                     </span>
                   </span>
                 </label>
@@ -257,7 +257,7 @@ export function CheckoutView() {
                   className={cn(
                     "flex cursor-pointer gap-3 rounded-card border p-3 transition-colors",
                     form.delivery === "courier"
-                      ? "border-accent bg-accent-soft/40"
+                      ? "border-brand bg-brand-50"
                       : "border-line hover:border-brand/30",
                   )}
                 >
@@ -274,7 +274,7 @@ export function CheckoutView() {
                       Курьером
                     </span>
                     <span className="mt-0.5 block text-xs text-muted">
-                      Доставка по городу после сборки
+                      Доставка по области после сборки
                     </span>
                   </span>
                 </label>
@@ -317,7 +317,7 @@ export function CheckoutView() {
                 <div className="mt-4 flex items-start gap-2.5 rounded-control bg-brand-50 p-3 text-xs text-brand">
                   <Icon name="mapPin" className="mt-0.5 size-4 shrink-0" />
                   <span>
-                    Заберите заказ по адресу: Москва, ул. Складская, 12. Пункт
+                    Заберите заказ по адресу: Тараз, ул. Жибек Жолы, 12. Пункт
                     выдачи работает ежедневно с 9:00 до 20:00.
                   </span>
                 </div>
@@ -362,7 +362,7 @@ export function CheckoutView() {
                     className={cn(
                       "flex cursor-pointer gap-3 rounded-card border p-3 transition-colors",
                       form.payment === option.value
-                        ? "border-accent bg-accent-soft/40"
+                        ? "border-brand bg-brand-50"
                         : "border-line hover:border-brand/30",
                     )}
                   >

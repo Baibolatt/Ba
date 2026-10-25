@@ -68,7 +68,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       />
 
       <div className="mt-4 flex items-start gap-3">
-        <span className="hidden size-12 shrink-0 items-center justify-center rounded-card bg-accent-soft text-brand sm:flex">
+        <span className="hidden size-12 shrink-0 items-center justify-center rounded-card bg-tint text-brand sm:flex">
           <Icon name={category?.icon ?? "grid"} className="size-6" />
         </span>
         <div>
@@ -90,7 +90,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           <Link
             href="/catalog/all"
             className={cn(
-              "rounded-full border px-3.5 py-2 text-xs font-semibold transition-colors",
+              "inline-flex min-h-11 items-center rounded-full border px-3.5 py-2 text-xs font-semibold transition-colors",
               slug === "all"
                 ? "border-brand bg-brand text-white"
                 : "border-line bg-surface text-muted hover:border-brand/40 hover:text-ink",
@@ -103,7 +103,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               key={item.slug}
               href={`/catalog/${item.slug}`}
               className={cn(
-                "rounded-full border px-3.5 py-2 text-xs font-semibold transition-colors",
+                "inline-flex min-h-11 items-center rounded-full border px-3.5 py-2 text-xs font-semibold transition-colors",
                 slug === item.slug
                   ? "border-brand bg-brand text-white"
                   : "border-line bg-surface text-muted hover:border-brand/40 hover:text-ink",

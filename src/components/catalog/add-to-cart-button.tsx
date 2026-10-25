@@ -45,7 +45,7 @@ export function AddToCartButton({
       onClick={() => addToCart(productId, qty)}
       aria-label="Добавить в корзину"
       className={cn(
-        "flex size-9 shrink-0 items-center justify-center rounded-control bg-brand text-white transition-colors hover:bg-brand-800 disabled:pointer-events-none disabled:bg-page disabled:text-muted",
+        "flex size-11 shrink-0 items-center justify-center rounded-control bg-brand text-white transition-colors hover:bg-brand-800 disabled:pointer-events-none disabled:bg-page disabled:text-muted",
         className,
       )}
     >

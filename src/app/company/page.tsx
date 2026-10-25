@@ -22,7 +22,7 @@ const advantages: Array<{ icon: IconName; title: string; text: string }> = [
   {
     icon: "box",
     title: "Собственный склад",
-    text: "Ходовые позиции хранятся в Москве — самовывоз в день заказа.",
+    text: "Ходовые позиции хранятся в Таразе — самовывоз в день заказа.",
   },
   {
     icon: "shield",
@@ -32,16 +32,15 @@ const advantages: Array<{ icon: IconName; title: string; text: string }> = [
   {
     icon: "fileText",
     title: "Документы для юрлиц",
-    text: "Счёт, УПД и закрывающие документы для бухгалтерии.",
+    text: "Счёт, накладные и закрывающие документы для бухгалтерии.",
   },
 ];
 
 const requisites = [
-  { label: "Наименование", value: "ООО «ПартсХаб»" },
-  { label: "ИНН", value: "7700000000" },
-  { label: "КПП", value: "770001001" },
-  { label: "ОГРН", value: "1237700000000" },
-  { label: "Юридический адрес", value: "Москва, ул. Складская, 12" },
+  { label: "Наименование", value: "ТОО «PartsHub»" },
+  { label: "БИН", value: "000000000000" },
+  { label: "Кбе", value: "17" },
+  { label: "Юридический адрес", value: "Тараз, ул. Жибек Жолы, 12" },
 ];
 
 export default function CompanyPage() {
@@ -60,7 +59,7 @@ export default function CompanyPage() {
             Склад, который держит ходовые запчасти рядом
           </h1>
           <p className="mt-3 text-sm leading-relaxed text-muted">
-            PartsHub — оптовый склад автозапчастей в Москве. Мы собрали
+            PartsHub — оптовый склад автозапчастей в Таразе. Мы собрали
             категории, которые чаще всего нужны для обслуживания автомобиля:
             тормозную систему, фильтры, масла, двигатель, подвеску и электрику.
           </p>
@@ -81,7 +80,7 @@ export default function CompanyPage() {
 
         <div className="rounded-card border border-line bg-surface p-4 shadow-card sm:p-5">
           <div className="flex items-center gap-2.5">
-            <span className="flex size-10 items-center justify-center rounded-control bg-accent text-brand">
+            <span className="flex size-10 items-center justify-center rounded-control bg-brand text-white">
               <Icon name="wrench" className="size-5" />
             </span>
             <div>
@@ -95,7 +94,7 @@ export default function CompanyPage() {
                 <Icon name="mapPin" className="size-3.5" />
                 Адрес
               </dt>
-              <dd className="text-ink">Москва, ул. Складская, 12</dd>
+              <dd className="text-ink">Тараз, ул. Жибек Жолы, 12</dd>
             </div>
             <div className="flex items-start gap-3">
               <dt className="flex w-24 shrink-0 items-center gap-1.5 text-muted">
@@ -111,10 +110,10 @@ export default function CompanyPage() {
               </dt>
               <dd>
                 <a
-                  href="tel:+74951234567"
+                  href="tel:+77000000000"
                   className="font-medium text-ink hover:text-brand-700"
                 >
-                  +7 (495) 123-45-67
+                  +7 (700) 000-00-00
                 </a>
               </dd>
             </div>
@@ -125,10 +124,10 @@ export default function CompanyPage() {
               </dt>
               <dd>
                 <a
-                  href="mailto:zakaz@partshub.ru"
+                  href="mailto:zakaz@partshub.kz"
                   className="font-medium text-ink hover:text-brand-700"
                 >
-                  zakaz@partshub.ru
+                  zakaz@partshub.kz
                 </a>
               </dd>
             </div>
@@ -165,7 +164,7 @@ export default function CompanyPage() {
               key={item.title}
               className="rounded-card border border-line bg-surface p-4 shadow-card"
             >
-              <span className="flex size-10 items-center justify-center rounded-control bg-accent-soft text-brand">
+              <span className="flex size-10 items-center justify-center rounded-control bg-tint text-brand">
                 <Icon name={item.icon} className="size-5" />
               </span>
               <h3 className="mt-3 text-sm font-bold text-ink">{item.title}</h3>
@@ -200,13 +199,13 @@ export default function CompanyPage() {
       </section>
 
       <section id="contacts" className="mt-8 scroll-mt-24">
-        <div className="flex flex-col gap-3 rounded-card border border-accent/40 bg-accent-soft/60 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+        <div className="flex flex-col gap-3 rounded-card border border-line bg-tint/60 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
           <div>
             <h2 className="text-sm font-bold text-ink">Контакты</h2>
             <p className="mt-1 text-xs text-muted">
-              Москва, ул. Складская, 12 · ежедневно 9:00–20:00 ·{" "}
-              <a href="tel:+74951234567" className="font-medium text-ink">
-                +7 (495) 123-45-67
+              Тараз, ул. Жибек Жолы, 12 · ежедневно 9:00–20:00 ·{" "}
+              <a href="tel:+77000000000" className="font-medium text-ink">
+                +7 (700) 000-00-00
               </a>
             </p>
           </div>

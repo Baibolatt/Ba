@@ -73,7 +73,7 @@ export function NotificationsView({
                   "flex size-10 shrink-0 items-center justify-center rounded-control",
                   item.read
                     ? "bg-page text-muted"
-                    : "bg-accent-soft text-brand",
+                    : "bg-tint text-brand",
                 )}
               >
                 <Icon name={notificationIcon(item)} className="size-5" />
@@ -85,7 +85,7 @@ export function NotificationsView({
                   </span>
                   {!item.read ? (
                     <span
-                      className="mt-1 size-2 shrink-0 rounded-full bg-accent"
+                      className="mt-1 size-2 shrink-0 rounded-full bg-brand"
                       aria-label="Непрочитанное"
                     />
                   ) : null}
@@ -104,7 +104,7 @@ export function NotificationsView({
             "flex w-full items-start gap-3 rounded-card border p-3.5 text-left transition-colors",
             item.read
               ? "border-line bg-surface"
-              : "border-accent/40 bg-accent-soft/20",
+              : "border-brand/25 bg-brand-50/60",
             item.href ? "hover:border-brand/30 hover:bg-brand-50/40" : "",
           );
 

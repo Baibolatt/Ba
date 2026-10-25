@@ -36,7 +36,7 @@ export function ProductPurchase({ product }: ProductPurchaseProps) {
         withLabel
         className="w-full"
       />
-      <p className="flex items-center gap-1.5 pt-1 text-xs text-success">
+      <p className="flex items-center gap-1.5 pt-1 text-xs text-muted">
         <Icon name="truck" className="size-3.5" />
         Со склада · самовывоз сегодня
       </p>

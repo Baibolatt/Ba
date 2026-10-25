@@ -29,13 +29,13 @@ export function CategoryTile({
     <Link
       href={`/catalog/${category.slug}`}
       className={cn(
-        "group flex items-center gap-3 rounded-card border border-line bg-surface p-3.5 shadow-card transition-colors hover:border-accent/60 hover:bg-accent-soft/30",
+        "group flex items-center gap-3 rounded-card border border-line bg-surface p-3.5 shadow-card transition-colors hover:border-brand/30 hover:bg-tint/30",
         className,
       )}
     >
       <span
         className={cn(
-          "flex shrink-0 items-center justify-center rounded-control bg-accent-soft text-brand transition-colors group-hover:bg-accent",
+          "flex shrink-0 items-center justify-center rounded-control bg-tint text-brand transition-colors group-hover:bg-brand group-hover:text-white",
           compact ? "size-10" : "size-11",
         )}
       >

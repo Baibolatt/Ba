@@ -10,14 +10,11 @@ import { Logo } from "@/components/layout/logo";
 import { SideMenu } from "@/components/layout/side-menu";
 import { useStore } from "@/components/providers/store-provider";
 
-const cities = ["Москва", "Санкт-Петербург", "Казань", "Екатеринбург"];
-
 export function Header() {
   const router = useRouter();
   const { cartCount } = useStore();
   const [menuOpen, setMenuOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [city, setCity] = useState(cities[0]);
 
   const submitSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -34,41 +31,18 @@ export function Header() {
               type="button"
               onClick={() => setMenuOpen(true)}
               aria-label="Открыть меню"
-              className="flex size-9 shrink-0 items-center justify-center rounded-control text-ink transition-colors hover:bg-brand-50 md:hidden"
+              className="flex size-11 shrink-0 items-center justify-center rounded-control text-icon transition-colors hover:bg-brand-50 md:hidden"
             >
               <Icon name="menu" className="size-5" />
             </button>
 
             <Logo />
 
-            <div className="relative ml-1 block md:ml-0">
-              <select
-                aria-label="Город доставки"
-                value={city}
-                onChange={(event) => setCity(event.target.value)}
-                className="h-8 cursor-pointer appearance-none rounded-full bg-transparent py-0 pl-7 pr-5 text-xs font-medium text-muted transition-colors hover:bg-brand-50 focus:outline-none"
-              >
-                {cities.map((item) => (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-              <Icon
-                name="mapPin"
-                className="pointer-events-none absolute left-1.5 top-1/2 size-3.5 -translate-y-1/2 text-muted"
-              />
-              <Icon
-                name="chevronDown"
-                className="pointer-events-none absolute right-1 top-1/2 size-3 -translate-y-1/2 text-muted"
-              />
-            </div>
-
             <Link
               href="/catalog"
               className="hidden h-10 items-center gap-2 rounded-control border border-line-strong bg-surface px-3 text-sm font-semibold text-ink transition-colors hover:bg-brand-50 md:flex"
             >
-              <Icon name="grid" className="size-4 text-accent" />
+              <Icon name="grid" className="size-4 text-icon" />
               Каталог
             </Link>
 
@@ -84,11 +58,11 @@ export function Header() {
                   onChange={(event) => setQuery(event.target.value)}
                   placeholder="Артикул, название или бренд"
                   aria-label="Поиск по каталогу"
-                  className="h-11 w-full rounded-control border border-line bg-page pl-9 pr-24 text-sm text-ink placeholder:text-muted/80 focus:border-brand focus:bg-surface focus:outline-none focus:ring-2 focus:ring-accent/25"
+                  className="h-11 w-full rounded-control border border-line bg-page pl-9 pr-24 text-sm text-ink placeholder:text-muted/80 focus:border-brand focus:bg-surface focus:outline-none focus:ring-2 focus:ring-brand/20"
                 />
                 <button
                   type="submit"
-                  className="absolute right-1 top-1 h-9 rounded-[8px] bg-accent px-4 text-xs font-bold text-brand transition-colors hover:bg-accent-600"
+                  className="absolute right-1 top-1 h-9 rounded-[8px] bg-brand px-4 text-xs font-bold text-white transition-colors hover:bg-brand-800"
                 >
                   Найти
                 </button>
@@ -96,32 +70,32 @@ export function Header() {
             </form>
 
             <a
-              href="tel:+74951234567"
+              href="tel:+77000000000"
               className="hidden items-center gap-2 text-sm font-semibold text-ink transition-colors hover:text-brand-700 xl:flex"
             >
-              <Icon name="phone" className="size-4 text-accent" />
-              +7 (495) 123-45-67
+              <Icon name="phone" className="size-4 text-icon" />
+              +7 (700) 000-00-00
             </a>
 
             <div className="ml-auto flex items-center gap-0.5 md:ml-0 md:gap-1">
               <Link
                 href="/account/favorites"
                 aria-label="Избранное"
-                className="relative flex size-9 items-center justify-center rounded-control text-ink transition-colors hover:bg-brand-50"
+                className="relative flex size-11 items-center justify-center rounded-control text-icon transition-colors hover:bg-brand-50"
               >
                 <Icon name="heart" className="size-5" />
               </Link>
               <Link
                 href="/login"
                 aria-label="Вход и регистрация"
-                className="hidden size-9 items-center justify-center rounded-control text-ink transition-colors hover:bg-brand-50 sm:flex"
+                className="hidden size-11 items-center justify-center rounded-control text-icon transition-colors hover:bg-brand-50 sm:flex"
               >
                 <Icon name="user" className="size-5" />
               </Link>
               <Link
                 href="/cart"
                 aria-label={`Корзина, товаров: ${cartCount}`}
-                className="relative flex size-9 items-center justify-center rounded-control text-ink transition-colors hover:bg-brand-50"
+                className="relative flex size-11 items-center justify-center rounded-control text-icon transition-colors hover:bg-brand-50"
               >
                 <Icon name="cart" className="size-5" />
                 {cartCount > 0 ? (
@@ -145,12 +119,12 @@ export function Header() {
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Артикул, название или бренд"
                 aria-label="Поиск по каталогу"
-                className="h-11 w-full rounded-control border border-line bg-page pl-9 pr-14 text-sm text-ink placeholder:text-muted/80 focus:border-brand focus:bg-surface focus:outline-none focus:ring-2 focus:ring-accent/25"
+                className="h-11 w-full rounded-control border border-line bg-page pl-9 pr-14 text-sm text-ink placeholder:text-muted/80 focus:border-brand focus:bg-surface focus:outline-none focus:ring-2 focus:ring-brand/20"
               />
               <button
                 type="submit"
                 aria-label="Найти"
-                className="absolute right-1 top-1 flex size-9 items-center justify-center rounded-[8px] bg-accent text-brand transition-colors hover:bg-accent-600"
+                className="absolute right-0 top-0 flex size-11 items-center justify-center rounded-[8px] bg-brand text-white transition-colors hover:bg-brand-800"
               >
                 <Icon name="search" className="size-4" strokeWidth={2} />
               </button>
@@ -176,8 +150,8 @@ export function Header() {
               <Link href="/feedback" className="transition-colors hover:text-ink">
                 Обратная связь
               </Link>
-              <span className="ml-auto flex items-center gap-1.5 text-success">
-                <span className="size-1.5 rounded-full bg-success" />
+              <span className="ml-auto flex items-center gap-1.5 text-muted">
+                <span className="size-1.5 rounded-full bg-muted" />
                 Со склада · самовывоз сегодня
               </span>
             </nav>

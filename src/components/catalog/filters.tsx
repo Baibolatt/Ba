@@ -93,7 +93,7 @@ export function FiltersPanel({
 
       <fieldset>
         <legend className="mb-2.5 text-xs font-semibold uppercase tracking-wide text-muted">
-          Цена, ₽
+          Цена, ₸
         </legend>
         <div className="flex items-center gap-2">
           <input
@@ -106,7 +106,7 @@ export function FiltersPanel({
             onChange={(event) =>
               onChange({ ...value, minPrice: event.target.value })
             }
-            className="h-10 w-full rounded-control border border-line-strong bg-surface px-3 text-sm text-ink placeholder:text-muted/70 focus:border-brand focus:outline-none focus:ring-2 focus:ring-accent/25"
+            className="h-10 w-full rounded-control border border-line-strong bg-surface px-3 text-sm text-ink placeholder:text-muted/70 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
           />
           <span className="text-muted">—</span>
           <input
@@ -119,7 +119,7 @@ export function FiltersPanel({
             onChange={(event) =>
               onChange({ ...value, maxPrice: event.target.value })
             }
-            className="h-10 w-full rounded-control border border-line-strong bg-surface px-3 text-sm text-ink placeholder:text-muted/70 focus:border-brand focus:outline-none focus:ring-2 focus:ring-accent/25"
+            className="h-10 w-full rounded-control border border-line-strong bg-surface px-3 text-sm text-ink placeholder:text-muted/70 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
           />
         </div>
       </fieldset>
@@ -198,7 +198,7 @@ export function FilterSheet({ open, onClose, children, footer }: FilterSheetProp
             type="button"
             onClick={onClose}
             aria-label="Закрыть"
-            className="flex size-9 items-center justify-center rounded-full text-muted transition-colors hover:bg-brand-50 hover:text-ink"
+            className="flex size-11 items-center justify-center rounded-full text-muted transition-colors hover:bg-brand-50 hover:text-ink"
           >
             <Icon name="close" className="size-5" />
           </button>

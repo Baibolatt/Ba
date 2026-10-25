@@ -22,7 +22,7 @@ export function Pagination({ page, pages, onPageChange }: PaginationProps) {
         onClick={() => onPageChange(page - 1)}
         disabled={page === 1}
         aria-label="Предыдущая страница"
-        className="flex size-10 items-center justify-center rounded-control border border-line bg-surface text-ink transition-colors hover:bg-brand-50 disabled:pointer-events-none disabled:opacity-40"
+        className="flex size-11 items-center justify-center rounded-control border border-line bg-surface text-ink transition-colors hover:bg-brand-50 disabled:pointer-events-none disabled:opacity-40"
       >
         <Icon name="chevronLeft" className="size-4" />
       </button>
@@ -47,7 +47,7 @@ export function Pagination({ page, pages, onPageChange }: PaginationProps) {
         onClick={() => onPageChange(page + 1)}
         disabled={page === pages}
         aria-label="Следующая страница"
-        className="flex size-10 items-center justify-center rounded-control border border-line bg-surface text-ink transition-colors hover:bg-brand-50 disabled:pointer-events-none disabled:opacity-40"
+        className="flex size-11 items-center justify-center rounded-control border border-line bg-surface text-ink transition-colors hover:bg-brand-50 disabled:pointer-events-none disabled:opacity-40"
       >
         <Icon name="chevronRight" className="size-4" />
       </button>

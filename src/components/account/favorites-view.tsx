@@ -30,7 +30,7 @@ export function FavoritesView() {
     <div>
       <div className="flex items-center justify-between gap-3">
         <p className="flex items-center gap-1.5 text-xs text-muted">
-          <Icon name="heart" className="size-3.5 text-accent" />
+          <Icon name="heart" className="size-3.5 text-icon" />
           {items.length} сохранённых товаров
         </p>
         <p className="hidden text-[11px] text-muted sm:block">
