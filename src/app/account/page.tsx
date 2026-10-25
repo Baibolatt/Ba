@@ -3,51 +3,55 @@ import Link from "next/link";
 import { AccountShell } from "@/components/account/account-shell";
 import { OrderRow } from "@/components/account/order-row";
 import { Icon, type IconName } from "@/components/ui/icon";
-import { notifications, orders, profile } from "@/lib/mock-data";
+import { getOrders } from "@/lib/data";
+import { notifications, profile } from "@/lib/mock-data";
 
 export const metadata: Metadata = {
   title: "Личный кабинет",
   description: "Обзор заказов, избранного и уведомлений PartsHub.",
 };
 
-const quickLinkMeta: Array<{
+type QuickLink = {
   href: string;
   title: string;
   hint: string;
   icon: IconName;
   value?: string;
-}> = [
-  {
-    href: "/account/orders",
-    title: "Заказы",
-    hint: "История и статусы",
-    icon: "box",
-    value: String(orders.length),
-  },
-  {
-    href: "/account/favorites",
-    title: "Избранное",
-    hint: "Сохранённые товары",
-    icon: "heart",
-  },
-  {
-    href: "/account/notifications",
-    title: "Уведомления",
-    hint: "События по заказам",
-    icon: "bell",
-    value: String(notifications.filter((item) => !item.read).length),
-  },
-  {
-    href: "/account/profile",
-    title: "Профиль",
-    hint: "Контакты и адрес",
-    icon: "user",
-  },
-];
+};
 
-export default function AccountPage() {
+export default async function AccountPage() {
+  const orders = await getOrders();
   const unread = notifications.filter((item) => !item.read).length;
   const recentOrders = orders.slice(0, 2);
+
+  const quickLinkMeta: QuickLink[] = [
+    {
+      href: "/account/orders",
+      title: "Заказы",
+      hint: "История и статусы",
+      icon: "box",
+      value: String(orders.length),
+    },
+    {
+      href: "/account/favorites",
+      title: "Избранное",
+      hint: "Сохранённые товары",
+      icon: "heart",
+    },
+    {
+      href: "/account/notifications",
+      title: "Уведомления",
+      hint: "События по заказам",
+      icon: "bell",
+      value: String(unread),
+    },
+    {
+      href: "/account/profile",
+      title: "Профиль",
+      hint: "Контакты и адрес",
+      icon: "user",
+    },
+  ];
 
   return (
     <AccountShell

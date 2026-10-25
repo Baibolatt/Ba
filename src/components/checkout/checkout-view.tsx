@@ -3,7 +3,8 @@
 import { useRouter } from "next/navigation";
 import { Fragment, useState, type FormEvent } from "react";
 import { cn } from "@/lib/cn";
-import { getProduct, profile } from "@/lib/mock-data";
+import { profile } from "@/lib/mock-data";
+import type { Product } from "@/lib/types";
 import { useStore } from "@/components/providers/store-provider";
 import { OrderSummary } from "@/components/cart/order-summary";
 import {
@@ -39,7 +40,7 @@ const steps: Array<{ n: Step; label: string }> = [
   { n: 3, label: "Оплата" },
 ];
 
-export function CheckoutView() {
+export function CheckoutView({ products }: { products: Product[] }) {
   const router = useRouter();
   const { cart, clearCart } = useStore();
   const [step, setStep] = useState<Step>(1);
@@ -60,7 +61,7 @@ export function CheckoutView() {
   });
 
   const lines = cart.flatMap((line) => {
-    const product = getProduct(line.productId);
+    const product = products.find((item) => item.id === line.productId);
     return product ? [{ product, qty: line.qty }] : [];
   });
 

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
-import { getProduct } from "@/lib/mock-data";
+import type { Product } from "@/lib/types";
 import { useStore } from "@/components/providers/store-provider";
 import { CartItem } from "@/components/cart/cart-item";
 import { QuantityStepper } from "@/components/catalog/quantity-stepper";
@@ -11,13 +11,13 @@ import { ButtonLink } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Icon } from "@/components/ui/icon";
 
-export function CartView() {
+export function CartView({ products }: { products: Product[] }) {
   const { cart, cartCount, setQty, removeFromCart, clearCart } = useStore();
   const [promo, setPromo] = useState("");
   const [promoMessage, setPromoMessage] = useState<string | null>(null);
 
   const lines = cart.flatMap((line) => {
-    const product = getProduct(line.productId);
+    const product = products.find((item) => item.id === line.productId);
     return product ? [{ product, qty: line.qty }] : [];
   });
 
@@ -70,7 +70,11 @@ export function CartView() {
                   <QuantityStepper
                     value={qty}
                     onChange={(value) => setQty(product.id, value)}
-                    max={product.stock > 0 ? Math.min(99, product.stock) : 99}
+                    max={
+                      product.quantity > 0
+                        ? Math.min(99, product.quantity)
+                        : 99
+                    }
                   />
                   <button
                     type="button"

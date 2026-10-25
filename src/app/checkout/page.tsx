@@ -2,13 +2,16 @@ import type { Metadata } from "next";
 import { Container } from "@/components/layout/container";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { CheckoutView } from "@/components/checkout/checkout-view";
+import { getProducts } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Оформление заказа",
   description: "Контакты, способ получения и оплаты заказа PartsHub.",
 };
 
-export default function CheckoutPage() {
+export default async function CheckoutPage() {
+  const products = await getProducts();
+
   return (
     <Container className="py-5 sm:py-8">
       <Breadcrumbs
@@ -27,7 +30,7 @@ export default function CheckoutPage() {
       </p>
 
       <div className="mt-5">
-        <CheckoutView />
+        <CheckoutView products={products} />
       </div>
     </Container>
   );

@@ -10,27 +10,27 @@ import { ProductPurchase } from "@/components/catalog/product-purchase";
 import { ProductCard } from "@/components/catalog/product-card";
 import { Icon } from "@/components/ui/icon";
 import {
-  formatPrice,
-  getCategory,
   getProduct,
+  getProductIds,
   getRelatedProducts,
-  products,
-  stockLevel,
-} from "@/lib/mock-data";
+} from "@/lib/data";
+import { formatPrice, stockLevel } from "@/lib/format";
 
 type ProductPageProps = {
   params: Promise<{ id: string }>;
 };
 
-export function generateStaticParams() {
-  return products.map((product) => ({ id: product.id }));
+export async function generateStaticParams() {
+  const ids = await getProductIds();
+
+  return ids.map((id) => ({ id }));
 }
 
 export async function generateMetadata({
   params,
 }: ProductPageProps): Promise<Metadata> {
   const { id } = await params;
-  const product = getProduct(id);
+  const product = await getProduct(id);
 
   if (!product) return { title: "Товар не найден" };
 
@@ -42,13 +42,12 @@ export async function generateMetadata({
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { id } = await params;
-  const product = getProduct(id);
+  const product = await getProduct(id);
 
   if (!product) notFound();
 
-  const category = getCategory(product.categorySlug);
   const level = stockLevel(product);
-  const related = getRelatedProducts(product);
+  const related = await getRelatedProducts(product);
   const discount = product.oldPrice
     ? Math.round((1 - product.price / product.oldPrice) * 100)
     : null;
@@ -59,9 +58,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
         items={[
           { label: "Главная", href: "/" },
           { label: "Каталог", href: "/catalog" },
-          ...(category
-            ? [{ label: category.name, href: `/catalog/${category.slug}` }]
-            : []),
+          {
+            label: product.categoryName,
+            href: `/catalog/${product.categorySlug}`,
+          },
           { label: product.name },
         ]}
       />
@@ -92,7 +92,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <span className="rounded-full bg-tint px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-ink">
               {product.brand}
             </span>
-            <StockBadge level={level} stock={product.stock} />
+            <StockBadge level={level} stock={product.quantity} />
           </div>
 
           <h1 className="mt-3 text-2xl font-bold leading-tight tracking-tight text-ink sm:text-3xl">
@@ -100,17 +100,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </h1>
           <p className="mt-1.5 text-sm text-muted">
             Артикул: <span className="font-mono text-ink">{product.article}</span>
-            {category ? (
-              <>
-                {" · "}
-                <Link
-                  href={`/catalog/${category.slug}`}
-                  className="transition-colors hover:text-ink"
-                >
-                  {category.name}
-                </Link>
-              </>
-            ) : null}
+            {" · "}
+            <Link
+              href={`/catalog/${product.categorySlug}`}
+              className="transition-colors hover:text-ink"
+            >
+              {product.categoryName}
+            </Link>
           </p>
 
           <div className="mt-5 rounded-card border border-line bg-surface p-4 shadow-card">
@@ -199,6 +195,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
             по данным склада; перед крупным заказом уточните количество у
             менеджера.
           </p>
+          <div className="mt-4 rounded-control bg-tint/60 p-3">
+            <p className="text-xs font-semibold text-ink">
+              Совместимость с авто
+            </p>
+            <p className="mt-1 text-xs leading-relaxed text-muted">
+              {product.compatibility}
+            </p>
+          </div>
           <Link
             href="/feedback"
             className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-brand transition-colors hover:text-brand-700"
@@ -215,15 +219,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
             title="Похожие товары"
             description="Из той же категории или от того же бренда"
             action={
-              category ? (
-                <Link
-                  href={`/catalog/${category.slug}`}
-                  className="flex items-center gap-1 text-sm font-semibold text-brand transition-colors hover:text-brand-700"
-                >
-                  В категорию
-                  <Icon name="chevronRight" className="size-4" />
-                </Link>
-              ) : null
+              <Link
+                href={`/catalog/${product.categorySlug}`}
+                className="flex items-center gap-1 text-sm font-semibold text-brand transition-colors hover:text-brand-700"
+              >
+                В категорию
+                <Icon name="chevronRight" className="size-4" />
+              </Link>
             }
           />
           <div className="mt-4 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">

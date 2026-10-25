@@ -8,7 +8,7 @@ import { BrandStrip } from "@/components/catalog/brand-strip";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { ButtonLink } from "@/components/ui/button";
 import { Icon, type IconName } from "@/components/ui/icon";
-import { categories, getProductsByCategory, products } from "@/lib/mock-data";
+import { getCategories, getProducts } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Автозапчасти со склада",
@@ -32,7 +32,11 @@ const advantages: Array<{ icon: IconName; title: string; text: string }> = [
   },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [categories, products] = await Promise.all([
+    getCategories(),
+    getProducts(),
+  ]);
   const popular = products.filter((product) => product.badge).slice(0, 4);
 
   return (
@@ -120,7 +124,7 @@ export default function HomePage() {
             <CategoryTile
               key={category.slug}
               category={category}
-              count={getProductsByCategory(category.slug).length}
+              count={category.productCount}
             />
           ))}
         </div>

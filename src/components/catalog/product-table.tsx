@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { formatPrice, stockLevel, type Product } from "@/lib/mock-data";
+import { formatPrice, stockLevel } from "@/lib/format";
+import type { Product } from "@/lib/types";
 import { ProductImage } from "@/components/catalog/product-image";
 import { AddToCartButton } from "@/components/catalog/add-to-cart-button";
 import { StockBadge } from "@/components/ui/stock-badge";
@@ -62,7 +63,7 @@ export function ProductTable({ products }: ProductTableProps) {
                   {product.brand}
                 </td>
                 <td className="whitespace-nowrap px-4 py-3">
-                  <StockBadge level={level} stock={product.stock} />
+                  <StockBadge level={level} stock={product.quantity} />
                 </td>
                 <td className="whitespace-nowrap px-4 py-3 text-right">
                   <span className="font-bold text-brand">

@@ -1,7 +1,9 @@
 import Link from "next/link";
-import { brands } from "@/lib/mock-data";
+import { getBrands } from "@/lib/data";
 
-export function BrandStrip() {
+export async function BrandStrip() {
+  const brands = await getBrands();
+
   return (
     <div className="flex flex-wrap gap-2">
       {brands.map((brand) => (

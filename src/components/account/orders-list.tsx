@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/cn";
-import type { Order } from "@/lib/mock-data";
+import type { Order } from "@/lib/types";
 import { OrderRow } from "@/components/account/order-row";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ButtonLink } from "@/components/ui/button";
@@ -20,10 +20,10 @@ export function OrdersList({ orders }: { orders: Order[] }) {
 
   const visible = orders.filter((order) => {
     if (filter === "active") {
-      return order.status === "processing" || order.status === "assembling";
+      return order.status === "new" || order.status === "in_progress";
     }
     if (filter === "done") {
-      return order.status === "delivered" || order.status === "cancelled";
+      return order.status === "done";
     }
     return true;
   });
@@ -38,14 +38,10 @@ export function OrdersList({ orders }: { orders: Order[] }) {
               : tab.value === "active"
                 ? orders.filter(
                     (order) =>
-                      order.status === "processing" ||
-                      order.status === "assembling",
+                      order.status === "new" ||
+                      order.status === "in_progress",
                   ).length
-                : orders.filter(
-                    (order) =>
-                      order.status === "delivered" ||
-                      order.status === "cancelled",
-                  ).length;
+                : orders.filter((order) => order.status === "done").length;
 
           return (
             <button

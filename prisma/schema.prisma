@@ -10,12 +10,93 @@ datasource db {
   provider = "sqlite"
 }
 
+model Category {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  name        String
+  shortName   String
+  description String
+  icon        String
+  sortOrder   Int       @default(0)
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Brand {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
 model Product {
-  id        String   @id @default(cuid())
-  slug      String   @unique
-  name      String
-  price     Int // цена в копейках
-  stock     Int      @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String        @id @default(cuid())
+  article       String        @unique
+  name          String
+  brandId       String
+  categoryId    String
+  price         Int // цена в тенге, целое число
+  oldPrice      Int? // старая цена в тенге
+  quantity      Int           @default(0) // остаток на складе
+  unit          String        @default("шт.")
+  imageUrl      String? // фото; пока может быть null — используется заглушка
+  description   String
+  compatibility String        @default("") // совместимость с авто, текст
+  badge         String? // Хит / Новинка
+  sortOrder     Int           @default(0)
+  brand         Brand         @relation(fields: [brandId], references: [id])
+  category      Category      @relation(fields: [categoryId], references: [id])
+  specs         ProductSpec[]
+  orderItems    OrderItem[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([name])
+  @@index([categoryId])
+  @@index([brandId])
+}
+
+model ProductSpec {
+  id        String  @id @default(cuid())
+  productId String
+  label     String
+  value     String
+  sortOrder Int     @default(0)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
+
+model Order {
+  id             String      @id @default(cuid())
+  number         String      @unique
+  customerName   String
+  phone          String
+  address        String? // адрес доставки; для самовывоза — пункт выдачи
+  deliveryMethod String      @default("pickup") // pickup | courier
+  comment        String?
+  payment        String?
+  status         String      @default("new") // new | in_progress | done
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  items          OrderItem[]
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int
+  price     Int // цена на момент заказа, тенге
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@unique([orderId, productId])
+  @@index([orderId])
+  @@index([productId])
 }

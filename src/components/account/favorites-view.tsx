@@ -1,17 +1,17 @@
 "use client";
 
-import { getProduct } from "@/lib/mock-data";
+import type { Product } from "@/lib/types";
 import { useStore } from "@/components/providers/store-provider";
 import { ProductCard } from "@/components/catalog/product-card";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ButtonLink } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 
-export function FavoritesView() {
+export function FavoritesView({ products }: { products: Product[] }) {
   const { favorites } = useStore();
 
   const items = favorites.flatMap((id) => {
-    const product = getProduct(id);
+    const product = products.find((item) => item.id === id);
     return product ? [product] : [];
   });
 

@@ -1,9 +1,6 @@
 import Link from "next/link";
-import {
-  formatPrice,
-  orderItemsCount,
-  type Order,
-} from "@/lib/mock-data";
+import { formatPrice, orderItemsCount } from "@/lib/format";
+import type { Order } from "@/lib/types";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Icon } from "@/components/ui/icon";
 

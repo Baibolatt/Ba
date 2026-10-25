@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { Product } from "@/lib/mock-data";
+import type { Product } from "@/lib/types";
 import { QuantityStepper } from "@/components/catalog/quantity-stepper";
 import { AddToCartButton } from "@/components/catalog/add-to-cart-button";
 import { FavoriteButton } from "@/components/catalog/favorite-button";
@@ -13,7 +13,7 @@ type ProductPurchaseProps = {
 
 export function ProductPurchase({ product }: ProductPurchaseProps) {
   const [qty, setQty] = useState(1);
-  const outOfStock = product.stock <= 0;
+  const outOfStock = !product.inStock;
 
   return (
     <div className="space-y-2.5">
@@ -21,7 +21,7 @@ export function ProductPurchase({ product }: ProductPurchaseProps) {
         <QuantityStepper
           value={qty}
           onChange={setQty}
-          max={outOfStock ? 1 : Math.min(99, product.stock)}
+          max={outOfStock ? 1 : Math.min(99, product.quantity)}
         />
         <AddToCartButton
           productId={product.id}

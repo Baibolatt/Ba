@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from "react";
 import { cn } from "@/lib/cn";
-import { stockLevel, type Product } from "@/lib/mock-data";
+import { stockLevel } from "@/lib/format";
+import type { Product } from "@/lib/types";
 import { ProductCard } from "@/components/catalog/product-card";
 import { ProductTable } from "@/components/catalog/product-table";
 import {

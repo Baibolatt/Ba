@@ -4,20 +4,17 @@ import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { ButtonLink } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { OrderSummary } from "@/components/cart/order-summary";
-import { getProduct } from "@/lib/mock-data";
+import { getProductsByIds } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Заказ оформлен",
   description: "Подтверждение заказа PartsHub.",
 };
 
-const successLines = [
+const successItems = [
   { id: "tl-2418", qty: 2 },
   { id: "gf-1042", qty: 1 },
-].flatMap(({ id, qty }) => {
-  const product = getProduct(id);
-  return product ? [{ product, qty }] : [];
-});
+];
 
 const nextSteps = [
   {
@@ -34,7 +31,13 @@ const nextSteps = [
   },
 ];
 
-export default function CheckoutSuccessPage() {
+export default async function CheckoutSuccessPage() {
+  const products = await getProductsByIds(successItems.map((item) => item.id));
+  const successLines = successItems.flatMap(({ id, qty }) => {
+    const product = products.find((item) => item.id === id);
+    return product ? [{ product, qty }] : [];
+  });
+
   return (
     <Container className="py-5 sm:py-8">
       <Breadcrumbs
@@ -86,7 +89,7 @@ export default function CheckoutSuccessPage() {
                   Статус
                 </p>
                 <p className="mt-1 text-xs font-medium text-ink">
-                  Обрабатывается
+                  Новая
                 </p>
               </div>
             </div>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { cn } from "@/lib/cn";
-import { formatPrice, stockLevel, type Product } from "@/lib/mock-data";
+import { formatPrice, stockLevel } from "@/lib/format";
+import type { Product } from "@/lib/types";
 import { ProductImage } from "@/components/catalog/product-image";
 import { FavoriteButton } from "@/components/catalog/favorite-button";
 import { AddToCartButton } from "@/components/catalog/add-to-cart-button";
@@ -49,7 +50,11 @@ export function ProductCard({ product, className }: ProductCardProps) {
         <p className="mt-1 text-[11px] text-muted">Арт. {product.article}</p>
 
         <div className="mt-auto pt-3">
-          <StockBadge level={level} stock={product.stock} className="mb-2" />
+          <StockBadge
+            level={level}
+            stock={product.quantity}
+            className="mb-2"
+          />
           <div className="flex items-end justify-between gap-2">
             <div>
               <p className="text-base font-bold leading-tight text-brand">

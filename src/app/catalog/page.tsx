@@ -8,12 +8,8 @@ import { ProductCard } from "@/components/catalog/product-card";
 import { BrandStrip } from "@/components/catalog/brand-strip";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Icon } from "@/components/ui/icon";
-import {
-  categories,
-  getProductsByCategory,
-  productCountLabel,
-  products,
-} from "@/lib/mock-data";
+import { getCategories, getProducts } from "@/lib/data";
+import { productCountLabel } from "@/lib/format";
 
 export const metadata: Metadata = {
   title: "Каталог запчастей",
@@ -21,7 +17,11 @@ export const metadata: Metadata = {
     "Категории автозапчастей PartsHub: тормозная система, фильтры, масла, двигатель, подвеска и электрика.",
 };
 
-export default function CatalogPage() {
+export default async function CatalogPage() {
+  const [categories, products] = await Promise.all([
+    getCategories(),
+    getProducts(),
+  ]);
   const popular = products.slice(0, 4);
 
   return (
@@ -61,7 +61,7 @@ export default function CatalogPage() {
             <CategoryTile
               key={category.slug}
               category={category}
-              count={getProductsByCategory(category.slug).length}
+              count={category.productCount}
             />
           ))}
         </div>

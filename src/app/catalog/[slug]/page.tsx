@@ -8,18 +8,23 @@ import { CatalogView } from "@/components/catalog/catalog-view";
 import { Icon } from "@/components/ui/icon";
 import { cn } from "@/lib/cn";
 import {
-  categories,
+  getCategories,
   getCategory,
   getProductsByCategory,
-  productCountLabel,
-} from "@/lib/mock-data";
+} from "@/lib/data";
+import { productCountLabel } from "@/lib/format";
 
 type CategoryPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
-  return [{ slug: "all" }, ...categories.map((category) => ({ slug: category.slug }))];
+export async function generateStaticParams() {
+  const categories = await getCategories();
+
+  return [
+    { slug: "all" },
+    ...categories.map((category) => ({ slug: category.slug })),
+  ];
 }
 
 export async function generateMetadata({
@@ -34,7 +39,7 @@ export async function generateMetadata({
     };
   }
 
-  const category = getCategory(slug);
+  const category = await getCategory(slug);
   if (!category) return { title: "Категория не найдена" };
 
   return {
@@ -46,12 +51,16 @@ export async function generateMetadata({
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { slug } = await params;
 
-  if (slug !== "all" && !getCategory(slug)) {
+  const [categories, category, items] = await Promise.all([
+    getCategories(),
+    slug === "all" ? Promise.resolve(null) : getCategory(slug),
+    getProductsByCategory(slug),
+  ]);
+
+  if (slug !== "all" && !category) {
     notFound();
   }
 
-  const category = getCategory(slug);
-  const items = getProductsByCategory(slug);
   const title = category?.name ?? "Все товары";
   const description =
     category?.description ??

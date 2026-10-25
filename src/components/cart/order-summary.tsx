@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
-import { formatPrice, type Product } from "@/lib/mock-data";
+import { formatPrice } from "@/lib/format";
+import type { Product } from "@/lib/types";
 
 export type SummaryLine = {
   product: Product;

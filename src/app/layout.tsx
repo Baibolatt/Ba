@@ -5,6 +5,7 @@ import { StoreProvider } from "@/components/providers/store-provider";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { BottomNav } from "@/components/layout/bottom-nav";
+import { getCategories } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: {
@@ -15,9 +16,11 @@ export const metadata: Metadata = {
     "PartsHub — оптовый склад автозапчастей: каталог, наличие, самовывоз и доставка по области.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
+  const categories = await getCategories();
+
   return (
     <html lang="ru" className="h-full">
       <body className="flex min-h-full flex-col pb-[calc(4rem+env(safe-area-inset-bottom))] lg:pb-0">
@@ -28,11 +31,11 @@ export default function RootLayout({
           >
             Перейти к содержимому
           </a>
-          <Header />
+          <Header categories={categories} />
           <main id="content" className="flex-1">
             {children}
           </main>
-          <Footer />
+          <Footer categories={categories} />
           <BottomNav />
         </StoreProvider>
       </body>

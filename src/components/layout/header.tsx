@@ -9,6 +9,7 @@ import { Container } from "@/components/layout/container";
 import { Logo } from "@/components/layout/logo";
 import { SideMenu } from "@/components/layout/side-menu";
 import { useStore } from "@/components/providers/store-provider";
+import type { Category } from "@/lib/types";
 
 const navItems = [
   { href: "/catalog", label: "Каталог" },
@@ -17,7 +18,7 @@ const navItems = [
   { href: "/feedback", label: "Обратная связь" },
 ];
 
-export function Header() {
+export function Header({ categories }: { categories: Category[] }) {
   const router = useRouter();
   const pathname = usePathname();
   const { cartCount } = useStore();
@@ -137,7 +138,11 @@ export function Header() {
         </Container>
       </header>
 
-      <SideMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
+      <SideMenu
+        open={menuOpen}
+        onClose={() => setMenuOpen(false)}
+        categories={categories}
+      />
     </>
   );
 }

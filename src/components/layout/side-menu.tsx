@@ -3,13 +3,15 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import { cn } from "@/lib/cn";
-import { categories, profile } from "@/lib/mock-data";
+import { profile } from "@/lib/mock-data";
+import type { Category } from "@/lib/types";
 import { Icon, type IconName } from "@/components/ui/icon";
 import { Logo } from "@/components/layout/logo";
 
 type SideMenuProps = {
   open: boolean;
   onClose: () => void;
+  categories: Category[];
 };
 
 type MenuLink = {
@@ -31,16 +33,7 @@ const accountLinks: MenuLink[] = [
   { href: "/account/notifications", label: "Уведомления", icon: "bell" },
 ];
 
-const categoryIcons: Record<string, IconName> = {
-  brakes: "brake",
-  filters: "filter",
-  oils: "droplet",
-  engine: "gear",
-  suspension: "spring",
-  electric: "battery",
-};
-
-export function SideMenu({ open, onClose }: SideMenuProps) {
+export function SideMenu({ open, onClose, categories }: SideMenuProps) {
   useEffect(() => {
     if (!open) return;
 
@@ -129,7 +122,7 @@ export function SideMenu({ open, onClose }: SideMenuProps) {
                 className="flex min-h-11 items-center gap-3 rounded-control px-2 py-2.5 text-sm text-ink transition-colors hover:bg-brand-50"
               >
                 <span className="flex size-8 items-center justify-center rounded-control bg-brand-50 text-brand">
-                  <Icon name={categoryIcons[category.slug]} className="size-4" />
+                  <Icon name={category.icon} className="size-4" />
                 </span>
                 {category.name}
               </Link>

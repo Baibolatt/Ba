@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { categories } from "@/lib/mock-data";
+import type { Category } from "@/lib/types";
 import { Container } from "@/components/layout/container";
 import { Icon } from "@/components/ui/icon";
 import { Logo } from "@/components/layout/logo";
@@ -18,7 +18,7 @@ const companyLinks = [
   { href: "/feedback", label: "Стать партнёром" },
 ];
 
-export function Footer() {
+export function Footer({ categories }: { categories: Category[] }) {
   return (
     <footer className="mt-12 border-t border-line bg-surface">
       <Container className="py-10">

@@ -3,13 +3,26 @@ import { Suspense } from "react";
 import { Container } from "@/components/layout/container";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { SearchView } from "@/components/search/search-view";
+import { searchProducts } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Поиск",
   description: "Поиск автозапчастей по названию, артикулу и бренду.",
 };
 
-export default function SearchPage() {
+type SearchPageProps = {
+  searchParams: Promise<{ q?: string | string[] }>;
+};
+
+async function SearchResults({ searchParams }: SearchPageProps) {
+  const { q } = await searchParams;
+  const query = typeof q === "string" ? q.trim() : "";
+  const results = await searchProducts(query);
+
+  return <SearchView query={query} results={results} />;
+}
+
+export default function SearchPage({ searchParams }: SearchPageProps) {
   return (
     <Container className="py-5 sm:py-8">
       <Breadcrumbs items={[{ label: "Главная", href: "/" }, { label: "Поиск" }]} />
@@ -27,7 +40,7 @@ export default function SearchPage() {
           <div className="mt-4 h-12 w-full animate-pulse rounded-control bg-surface" />
         }
       >
-        <SearchView />
+        <SearchResults searchParams={searchParams} />
       </Suspense>
     </Container>
   );

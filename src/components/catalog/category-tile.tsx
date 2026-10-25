@@ -1,16 +1,8 @@
 import Link from "next/link";
 import { cn } from "@/lib/cn";
-import { productCountLabel, type Category } from "@/lib/mock-data";
-import { Icon, type IconName } from "@/components/ui/icon";
-
-const categoryIcons: Record<Category["icon"], IconName> = {
-  brake: "brake",
-  filter: "filter",
-  droplet: "droplet",
-  gear: "gear",
-  spring: "spring",
-  battery: "battery",
-};
+import { productCountLabel } from "@/lib/format";
+import type { Category } from "@/lib/types";
+import { Icon } from "@/components/ui/icon";
 
 type CategoryTileProps = {
   category: Category;
@@ -39,7 +31,7 @@ export function CategoryTile({
           compact ? "size-10" : "size-11",
         )}
       >
-        <Icon name={categoryIcons[category.icon]} className="size-5" />
+        <Icon name={category.icon} className="size-5" />
       </span>
       <span className="min-w-0 flex-1">
         <span className="block truncate text-sm font-semibold text-ink">

@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
-import { searchProducts } from "@/lib/mock-data";
+import type { Product } from "@/lib/types";
 import { ProductCard } from "@/components/catalog/product-card";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Button } from "@/components/ui/button";
@@ -17,20 +17,22 @@ const quickQueries = [
   { label: "Свечи", query: "свеча" },
 ];
 
-export function SearchView() {
+export function SearchView({
+  query: initialQuery,
+  results,
+}: {
+  query: string;
+  results: Product[];
+}) {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const q = searchParams.get("q")?.trim() ?? "";
-  const [query, setQuery] = useState(q);
-  const [syncedQuery, setSyncedQuery] = useState(q);
+  const [query, setQuery] = useState(initialQuery);
+  const [syncedQuery, setSyncedQuery] = useState(initialQuery);
 
   // Синхронизируем поле с адресом при переходе «назад/вперёд» без эффекта.
-  if (q !== syncedQuery) {
-    setSyncedQuery(q);
-    setQuery(q);
+  if (initialQuery !== syncedQuery) {
+    setSyncedQuery(initialQuery);
+    setQuery(initialQuery);
   }
-
-  const results = searchProducts(q);
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -64,7 +66,7 @@ export function SearchView() {
         </div>
       </form>
 
-      {!q ? (
+      {!initialQuery ? (
         <div className="mt-8">
           <h2 className="text-sm font-bold text-ink">Частые запросы</h2>
           <div className="mt-3 flex flex-wrap gap-2">
@@ -98,7 +100,7 @@ export function SearchView() {
         <div className="mt-6">
           <EmptyState
             icon="search"
-            title={`По запросу «${q}» ничего не найдено`}
+            title={`По запросу «${initialQuery}» ничего не найдено`}
             description="Проверьте написание артикула или напишите нам — проверим наличие на складе."
             action={
               <div className="flex flex-wrap justify-center gap-2">
@@ -122,7 +124,7 @@ export function SearchView() {
         <div className="mt-6">
           <div className="flex items-baseline justify-between gap-3">
             <h2 className="text-sm font-bold text-ink">
-              Результаты по запросу «{q}»
+              Результаты по запросу «{initialQuery}»
             </h2>
             <span className="text-xs text-muted">
               {results.length}{" "}

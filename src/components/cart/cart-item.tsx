@@ -1,12 +1,14 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import { formatPrice, type Product } from "@/lib/mock-data";
+import { formatPrice } from "@/lib/format";
+import type { Product } from "@/lib/types";
 import { ProductImage } from "@/components/catalog/product-image";
 
 type CartItemProps = {
   product: Product;
   qty: number;
+  unitPrice?: number;
   actions?: ReactNode;
   compact?: boolean;
   className?: string;
@@ -15,11 +17,13 @@ type CartItemProps = {
 export function CartItem({
   product,
   qty,
+  unitPrice,
   actions,
   compact = false,
   className,
 }: CartItemProps) {
-  const lineTotal = product.price * qty;
+  const price = unitPrice ?? product.price;
+  const lineTotal = price * qty;
 
   return (
     <article className={cn("flex gap-3 py-4 first:pt-0 last:pb-0", className)}>
@@ -56,7 +60,7 @@ export function CartItem({
             </p>
             {qty > 1 ? (
               <p className="mt-0.5 text-[11px] text-muted">
-                {formatPrice(product.price)} × {qty}
+                {formatPrice(price)} × {qty}
               </p>
             ) : null}
           </div>

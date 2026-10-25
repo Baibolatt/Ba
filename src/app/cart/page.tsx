@@ -2,13 +2,16 @@ import type { Metadata } from "next";
 import { Container } from "@/components/layout/container";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { CartView } from "@/components/cart/cart-view";
+import { getProducts } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Корзина",
   description: "Выбранные автозапчасти, количество и итоговая сумма заказа.",
 };
 
-export default function CartPage() {
+export default async function CartPage() {
+  const products = await getProducts();
+
   return (
     <Container className="py-5 sm:py-8">
       <Breadcrumbs
@@ -22,7 +25,7 @@ export default function CartPage() {
       </p>
 
       <div className="mt-5">
-        <CartView />
+        <CartView products={products} />
       </div>
     </Container>
   );

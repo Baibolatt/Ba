@@ -1,5 +1,6 @@
 import { cn } from "@/lib/cn";
-import { orderStatusLabels, type OrderStatus } from "@/lib/mock-data";
+import { orderStatusLabels } from "@/lib/format";
+import type { OrderStatus } from "@/lib/types";
 
 type StatusBadgeProps = {
   status: OrderStatus;
@@ -7,10 +8,9 @@ type StatusBadgeProps = {
 };
 
 const styles: Record<OrderStatus, string> = {
-  processing: "bg-brand-50 text-brand",
-  assembling: "bg-tint text-ink",
-  delivered: "bg-ink text-white",
-  cancelled: "border border-line bg-page text-muted",
+  new: "bg-brand-50 text-brand",
+  in_progress: "bg-tint text-ink",
+  done: "bg-ink text-white",
 };
 
 export function StatusBadge({ status, className }: StatusBadgeProps) {

@@ -1,5 +1,5 @@
 import { cn } from "@/lib/cn";
-import type { StockLevel } from "@/lib/mock-data";
+import type { StockLevel } from "@/lib/types";
 
 type StockBadgeProps = {
   level: StockLevel;

@@ -1,15 +1,6 @@
 import { cn } from "@/lib/cn";
-import { Icon, type IconName } from "@/components/ui/icon";
-import type { CategorySlug, Product } from "@/lib/mock-data";
-
-const categoryIcons: Record<CategorySlug, IconName> = {
-  brakes: "brake",
-  filters: "filter",
-  oils: "droplet",
-  engine: "gear",
-  suspension: "spring",
-  electric: "battery",
-};
+import { Icon } from "@/components/ui/icon";
+import type { Product } from "@/lib/types";
 
 type ProductImageProps = {
   product: Product;
@@ -25,7 +16,7 @@ export function ProductImage({ product, className }: ProductImageProps) {
       )}
     >
       <Icon
-        name={categoryIcons[product.categorySlug]}
+        name={product.categoryIcon}
         className="size-1/3 max-h-20 min-h-8 text-muted/40"
         strokeWidth={1.2}
       />
