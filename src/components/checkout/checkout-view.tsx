@@ -5,6 +5,7 @@ import { Fragment, useState, type FormEvent } from "react";
 import { cn } from "@/lib/cn";
 import { profile } from "@/lib/mock-data";
 import type { Product } from "@/lib/types";
+import { createOrderAction } from "@/app/checkout/actions";
 import { useStore } from "@/components/providers/store-provider";
 import { OrderSummary } from "@/components/cart/order-summary";
 import {
@@ -46,6 +47,7 @@ export function CheckoutView({ products }: { products: Product[] }) {
   const [step, setStep] = useState<Step>(1);
   const [placing, setPlacing] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [serverError, setServerError] = useState("");
   const [form, setForm] = useState<FormState>({
     name: `${profile.name} ${profile.lastName}`,
     phone: profile.phone,
@@ -96,19 +98,53 @@ export function CheckoutView({ products }: { products: Product[] }) {
     return Object.keys(next).length === 0;
   };
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!validateStep(step)) return;
 
     if (step < 3) {
+      setServerError("");
       setStep((current) => (current + 1) as Step);
       return;
     }
 
     setPlacing(true);
-    clearCart();
-    router.push("/checkout/success");
+    setServerError("");
+
+    try {
+      const result = await createOrderAction({
+        customerName: form.name,
+        phone: form.phone,
+        email: form.email,
+        deliveryMethod: form.delivery,
+        city: form.city,
+        street: form.street,
+        house: form.house,
+        flat: form.flat,
+        comment: form.comment,
+        payment: form.payment,
+        consent: form.consent,
+        items: cart.map((line) => ({
+          productId: line.productId,
+          qty: line.qty,
+        })),
+      });
+
+      if (!result.ok) {
+        if (result.fieldErrors) setErrors(result.fieldErrors);
+        if (result.step) setStep(result.step);
+        setServerError(result.error);
+        setPlacing(false);
+        return;
+      }
+
+      clearCart();
+      router.push(`/checkout/success?order=${encodeURIComponent(result.orderId)}`);
+    } catch {
+      setServerError("Не удалось связаться с сервером. Попробуйте ещё раз.");
+      setPlacing(false);
+    }
   };
 
   if (placing) {
@@ -398,10 +434,23 @@ export function CheckoutView({ products }: { products: Product[] }) {
               </div>
 
               <p className="mt-4 rounded-control bg-page p-3 text-[11px] leading-relaxed text-muted">
-                Демо-режим: заказ не сохраняется в базе, оплата не проводится.
-                После оформления откроется страница подтверждения.
+                Заказ сохранится в базе и появится в личном кабинете. Оплата не
+                проводится — менеджер подтвердит заказ по телефону.
               </p>
             </div>
+          ) : null}
+
+          {serverError ? (
+            <p
+              role="alert"
+              className="mt-4 flex items-start gap-2 rounded-control bg-danger-soft p-3 text-xs font-medium text-danger"
+            >
+              <Icon
+                name="alertCircle"
+                className="mt-0.5 size-4 shrink-0"
+              />
+              {serverError}
+            </p>
           ) : null}
 
           <div className="mt-6 flex flex-col-reverse gap-2 border-t border-line pt-4 sm:flex-row sm:items-center sm:justify-between">

@@ -5,6 +5,8 @@ import type { Product } from "@/lib/types";
 export type SummaryLine = {
   product: Product;
   qty: number;
+  /** Цена на момент заказа. Если не передана, берётся текущая цена товара. */
+  price?: number;
 };
 
 type OrderSummaryProps = {
@@ -18,8 +20,9 @@ export function OrderSummary({
   title = "Ваш заказ",
   children,
 }: OrderSummaryProps) {
+  const linePrice = (line: SummaryLine) => line.price ?? line.product.price;
   const total = lines.reduce(
-    (sum, line) => sum + line.product.price * line.qty,
+    (sum, line) => sum + linePrice(line) * line.qty,
     0,
   );
   const count = lines.reduce((sum, line) => sum + line.qty, 0);
@@ -37,11 +40,11 @@ export function OrderSummary({
             <span className="min-w-0 flex-1 text-muted">
               <span className="line-clamp-1 text-ink">{line.product.name}</span>
               <span className="text-xs">
-                {line.qty} × {formatPrice(line.product.price)}
+                {line.qty} × {formatPrice(linePrice(line))}
               </span>
             </span>
             <span className="shrink-0 font-medium text-ink">
-              {formatPrice(line.product.price * line.qty)}
+              {formatPrice(linePrice(line) * line.qty)}
             </span>
           </li>
         ))}
