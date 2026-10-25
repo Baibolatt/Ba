@@ -1,0 +1,21 @@
+// Схема БД PartsHub
+// Документация: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Product {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  name      String
+  price     Int // цена в копейках
+  stock     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
