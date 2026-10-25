@@ -80,7 +80,7 @@ export default function CompanyPage() {
 
         <div className="rounded-card border border-line bg-surface p-4 shadow-card sm:p-5">
           <div className="flex items-center gap-2.5">
-            <span className="flex size-10 items-center justify-center rounded-control bg-brand text-white">
+            <span className="flex size-10 items-center justify-center rounded-control bg-ink text-white">
               <Icon name="wrench" className="size-5" />
             </span>
             <div>
@@ -164,7 +164,7 @@ export default function CompanyPage() {
               key={item.title}
               className="rounded-card border border-line bg-surface p-4 shadow-card"
             >
-              <span className="flex size-10 items-center justify-center rounded-control bg-tint text-brand">
+              <span className="flex size-10 items-center justify-center rounded-control bg-tint text-icon">
                 <Icon name={item.icon} className="size-5" />
               </span>
               <h3 className="mt-3 text-sm font-bold text-ink">{item.title}</h3>
@@ -176,7 +176,7 @@ export default function CompanyPage() {
         </div>
       </div>
 
-      <section id="requisites" className="mt-8 scroll-mt-24">
+      <section id="requisites" className="mt-8 scroll-mt-32">
         <h2 className="text-lg font-bold text-ink sm:text-xl">Реквизиты</h2>
         <div className="mt-3 rounded-card border border-line bg-surface p-4 shadow-card sm:p-5">
           <dl className="grid gap-x-8 gap-y-2.5 text-sm sm:grid-cols-2">
@@ -198,7 +198,7 @@ export default function CompanyPage() {
         </div>
       </section>
 
-      <section id="contacts" className="mt-8 scroll-mt-24">
+      <section id="contacts" className="mt-8 scroll-mt-32">
         <div className="flex flex-col gap-3 rounded-card border border-line bg-tint/60 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
           <div>
             <h2 className="text-sm font-bold text-ink">Контакты</h2>

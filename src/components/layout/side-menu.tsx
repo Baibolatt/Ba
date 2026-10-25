@@ -61,7 +61,7 @@ export function SideMenu({ open, onClose }: SideMenuProps) {
   return (
     <div
       className={cn(
-        "fixed inset-0 z-50 md:hidden",
+        "fixed inset-0 z-50 lg:hidden",
         open ? "pointer-events-auto" : "pointer-events-none",
       )}
       aria-hidden={!open}
@@ -72,7 +72,7 @@ export function SideMenu({ open, onClose }: SideMenuProps) {
         aria-label="Закрыть меню"
         onClick={onClose}
         className={cn(
-          "absolute inset-0 bg-brand/45 backdrop-blur-[2px] transition-opacity duration-200",
+          "absolute inset-0 bg-ink/45 backdrop-blur-[2px] transition-opacity duration-200",
           open ? "opacity-100" : "opacity-0",
         )}
       />
@@ -116,7 +116,7 @@ export function SideMenu({ open, onClose }: SideMenuProps) {
               onClick={onClose}
               className="flex min-h-11 items-center gap-3 rounded-control px-2 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-brand-50"
             >
-              <span className="flex size-8 items-center justify-center rounded-control bg-tint text-brand">
+              <span className="flex size-8 items-center justify-center rounded-control bg-tint text-icon">
                 <Icon name="grid" className="size-4" />
               </span>
               Все категории

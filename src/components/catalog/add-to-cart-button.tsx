@@ -28,7 +28,7 @@ export function AddToCartButton({
         disabled={disabled}
         onClick={() => addToCart(productId, qty)}
         className={cn(
-          "inline-flex h-12 w-full items-center justify-center gap-2 rounded-control bg-accent px-5 text-sm font-bold text-brand transition-colors hover:bg-accent-600 disabled:pointer-events-none disabled:bg-page disabled:text-muted",
+          "inline-flex h-12 w-full items-center justify-center gap-2 rounded-control bg-brand px-5 text-sm font-bold text-white transition-colors hover:bg-brand-800 disabled:pointer-events-none disabled:bg-page disabled:text-muted",
           className,
         )}
       >

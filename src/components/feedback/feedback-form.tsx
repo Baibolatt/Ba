@@ -99,7 +99,7 @@ export function FeedbackForm() {
   if (sent) {
     return (
       <div className="rounded-card border border-line bg-surface p-5 text-center shadow-card sm:p-6">
-        <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-tint text-brand">
+        <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-tint text-icon">
           <Icon name="check" className="size-7" />
         </span>
         <h2 className="mt-4 text-lg font-bold text-ink">Обращение отправлено</h2>

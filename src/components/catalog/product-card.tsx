@@ -21,22 +21,22 @@ export function ProductCard({ product, className }: ProductCardProps) {
         className,
       )}
     >
-      <div className="relative p-3 pb-0">
+      <div className="relative p-2.5 pb-0 sm:p-3">
         <Link href={`/product/${product.id}`} aria-label={product.name}>
           <ProductImage product={product} className="aspect-square" />
         </Link>
         <FavoriteButton
           productId={product.id}
-          className="absolute right-4 top-4"
+          className="absolute right-3 top-3 sm:right-4 sm:top-4"
         />
         {product.badge ? (
-          <span className="absolute left-4 top-4 rounded-full bg-brand px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">
+          <span className="absolute left-3 top-3 rounded-full bg-ink px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-white sm:left-4 sm:top-4 sm:px-2.5">
             {product.badge}
           </span>
         ) : null}
       </div>
 
-      <div className="flex flex-1 flex-col p-3">
+      <div className="flex flex-1 flex-col p-2.5 sm:p-3">
         <p className="text-[11px] font-medium uppercase tracking-wide text-muted">
           {product.brand}
         </p>
@@ -52,7 +52,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
           <StockBadge level={level} stock={product.stock} className="mb-2" />
           <div className="flex items-end justify-between gap-2">
             <div>
-              <p className="text-base font-bold leading-tight text-ink">
+              <p className="text-base font-bold leading-tight text-brand">
                 {formatPrice(product.price)}
               </p>
               {product.oldPrice ? (

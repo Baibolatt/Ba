@@ -13,9 +13,12 @@ export function Logo({ className, onNavigate }: LogoProps) {
       href="/"
       onClick={onNavigate}
       aria-label="PartsHub — на главную"
-      className={cn("flex shrink-0 items-center gap-2", className)}
+      className={cn(
+        "flex min-h-11 shrink-0 items-center gap-2",
+        className,
+      )}
     >
-      <span className="flex size-8 items-center justify-center rounded-[10px] bg-brand text-white">
+      <span className="flex size-8 items-center justify-center rounded-[10px] bg-ink text-white">
         <Icon name="wrench" className="size-4" strokeWidth={2} />
       </span>
       <span className="text-lg font-extrabold leading-none tracking-tight text-ink">

@@ -51,7 +51,9 @@ export function CartItem({
             </p>
           </div>
           <div className="shrink-0 text-right">
-            <p className="text-sm font-bold text-ink">{formatPrice(lineTotal)}</p>
+            <p className="text-sm font-bold text-brand">
+              {formatPrice(lineTotal)}
+            </p>
             {qty > 1 ? (
               <p className="mt-0.5 text-[11px] text-muted">
                 {formatPrice(product.price)} × {qty}

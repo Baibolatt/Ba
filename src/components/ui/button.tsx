@@ -14,7 +14,8 @@ const base =
 
 const variants: Record<ButtonVariant, string> = {
   primary: "bg-brand text-white hover:bg-brand-800",
-  accent: "bg-accent text-brand hover:bg-accent-600",
+  // Один акцент на все главные действия — отдельных контрастных цветов нет.
+  accent: "bg-brand text-white hover:bg-brand-800",
   secondary:
     "border border-line-strong bg-surface text-ink hover:border-brand/40 hover:bg-brand-50",
   ghost: "text-ink hover:bg-brand-50",

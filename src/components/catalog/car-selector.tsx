@@ -37,7 +37,7 @@ const years = [
 ];
 
 const selectClass =
-  "h-10 w-full cursor-pointer appearance-none rounded-control border border-line-strong bg-surface px-3 pr-8 text-sm text-ink focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20";
+  "h-11 w-full cursor-pointer appearance-none rounded-control border border-line-strong bg-surface px-3 pr-8 text-sm text-ink focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20";
 
 export function CarSelector() {
   const router = useRouter();

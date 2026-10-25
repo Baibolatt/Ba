@@ -25,7 +25,7 @@ export function AuthLayout({
   return (
     <Container className="py-6 sm:py-10">
       <div className="mx-auto grid max-w-4xl overflow-hidden rounded-[22px] border border-line bg-surface shadow-card lg:grid-cols-[0.85fr_1.15fr]">
-        <aside className="relative hidden flex-col bg-brand p-8 text-white lg:flex">
+        <aside className="relative hidden flex-col bg-ink p-8 text-white lg:flex">
           <div
             className="pointer-events-none absolute -right-16 -top-16 size-48 rounded-full border border-white/10"
             aria-hidden="true"

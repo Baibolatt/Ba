@@ -68,7 +68,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       />
 
       <div className="mt-4 flex items-start gap-3">
-        <span className="hidden size-12 shrink-0 items-center justify-center rounded-card bg-tint text-brand sm:flex">
+        <span className="hidden size-12 shrink-0 items-center justify-center rounded-card bg-tint text-icon sm:flex">
           <Icon name={category?.icon ?? "grid"} className="size-6" />
         </span>
         <div>
@@ -85,8 +85,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         <CarSelector />
       </div>
 
-      <div className="no-scrollbar mt-4 overflow-x-auto">
-        <div className="flex min-w-max gap-2">
+      <div className="mt-4">
+        <div className="flex flex-wrap gap-2">
           <Link
             href="/catalog/all"
             className={cn(

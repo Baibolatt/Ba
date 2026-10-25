@@ -54,7 +54,7 @@ export default function AccountPage() {
       title="Личный кабинет"
       description="Заказы, избранное и контактные данные."
     >
-      <section className="relative overflow-hidden rounded-card bg-brand p-4 text-white sm:p-5">
+      <section className="relative overflow-hidden rounded-card bg-ink p-4 text-white sm:p-5">
         <div
           className="pointer-events-none absolute -right-10 -top-12 size-40 rounded-full border border-white/10"
           aria-hidden="true"
@@ -73,7 +73,7 @@ export default function AccountPage() {
         <div className="mt-4 flex flex-wrap gap-2">
           <Link
             href="/account/orders"
-            className="inline-flex h-11 items-center rounded-control bg-accent px-4 text-sm font-bold text-brand transition-colors hover:bg-accent-600"
+            className="inline-flex h-11 items-center rounded-control bg-brand px-4 text-sm font-bold text-white transition-colors hover:bg-brand-800"
           >
             Мои заказы
           </Link>
@@ -94,7 +94,7 @@ export default function AccountPage() {
             className="group rounded-card border border-line bg-surface p-3.5 shadow-card transition-colors hover:border-brand/30"
           >
             <div className="flex items-start justify-between">
-              <span className="flex size-9 items-center justify-center rounded-control bg-tint text-brand">
+              <span className="flex size-9 items-center justify-center rounded-control bg-tint text-icon">
                 <Icon name={item.icon} className="size-5" />
               </span>
               <Icon

@@ -20,13 +20,13 @@ export function ProductImage({ product, className }: ProductImageProps) {
   return (
     <div
       className={cn(
-        "relative flex items-center justify-center overflow-hidden rounded-control bg-gradient-to-br from-brand-50 via-surface to-page ring-1 ring-inset ring-line/70",
+        "relative flex items-center justify-center overflow-hidden rounded-control bg-gradient-to-br from-tint via-surface to-page ring-1 ring-inset ring-line/70",
         className,
       )}
     >
       <Icon
         name={categoryIcons[product.categorySlug]}
-        className="size-1/3 max-h-20 min-h-8 text-brand/35"
+        className="size-1/3 max-h-20 min-h-8 text-muted/40"
         strokeWidth={1.2}
       />
       <span className="absolute bottom-2 right-2.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-muted/50">

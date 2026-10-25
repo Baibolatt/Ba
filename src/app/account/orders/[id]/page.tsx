@@ -199,7 +199,7 @@ export default async function OrderPage({ params }: OrderPageProps) {
             </div>
             <div className="flex items-center justify-between gap-3 border-t border-line pt-3">
               <dt className="font-bold text-ink">Итого</dt>
-              <dd className="text-base font-bold text-ink">
+              <dd className="text-base font-bold text-brand">
                 {formatPrice(order.total)}
               </dd>
             </div>

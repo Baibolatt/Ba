@@ -33,7 +33,7 @@ export function Pagination({ page, pages, onPageChange }: PaginationProps) {
           onClick={() => onPageChange(number)}
           aria-current={number === page ? "page" : undefined}
           className={cn(
-            "size-10 rounded-control border text-sm font-semibold transition-colors",
+            "size-11 rounded-control border text-sm font-semibold transition-colors",
             number === page
               ? "border-brand bg-brand text-white"
               : "border-line bg-surface text-ink hover:bg-brand-50",

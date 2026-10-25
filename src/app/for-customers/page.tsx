@@ -104,8 +104,8 @@ export default function ForCustomersPage() {
         Условия одинаковы для розничных и оптовых покупателей.
       </p>
 
-      <nav className="no-scrollbar mt-4 overflow-x-auto">
-        <div className="flex min-w-max gap-2">
+      <nav className="mt-4">
+        <div className="flex flex-wrap gap-2">
           {anchors.map((anchor) => (
             <Link
               key={anchor.href}
@@ -118,7 +118,7 @@ export default function ForCustomersPage() {
         </div>
       </nav>
 
-      <section id="delivery" className="mt-8 scroll-mt-24">
+      <section id="delivery" className="mt-8 scroll-mt-32">
         <h2 className="text-lg font-bold text-ink sm:text-xl">Доставка</h2>
         <p className="mt-1 text-sm text-muted">
           Заказы собираются на складе в Таразе. Срок зависит от наличия.
@@ -129,7 +129,7 @@ export default function ForCustomersPage() {
               key={option.title}
               className="rounded-card border border-line bg-surface p-4 shadow-card"
             >
-              <span className="flex size-10 items-center justify-center rounded-control bg-tint text-brand">
+              <span className="flex size-10 items-center justify-center rounded-control bg-tint text-icon">
                 <Icon name={option.icon} className="size-5" />
               </span>
               <h3 className="mt-3 text-sm font-bold text-ink">
@@ -146,7 +146,7 @@ export default function ForCustomersPage() {
         </div>
       </section>
 
-      <section id="payment" className="mt-8 scroll-mt-24">
+      <section id="payment" className="mt-8 scroll-mt-32">
         <h2 className="text-lg font-bold text-ink sm:text-xl">Оплата</h2>
         <p className="mt-1 text-sm text-muted">
           Онлайн-оплата на сайте не подключена — выбирайте удобный способ при
@@ -170,7 +170,7 @@ export default function ForCustomersPage() {
         </div>
       </section>
 
-      <section id="returns" className="mt-8 scroll-mt-24">
+      <section id="returns" className="mt-8 scroll-mt-32">
         <div className="rounded-card border border-line bg-surface p-4 shadow-card sm:p-5">
           <div className="flex items-center gap-2.5">
             <span className="flex size-10 items-center justify-center rounded-control bg-brand-50 text-brand">
@@ -197,7 +197,7 @@ export default function ForCustomersPage() {
         </div>
       </section>
 
-      <section id="faq" className="mt-8 scroll-mt-24">
+      <section id="faq" className="mt-8 scroll-mt-32">
         <h2 className="text-lg font-bold text-ink sm:text-xl">
           Вопросы и ответы
         </h2>

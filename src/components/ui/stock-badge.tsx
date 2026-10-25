@@ -8,9 +8,10 @@ type StockBadgeProps = {
 };
 
 const styles: Record<StockLevel, string> = {
+  // Зелёный и красный — только для наличия, как и требует палитра.
   in: "bg-success-soft text-success",
-  low: "bg-tint text-brand",
-  out: "border border-line bg-page text-muted",
+  low: "bg-tint text-ink",
+  out: "bg-danger-soft text-danger",
 };
 
 export function StockBadge({ level, stock, className }: StockBadgeProps) {

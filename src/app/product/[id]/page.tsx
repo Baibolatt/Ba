@@ -89,7 +89,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
         <div>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-brand-50 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-brand">
+            <span className="rounded-full bg-tint px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-ink">
               {product.brand}
             </span>
             <StockBadge level={level} stock={product.stock} />
@@ -115,7 +115,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
           <div className="mt-5 rounded-card border border-line bg-surface p-4 shadow-card">
             <div className="flex flex-wrap items-end gap-3">
-              <p className="text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
+              <p className="text-2xl font-extrabold tracking-tight text-brand sm:text-3xl">
                 {formatPrice(product.price)}
               </p>
               {product.oldPrice ? (
@@ -226,7 +226,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               ) : null
             }
           />
-          <div className="mt-4 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+          <div className="mt-4 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
             {related.map((item) => (
               <ProductCard key={item.id} product={item} />
             ))}

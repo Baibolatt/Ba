@@ -65,7 +65,7 @@ export function ProductTable({ products }: ProductTableProps) {
                   <StockBadge level={level} stock={product.stock} />
                 </td>
                 <td className="whitespace-nowrap px-4 py-3 text-right">
-                  <span className="font-bold text-ink">
+                  <span className="font-bold text-brand">
                     {formatPrice(product.price)}
                   </span>
                   {product.oldPrice ? (

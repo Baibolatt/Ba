@@ -35,7 +35,7 @@ export function CategoryTile({
     >
       <span
         className={cn(
-          "flex shrink-0 items-center justify-center rounded-control bg-tint text-brand transition-colors group-hover:bg-brand group-hover:text-white",
+          "flex shrink-0 items-center justify-center rounded-control bg-tint text-icon transition-colors group-hover:bg-brand group-hover:text-white",
           compact ? "size-10" : "size-11",
         )}
       >

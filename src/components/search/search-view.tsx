@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { searchProducts } from "@/lib/mock-data";
 import { ProductCard } from "@/components/catalog/product-card";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -22,10 +22,13 @@ export function SearchView() {
   const searchParams = useSearchParams();
   const q = searchParams.get("q")?.trim() ?? "";
   const [query, setQuery] = useState(q);
+  const [syncedQuery, setSyncedQuery] = useState(q);
 
-  useEffect(() => {
+  // Синхронизируем поле с адресом при переходе «назад/вперёд» без эффекта.
+  if (q !== syncedQuery) {
+    setSyncedQuery(q);
     setQuery(q);
-  }, [q]);
+  }
 
   const results = searchProducts(q);
 
@@ -130,7 +133,7 @@ export function SearchView() {
                   : "товаров"}
             </span>
           </div>
-          <div className="mt-4 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 xl:grid-cols-4">
+          <div className="mt-4 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
             {results.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

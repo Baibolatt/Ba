@@ -81,7 +81,7 @@ export default function CatalogPage() {
             </Link>
           }
         />
-        <div className="mt-4 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+        <div className="mt-4 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
           {popular.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
@@ -99,7 +99,7 @@ export default function CatalogPage() {
       </div>
 
       <div className="mt-8 flex items-start gap-3 rounded-card border border-line bg-surface p-4 shadow-card">
-        <span className="flex size-10 shrink-0 items-center justify-center rounded-control bg-tint text-brand">
+        <span className="flex size-10 shrink-0 items-center justify-center rounded-control bg-tint text-icon">
           <Icon name="truck" className="size-5" />
         </span>
         <div>

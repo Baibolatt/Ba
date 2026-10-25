@@ -20,7 +20,7 @@ export function AccountNav() {
     <div className="lg:rounded-card lg:border lg:border-line lg:bg-surface lg:p-2 lg:shadow-card">
       <nav
         aria-label="Разделы кабинета"
-        className="no-scrollbar -mx-4 flex gap-1 overflow-x-auto px-4 pb-1 lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0 lg:pb-0"
+        className="flex flex-wrap gap-1 pb-1 lg:flex-col lg:pb-0"
       >
         {links.map((link) => {
           const active = link.exact
@@ -33,7 +33,7 @@ export function AccountNav() {
               href={link.href}
               aria-current={active ? "page" : undefined}
               className={cn(
-                "flex shrink-0 items-center gap-2 whitespace-nowrap rounded-control px-3 py-2.5 text-sm font-medium transition-colors",
+                "flex min-h-11 shrink-0 items-center gap-2 whitespace-nowrap rounded-control px-3 py-2.5 text-sm font-medium transition-colors",
                 active
                   ? "bg-brand text-white"
                   : "text-muted hover:bg-brand-50 hover:text-ink",

@@ -74,7 +74,7 @@ export function FiltersPanel({
           {brands.map((brand) => (
             <label
               key={brand.name}
-              className="flex cursor-pointer items-center justify-between gap-2 text-sm text-ink"
+              className="flex min-h-11 cursor-pointer items-center justify-between gap-2 text-sm text-ink"
             >
               <span className="flex items-center gap-2.5">
                 <input
@@ -106,7 +106,7 @@ export function FiltersPanel({
             onChange={(event) =>
               onChange({ ...value, minPrice: event.target.value })
             }
-            className="h-10 w-full rounded-control border border-line-strong bg-surface px-3 text-sm text-ink placeholder:text-muted/70 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+            className="h-11 w-full rounded-control border border-line-strong bg-surface px-3 text-sm text-ink placeholder:text-muted/70 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
           />
           <span className="text-muted">—</span>
           <input
@@ -119,7 +119,7 @@ export function FiltersPanel({
             onChange={(event) =>
               onChange({ ...value, maxPrice: event.target.value })
             }
-            className="h-10 w-full rounded-control border border-line-strong bg-surface px-3 text-sm text-ink placeholder:text-muted/70 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+            className="h-11 w-full rounded-control border border-line-strong bg-surface px-3 text-sm text-ink placeholder:text-muted/70 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
           />
         </div>
       </fieldset>
@@ -128,7 +128,7 @@ export function FiltersPanel({
         <legend className="mb-2.5 text-xs font-semibold uppercase tracking-wide text-muted">
           Наличие
         </legend>
-        <label className="flex cursor-pointer items-center gap-2.5 text-sm text-ink">
+        <label className="flex min-h-11 cursor-pointer items-center gap-2.5 text-sm text-ink">
           <input
             type="checkbox"
             checked={value.inStockOnly}
@@ -189,7 +189,7 @@ export function FilterSheet({ open, onClose, children, footer }: FilterSheetProp
         type="button"
         aria-label="Закрыть фильтры"
         onClick={onClose}
-        className="absolute inset-0 bg-brand/45 backdrop-blur-[2px]"
+        className="absolute inset-0 bg-ink/45 backdrop-blur-[2px]"
       />
       <div className="absolute inset-x-0 bottom-0 flex max-h-[88vh] flex-col rounded-t-sheet bg-surface shadow-float">
         <div className="flex items-center justify-between border-b border-line px-4 py-3">

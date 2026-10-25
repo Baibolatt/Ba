@@ -40,7 +40,7 @@ export function BottomNav() {
   return (
     <nav
       aria-label="Основная навигация"
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface pb-[env(safe-area-inset-bottom)] md:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface pb-[env(safe-area-inset-bottom)] lg:hidden"
     >
       <div className="grid h-16 grid-cols-5">
         {items.map((item) => {
@@ -68,7 +68,7 @@ export function BottomNav() {
                   strokeWidth={active ? 2 : 1.7}
                 />
                 {item.isCart && cartCount > 0 ? (
-                  <span className="absolute -right-2 -top-1.5 flex min-w-4 items-center justify-center rounded-full bg-accent px-1 text-[9px] font-bold leading-4 text-brand">
+                  <span className="absolute -right-2 -top-1.5 flex min-w-4 items-center justify-center rounded-full bg-brand px-1 text-[9px] font-bold leading-4 text-white">
                     {cartCount}
                   </span>
                 ) : null}

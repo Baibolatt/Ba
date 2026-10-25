@@ -38,7 +38,7 @@ export default function HomePage() {
   return (
     <div className="pb-8">
       <Container className="pt-4 sm:pt-6">
-        <section className="relative overflow-hidden rounded-[22px] bg-brand px-4 py-5 text-white sm:px-8 sm:py-9 lg:px-10 lg:py-12">
+        <section className="relative overflow-hidden rounded-[22px] bg-ink px-4 py-5 text-white sm:px-8 sm:py-9 lg:px-10 lg:py-12">
           <div
             className="pointer-events-none absolute -right-20 -top-24 size-72 rounded-full border border-white/10"
             aria-hidden="true"
@@ -140,7 +140,7 @@ export default function HomePage() {
             </Link>
           }
         />
-        <div className="mt-4 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+        <div className="mt-4 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
           {popular.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
@@ -154,7 +154,7 @@ export default function HomePage() {
               key={item.title}
               className="flex gap-3 rounded-card border border-line bg-surface p-4 shadow-card"
             >
-              <span className="flex size-10 shrink-0 items-center justify-center rounded-control bg-tint text-brand">
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-control bg-tint text-icon">
                 <Icon name={item.icon} className="size-5" />
               </span>
               <div>
@@ -181,7 +181,7 @@ export default function HomePage() {
       <Container className="mt-8 sm:mt-10">
         <div className="flex flex-col gap-4 rounded-card border border-line bg-tint/60 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
           <div className="flex items-start gap-3">
-            <span className="flex size-10 shrink-0 items-center justify-center rounded-control bg-brand text-white">
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-control bg-ink text-white">
               <Icon name="wrench" className="size-5" />
             </span>
             <div>

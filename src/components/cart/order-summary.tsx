@@ -57,7 +57,7 @@ export function OrderSummary({
         </div>
         <div className="flex items-center justify-between gap-3 border-t border-line pt-3 text-base">
           <dt className="font-bold text-ink">Итого</dt>
-          <dd className="font-bold text-ink">{formatPrice(total)}</dd>
+          <dd className="font-bold text-brand">{formatPrice(total)}</dd>
         </div>
       </dl>
 

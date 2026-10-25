@@ -12,12 +12,15 @@ type BreadcrumbsProps = {
 
 export function Breadcrumbs({ items }: BreadcrumbsProps) {
   return (
-    <nav aria-label="Хлебные крошки" className="no-scrollbar overflow-x-auto">
-      <ol className="flex min-w-max items-center gap-1.5 text-xs text-muted">
+    <nav aria-label="Хлебные крошки" className="min-w-0">
+      <ol className="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs text-muted">
         {items.map((item, index) => {
           const isLast = index === items.length - 1;
           return (
-            <li key={`${item.label}-${index}`} className="flex items-center gap-1.5">
+            <li
+              key={`${item.label}-${index}`}
+              className="flex min-w-0 items-center gap-1.5"
+            >
               {index > 0 ? (
                 <Icon
                   name="chevronRight"

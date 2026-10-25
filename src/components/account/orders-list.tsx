@@ -30,7 +30,7 @@ export function OrdersList({ orders }: { orders: Order[] }) {
 
   return (
     <div>
-      <div className="no-scrollbar -mx-4 flex gap-1 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0">
+      <div className="flex flex-wrap gap-1 pb-1">
         {tabs.map((tab) => {
           const count =
             tab.value === "all"
@@ -53,7 +53,7 @@ export function OrdersList({ orders }: { orders: Order[] }) {
               type="button"
               onClick={() => setFilter(tab.value)}
               className={cn(
-                "shrink-0 rounded-full border px-3.5 py-2 text-xs font-semibold transition-colors",
+                "inline-flex min-h-11 shrink-0 items-center rounded-full border px-3.5 py-2 text-xs font-semibold transition-colors",
                 filter === tab.value
                   ? "border-brand bg-brand text-white"
                   : "border-line bg-surface text-muted hover:border-brand/40 hover:text-ink",

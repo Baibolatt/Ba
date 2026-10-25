@@ -239,14 +239,22 @@ export function CatalogView({
             />
           </div>
         ) : view === "grid" ? (
-          <div className="mt-4 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 xl:grid-cols-4">
+          <div className="mt-4 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
             {visible.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
         ) : (
           <div className="mt-4">
-            <ProductTable products={visible} />
+            {/* На мобильных таблица заменяется карточками: без горизонтального скролла. */}
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:hidden">
+              {visible.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+            <div className="hidden lg:block">
+              <ProductTable products={visible} />
+            </div>
           </div>
         )}
 

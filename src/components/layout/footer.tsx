@@ -22,8 +22,8 @@ export function Footer() {
   return (
     <footer className="mt-12 border-t border-line bg-surface">
       <Container className="py-10">
-        <div className="grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-4">
-          <div className="col-span-2 md:col-span-1">
+        <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="sm:col-span-2 lg:col-span-1">
             <Logo />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">
               Оптовый склад автозапчастей: подбор по каталогу, самовывоз в день

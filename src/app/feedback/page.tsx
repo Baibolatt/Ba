@@ -65,7 +65,7 @@ export default function FeedbackPage() {
             <ul className="mt-3 space-y-3">
               {contacts.map((contact) => (
                 <li key={contact.title} className="flex items-start gap-2.5">
-                  <span className="flex size-8 shrink-0 items-center justify-center rounded-control bg-tint text-brand">
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-control bg-tint text-icon">
                     <Icon name={contact.icon} className="size-4" />
                   </span>
                   <div className="min-w-0">
@@ -102,7 +102,7 @@ export default function FeedbackPage() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="flex items-center justify-between gap-2 rounded-control py-1.5 text-muted transition-colors hover:text-brand"
+                    className="flex min-h-11 items-center justify-between gap-2 rounded-control py-1.5 text-muted transition-colors hover:text-brand"
                   >
                     {link.label}
                     <Icon name="chevronRight" className="size-3.5" />
