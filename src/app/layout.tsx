@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import Link from "next/link";
 import "./globals.css";
+import { StoreProvider } from "@/components/providers/store-provider";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
+import { BottomNav } from "@/components/layout/bottom-nav";
 
 export const metadata: Metadata = {
   title: {
-    default: "PartsHub",
+    default: "PartsHub — автозапчасти со склада",
     template: "%s — PartsHub",
   },
-  description: "Каталог автозапчастей PartsHub",
+  description:
+    "PartsHub — оптовый склад автозапчастей: каталог, наличие, самовывоз и доставка по городу.",
 };
 
 export default function RootLayout({
@@ -16,35 +20,21 @@ export default function RootLayout({
 }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="ru" className="h-full">
-      <body className="flex min-h-full flex-col bg-zinc-50 text-zinc-900">
-        <header className="border-b border-zinc-200 bg-white">
-          <div className="mx-auto flex h-16 w-full max-w-6xl items-center gap-8 px-4">
-            <Link href="/" className="text-lg font-semibold tracking-tight">
-              PartsHub
-            </Link>
-            <nav className="flex items-center gap-6 text-sm text-zinc-600">
-              <Link href="/" className="transition-colors hover:text-zinc-900">
-                Главная
-              </Link>
-              <Link
-                href="/catalog"
-                className="transition-colors hover:text-zinc-900"
-              >
-                Каталог
-              </Link>
-            </nav>
-          </div>
-        </header>
-
-        <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
-          {children}
-        </main>
-
-        <footer className="border-t border-zinc-200 bg-white">
-          <div className="mx-auto w-full max-w-6xl px-4 py-6 text-sm text-zinc-500">
-            © PartsHub
-          </div>
-        </footer>
+      <body className="flex min-h-full flex-col pb-16 md:pb-0">
+        <StoreProvider>
+          <a
+            href="#content"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-control focus:bg-brand focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+          >
+            Перейти к содержимому
+          </a>
+          <Header />
+          <main id="content" className="flex-1">
+            {children}
+          </main>
+          <Footer />
+          <BottomNav />
+        </StoreProvider>
       </body>
     </html>
   );
