@@ -49,7 +49,7 @@ export function SearchView() {
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Введите артикул, название или бренд"
             aria-label="Поисковый запрос"
-            className="h-12 w-full rounded-control border border-line-strong bg-surface pl-11 pr-28 text-sm text-ink placeholder:text-muted/80 focus:border-brand focus:outline-none focus:ring-2 focus:ring-accent/25 sm:h-13"
+            className="h-12 w-full rounded-control border border-line-strong bg-surface pl-11 pr-28 text-sm text-ink placeholder:text-muted/80 focus:border-brand focus:outline-none focus:ring-2 focus:ring-accent/25"
           />
           <Button
             type="submit"

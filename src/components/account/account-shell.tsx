@@ -10,15 +10,21 @@ type AccountShellProps = {
 };
 
 export function AccountShell({ title, description, children }: AccountShellProps) {
-  return (
-    <Container className="py-5 sm:py-8">
-      <Breadcrumbs
-        items={[
+  const crumbs =
+    title === "Личный кабинет"
+      ? [
+          { label: "Главная", href: "/" },
+          { label: "Личный кабинет" },
+        ]
+      : [
           { label: "Главная", href: "/" },
           { label: "Кабинет", href: "/account" },
           { label: title },
-        ]}
-      />
+        ];
+
+  return (
+    <Container className="py-5 sm:py-8">
+      <Breadcrumbs items={crumbs} />
 
       <div className="mt-4 grid gap-5 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-6">
         <AccountNav />

@@ -10,7 +10,7 @@ import { Icon } from "@/components/ui/icon";
 const controlBase =
   "w-full rounded-control border bg-surface px-3 text-sm text-ink transition-colors placeholder:text-muted/70 focus:outline-none focus:ring-2 disabled:cursor-not-allowed disabled:bg-page disabled:text-muted";
 
-function controlClass(hasError: boolean): string {
+export function fieldControlClass(hasError: boolean): string {
   return cn(
     controlBase,
     hasError
@@ -90,7 +90,7 @@ export function TextField({
         name={name}
         required={required}
         aria-invalid={error ? true : undefined}
-        className={cn(controlClass(Boolean(error)), "h-11", className)}
+        className={cn(fieldControlClass(Boolean(error)), "h-11", className)}
         {...props}
       />
     </FieldShell>
@@ -132,7 +132,7 @@ export function SelectField({
         name={name}
         required={required}
         aria-invalid={error ? true : undefined}
-        className={cn(controlClass(Boolean(error)), "h-11 pr-8", className)}
+        className={cn(fieldControlClass(Boolean(error)), "h-11 pr-8", className)}
         {...props}
       >
         {options.map((option) => (
@@ -178,7 +178,7 @@ export function TextareaField({
         name={name}
         required={required}
         aria-invalid={error ? true : undefined}
-        className={cn(controlClass(Boolean(error)), "min-h-28 py-2.5", className)}
+        className={cn(fieldControlClass(Boolean(error)), "min-h-28 py-2.5", className)}
         {...props}
       />
     </FieldShell>

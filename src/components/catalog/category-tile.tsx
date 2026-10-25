@@ -39,10 +39,7 @@ export function CategoryTile({
           compact ? "size-10" : "size-11",
         )}
       >
-        <Icon
-          name={categoryIcons[category.icon]}
-          className={compact ? "size-5" : "size-5.5"}
-        />
+        <Icon name={categoryIcons[category.icon]} className="size-5" />
       </span>
       <span className="min-w-0 flex-1">
         <span className="block truncate text-sm font-semibold text-ink">
