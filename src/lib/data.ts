@@ -13,8 +13,10 @@ import {
   type CatalogQuery,
   type CatalogSort,
 } from "@/lib/catalog-query";
+import { categoryIcons } from "@/lib/category-icons";
 import { normalizeArticle } from "@/lib/import/clean";
 import type {
+  BrandSummary,
   Category,
   CategoryIcon,
   Order,
@@ -38,15 +40,6 @@ type ProductWithRelations = ProductRecord & {
 type OrderWithItems = OrderRecord & {
   items: OrderItemRecord[];
 };
-
-const categoryIcons: CategoryIcon[] = [
-  "brake",
-  "filter",
-  "droplet",
-  "gear",
-  "spring",
-  "battery",
-];
 
 function toCategoryIcon(value: string): CategoryIcon {
   return categoryIcons.includes(value as CategoryIcon)
@@ -91,6 +84,7 @@ function toCategory(record: CategoryRecord, productCount: number): Category {
     shortName: record.shortName,
     description: record.description,
     icon: toCategoryIcon(record.icon),
+    sortOrder: record.sortOrder,
     productCount,
   };
 }
@@ -163,6 +157,19 @@ export async function getBrands(): Promise<string[]> {
   });
 
   return records.map((record) => record.name);
+}
+
+export async function getBrandSummaries(): Promise<BrandSummary[]> {
+  const records = await prisma.brand.findMany({
+    include: { _count: { select: { products: true } } },
+    orderBy: { name: "asc" },
+  });
+
+  return records.map((record) => ({
+    id: record.id,
+    name: record.name,
+    productCount: record._count.products,
+  }));
 }
 
 export async function getProducts(): Promise<Product[]> {

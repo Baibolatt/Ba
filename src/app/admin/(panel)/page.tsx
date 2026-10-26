@@ -127,6 +127,13 @@ export default async function AdminPage() {
                 >
                   Импорт из Excel/CSV
                 </ButtonLink>
+                <ButtonLink
+                  href="/admin/catalog"
+                  variant="secondary"
+                  size="sm"
+                >
+                  Бренды и категории
+                </ButtonLink>
               </div>
             }
           />

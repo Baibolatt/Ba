@@ -12,6 +12,12 @@ import {
   isAdminAuthenticated,
   isValidAdminPassword,
 } from "@/lib/admin-auth";
+import {
+  deleteBrand,
+  deleteCategory,
+  saveBrand,
+  saveCategory,
+} from "@/lib/catalog-admin";
 import { changeOrderStatus } from "@/lib/orders";
 import {
   deleteProduct,
@@ -231,6 +237,112 @@ export async function deleteProductAction(
   revalidatePath("/admin");
 
   redirect("/admin");
+}
+
+export async function saveBrandAction(
+  _previous: AdminActionState,
+  formData: FormData,
+): Promise<AdminActionState> {
+  if (!(await isAdminAuthenticated())) {
+    redirect("/admin/login");
+  }
+
+  const brandId = String(formData.get("brandId") ?? "").trim();
+  const result = await saveBrand(
+    formData.get("name"),
+    brandId || undefined,
+  );
+
+  if (!result.ok) {
+    return { status: "error", message: result.error };
+  }
+
+  revalidatePath("/", "layout");
+  revalidatePath("/admin");
+  revalidatePath("/admin/catalog");
+
+  return { status: "success", message: result.message };
+}
+
+export async function deleteBrandAction(
+  _previous: AdminActionState,
+  formData: FormData,
+): Promise<AdminActionState> {
+  if (!(await isAdminAuthenticated())) {
+    redirect("/admin/login");
+  }
+
+  const brandId = String(formData.get("brandId") ?? "").trim();
+  if (!brandId) {
+    return { status: "error", message: "Бренд не найден" };
+  }
+
+  const result = await deleteBrand(brandId);
+  if (!result.ok) {
+    return { status: "error", message: result.error };
+  }
+
+  revalidatePath("/", "layout");
+  revalidatePath("/admin");
+  revalidatePath("/admin/catalog");
+
+  return { status: "success", message: result.message };
+}
+
+export async function saveCategoryAction(
+  _previous: AdminActionState,
+  formData: FormData,
+): Promise<AdminActionState> {
+  if (!(await isAdminAuthenticated())) {
+    redirect("/admin/login");
+  }
+
+  const categoryId = String(formData.get("categoryId") ?? "").trim();
+  const result = await saveCategory(
+    {
+      name: formData.get("name"),
+      shortName: formData.get("shortName"),
+      description: formData.get("description"),
+      icon: formData.get("icon"),
+      sortOrder: formData.get("sortOrder"),
+    },
+    categoryId || undefined,
+  );
+
+  if (!result.ok) {
+    return { status: "error", message: result.error };
+  }
+
+  revalidatePath("/", "layout");
+  revalidatePath("/admin");
+  revalidatePath("/admin/catalog");
+
+  return { status: "success", message: result.message };
+}
+
+export async function deleteCategoryAction(
+  _previous: AdminActionState,
+  formData: FormData,
+): Promise<AdminActionState> {
+  if (!(await isAdminAuthenticated())) {
+    redirect("/admin/login");
+  }
+
+  const categoryId = String(formData.get("categoryId") ?? "").trim();
+  if (!categoryId) {
+    return { status: "error", message: "Категория не найдена" };
+  }
+
+  const result = await deleteCategory(categoryId);
+  if (!result.ok) {
+    return { status: "error", message: result.error };
+  }
+
+  revalidatePath("/", "layout");
+  revalidatePath("/admin");
+  revalidatePath("/admin/catalog");
+
+  return { status: "success", message: result.message };
 }
 
 export async function uploadProductImageAction(

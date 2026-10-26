@@ -13,6 +13,13 @@ export type Category = {
   shortName: string;
   description: string;
   icon: CategoryIcon;
+  sortOrder: number;
+  productCount: number;
+};
+
+export type BrandSummary = {
+  id: string;
+  name: string;
   productCount: number;
 };
 
