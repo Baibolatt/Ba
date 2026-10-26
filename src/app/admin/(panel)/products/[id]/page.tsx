@@ -53,8 +53,8 @@ export default async function EditProductPage({
           <ButtonLink href={`/product/${product.id}`} variant="secondary" size="sm">
             Открыть на сайте
           </ButtonLink>
-          <ButtonLink href="/admin" variant="secondary" size="sm">
-            Назад в админку
+          <ButtonLink href="/admin/products" variant="secondary" size="sm">
+            К товарам
           </ButtonLink>
         </div>
       </div>

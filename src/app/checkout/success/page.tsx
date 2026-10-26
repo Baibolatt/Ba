@@ -11,8 +11,8 @@ import { orderStatusLabels } from "@/lib/format";
 import { formatPhone } from "@/lib/phone";
 
 export const metadata: Metadata = {
-  title: "Заказ оформлен",
-  description: "Подтверждение заказа PartsHub.",
+  title: "Заявка отправлена",
+  description: "Подтверждение оптовой заявки PartsHub.",
 };
 
 // Заказ показывается только гостю-автору ссылки или владельцу сессии.
@@ -21,15 +21,15 @@ export const instant = false;
 const nextSteps = [
   {
     title: "Сборка",
-    text: "Проверим наличие и соберём заказ в течение дня.",
+    text: "Проверим наличие и соберём заявку в течение дня.",
   },
   {
-    title: "Готов к выдаче",
-    text: "Отправим уведомление в личный кабинет.",
+    title: "Подтверждение",
+    text: "Менеджер свяжется и подтвердит цену, оплату и время.",
   },
   {
     title: "Получение",
-    text: "Заберите заказ по адресу склада или дождитесь курьера.",
+    text: "Заберите заявку со склада или дождитесь доставки по области.",
   },
 ];
 
@@ -52,15 +52,15 @@ async function SuccessContent({ searchParams }: CheckoutSuccessPageProps) {
           <Icon name="alertCircle" className="size-8" />
         </span>
         <h1 className="mt-4 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-          Заказ не найден
+          Заявка не найдена
         </h1>
         <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted">
-          Возможно, ссылка устарела. Откройте историю заказов или вернитесь в
+          Возможно, ссылка устарела. Откройте историю заявок или вернитесь в
           каталог.
         </p>
         <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:justify-center">
           <ButtonLink href="/account/orders" variant="primary">
-            Мои заказы
+            Мои заявки
             <Icon name="arrowRight" className="size-4" />
           </ButtonLink>
           <ButtonLink href="/catalog" variant="secondary">
@@ -85,15 +85,16 @@ async function SuccessContent({ searchParams }: CheckoutSuccessPageProps) {
             <Icon name="check" className="size-8" strokeWidth={2.5} />
           </span>
           <h1 className="mt-4 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-            Заказ оформлен
+            Заявка отправлена
           </h1>
           <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted">
-            Номер заказа{" "}
+            Номер заявки{" "}
             <span className="font-mono font-semibold text-ink">
               {order.number}
             </span>
-            . Заказ сохранён. Мы свяжемся с вами по телефону{" "}
-            {formatPhone(order.phone)}, чтобы подтвердить состав и время получения.
+            . Заявка сохранена. Мы свяжемся с вами по телефону{" "}
+            {formatPhone(order.phone)}, чтобы подтвердить состав, цену и условия
+            получения.
           </p>
 
           <div className="mt-6 grid gap-2 sm:grid-cols-3">
@@ -136,7 +137,7 @@ async function SuccessContent({ searchParams }: CheckoutSuccessPageProps) {
 
           <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:justify-center">
             <ButtonLink href="/account/orders" variant="primary">
-              Перейти в заказы
+              Перейти в заявки
               <Icon name="arrowRight" className="size-4" />
             </ButtonLink>
             <ButtonLink href="/catalog" variant="secondary">
@@ -171,7 +172,7 @@ async function SuccessContent({ searchParams }: CheckoutSuccessPageProps) {
         </section>
       </div>
 
-      <OrderSummary lines={lines} title="Состав заказа" />
+      <OrderSummary lines={lines} title="Состав заявки" />
     </div>
   );
 }
@@ -184,7 +185,7 @@ export default function CheckoutSuccessPage({
       <Breadcrumbs
         items={[
           { label: "Главная", href: "/" },
-          { label: "Корзина", href: "/cart" },
+          { label: "Заявка", href: "/cart" },
           { label: "Оформление", href: "/checkout" },
           { label: "Готово" },
         ]}

@@ -17,7 +17,7 @@ type NavItem = {
 const items: NavItem[] = [
   { href: "/", label: "Главная", icon: "home", exact: true },
   { href: "/catalog", label: "Каталог", icon: "grid" },
-  { href: "/cart", label: "Корзина", icon: "cart", exact: true, isCart: true },
+  { href: "/cart", label: "Заявка", icon: "cart", exact: true, isCart: true },
   { href: "/account/favorites", label: "Избранное", icon: "heart", exact: true },
   { href: "/account", label: "Кабинет", icon: "user" },
 ];

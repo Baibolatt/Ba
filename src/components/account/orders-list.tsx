@@ -69,7 +69,7 @@ export function OrdersList({ orders }: { orders: Order[] }) {
         <div className="mt-4">
           <EmptyState
             icon="box"
-            title="В этой группе заказов нет"
+            title="В этой группе заявок нет"
             description="Выберите другой фильтр или перейдите в каталог."
             action={<ButtonLink href="/catalog">Открыть каталог</ButtonLink>}
           />

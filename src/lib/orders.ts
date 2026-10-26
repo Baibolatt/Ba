@@ -1,5 +1,6 @@
 import type { Prisma } from "@/generated/prisma/client";
 import { prisma } from "@/lib/db";
+import { siteConfig } from "@/lib/site";
 import type { OrderStatus } from "@/lib/types";
 
 export type DeliveryMethod = "pickup" | "courier";
@@ -30,12 +31,10 @@ export type CreateOrderResult =
     };
 
 const paymentLabels: Record<PaymentMethod, string> = {
-  "on-delivery": "При получении",
-  "card-courier": "Картой курьеру",
+  "on-delivery": "По согласованию",
+  "card-courier": "По согласованию",
   invoice: "По счёту для юрлица",
 };
-
-const pickupAddress = "Тараз, пункт выдачи «Жибек Жолы, 12»";
 
 // Ожидаемая ошибка транзакции с понятным для клиента текстом.
 class OrderConflictError extends Error {}
@@ -107,7 +106,7 @@ function validateInput(input: CreateOrderInput): {
     const qty = Number(item?.qty);
 
     if (!productId || !Number.isInteger(qty) || qty <= 0) {
-      fieldErrors.items = "В корзине есть некорректный товар";
+      fieldErrors.items = "В заявке есть некорректный товар";
       continue;
     }
 
@@ -125,7 +124,7 @@ function validateInput(input: CreateOrderInput): {
   }));
 
   if (items.length === 0) {
-    fieldErrors.items = "Корзина пуста";
+    fieldErrors.items = "Заявка пуста";
   }
 
   return { fieldErrors, items };
@@ -203,7 +202,7 @@ export async function createOrder(
   const comment = text(input.comment);
   const address =
     input.deliveryMethod === "pickup"
-      ? pickupAddress
+      ? siteConfig.pickupAddress
       : [
           text(input.city),
           text(input.street),
@@ -231,7 +230,7 @@ export async function createOrder(
             ok: false,
             error: "Некоторые товары больше недоступны",
             fieldErrors: {
-              items: "Удалите недоступный товар из корзины и попробуйте снова",
+              items: "Удалите недоступный товар из заявки и попробуйте снова",
             },
             step: 3,
           };
@@ -242,7 +241,7 @@ export async function createOrder(
             ok: false,
             error: `Товар «${product.name}» закончился`,
             fieldErrors: {
-              items: `Товара «${product.name}» нет в наличии. Уберите его из корзины.`,
+              items: `Товара «${product.name}» нет в наличии. Уберите его из заявки.`,
             },
             step: 3,
           };

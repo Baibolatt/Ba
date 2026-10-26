@@ -61,10 +61,7 @@ export function CarSelector() {
         <Icon name="car" className="size-4 text-icon" />
         Подбор по автомобилю
       </div>
-      <form
-        onSubmit={onSubmit}
-        className="grid grid-cols-2 gap-2 sm:grid-cols-[1fr_1fr_0.8fr_auto]"
-      >
+      <form onSubmit={onSubmit} className="grid grid-cols-2 gap-2">
         <label className="relative">
           <span className="sr-only">Марка</span>
           <select
@@ -122,11 +119,7 @@ export function CarSelector() {
           />
         </label>
 
-        <Button
-          type="submit"
-          variant="accent"
-          className="col-span-2 sm:col-span-1"
-        >
+        <Button type="submit" variant="accent">
           Подобрать
         </Button>
       </form>

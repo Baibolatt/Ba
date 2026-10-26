@@ -6,6 +6,7 @@ import { cn } from "@/lib/cn";
 import type { Category } from "@/lib/types";
 import { Icon, type IconName } from "@/components/ui/icon";
 import { Logo } from "@/components/layout/logo";
+import { siteConfig } from "@/lib/site";
 
 type SideMenuProps = {
   open: boolean;
@@ -20,14 +21,14 @@ type MenuLink = {
 };
 
 const customerLinks: MenuLink[] = [
-  { href: "/for-customers", label: "Клиентам", icon: "fileText" },
+  { href: "/for-customers", label: "Оптовикам", icon: "fileText" },
   { href: "/company", label: "Компания", icon: "info" },
   { href: "/feedback", label: "Обратная связь", icon: "mail" },
 ];
 
 const accountLinks: MenuLink[] = [
   { href: "/account", label: "Личный кабинет", icon: "user" },
-  { href: "/account/orders", label: "Мои заказы", icon: "box" },
+  { href: "/account/orders", label: "Мои заявки", icon: "box" },
   { href: "/account/favorites", label: "Избранное", icon: "heart" },
   { href: "/account/notifications", label: "Уведомления", icon: "bell" },
 ];
@@ -95,7 +96,7 @@ export function SideMenu({ open, onClose, categories }: SideMenuProps) {
             <Icon name="mapPin" className="size-4 shrink-0 text-icon" />
             <div className="min-w-0">
               <p className="text-sm font-semibold text-ink">Тараз</p>
-              <p className="text-[11px] text-muted">Доставка по области</p>
+              <p className="text-[11px] text-muted">Оптовые поставки по области</p>
             </div>
           </div>
 
@@ -129,7 +130,7 @@ export function SideMenu({ open, onClose, categories }: SideMenuProps) {
           </nav>
 
           <p className="px-2 pb-2 pt-5 text-[11px] font-semibold uppercase tracking-[0.12em] text-muted">
-            Покупателям
+            Оптовикам
           </p>
           <nav className="space-y-0.5">
             {customerLinks.map((link) => (
@@ -165,15 +166,15 @@ export function SideMenu({ open, onClose, categories }: SideMenuProps) {
 
         <div className="border-t border-line px-4 py-4">
           <a
-            href="tel:+77000000000"
+            href={`tel:${siteConfig.phoneHref}`}
             className="flex items-center gap-2 text-sm font-semibold text-ink"
           >
             <Icon name="phone" className="size-4 text-icon" />
-            +7 (700) 000-00-00
+            {siteConfig.phoneDisplay}
           </a>
           <p className="mt-2 flex items-center gap-1.5 text-xs text-muted">
             <span className="size-1.5 rounded-full bg-muted" />
-            Со склада · самовывоз сегодня
+            Только опт · документы для юрлиц
           </p>
         </div>
       </div>

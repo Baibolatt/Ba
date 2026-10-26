@@ -5,15 +5,16 @@ import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { Accordion } from "@/components/ui/accordion";
 import { ButtonLink } from "@/components/ui/button";
 import { Icon, type IconName } from "@/components/ui/icon";
+import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Клиентам",
+  title: "Оптовикам",
   description:
-    "Доставка, оплата, возврат и гарантия в PartsHub: условия получения заказов со склада.",
+    "Оптовые поставки, оплата по счёту, возврат и гарантия в PartsHub: условия работы с юридическими лицами.",
 };
 
 const anchors = [
-  { href: "#delivery", label: "Доставка" },
+  { href: "#delivery", label: "Получение" },
   { href: "#payment", label: "Оплата" },
   { href: "#returns", label: "Возврат и гарантия" },
   { href: "#faq", label: "Вопросы и ответы" },
@@ -28,14 +29,14 @@ const deliveryOptions: Array<{
   {
     icon: "mapPin",
     title: "Самовывоз со склада",
-    text: "Тараз, ул. Жибек Жолы, 12. Заберите заказ в день оформления после подтверждения сборки.",
+    text: `${siteConfig.pickupAddress}. Заберите заявку в день оформления после подтверждения сборки.`,
     note: "Сегодня",
   },
   {
     icon: "truck",
-    title: "Доставка курьером",
-    text: "По Таразу и Жамбылской области. Курьер приезжает после сборки заказа, время согласуем по телефону.",
-    note: "На следующий день",
+    title: "Доставка по области",
+    text: "По Таразу и Жамбылской области. Время и стоимость доставки согласуем после сборки заявки.",
+    note: "После сборки",
   },
 ];
 
@@ -45,19 +46,14 @@ const paymentOptions: Array<{
   text: string;
 }> = [
   {
-    icon: "box",
-    title: "При получении",
-    text: "Наличными или картой в пункте выдачи.",
-  },
-  {
-    icon: "creditCard",
-    title: "Картой курьеру",
-    text: "Оплата при доставке по адресу.",
-  },
-  {
     icon: "fileText",
     title: "По счёту для юрлица",
-    text: "Счёт, накладные и закрывающие документы.",
+    text: "Счёт, накладные и закрывающие документы для бухгалтерии.",
+  },
+  {
+    icon: "box",
+    title: "По согласованию",
+    text: "Условия оплаты подтвердит менеджер при сборке заявки.",
   },
 ];
 
@@ -75,12 +71,12 @@ const faq = [
   {
     title: "Что нужно для получения по счёту?",
     content:
-      "Реквизиты компании и контакт бухгалтера. Счёт выставим после подтверждения состава заказа, отгрузка — после оплаты.",
+      "Реквизиты компании и контакт бухгалтера. Счёт выставим после подтверждения состава заявки, отгрузка — после оплаты.",
   },
   {
     title: "Как вернуть деталь?",
     content:
-      "Товар без следов установки и с документами можно вернуть в течение 14 дней. Пришлите номер заказа через обратную связь — согласуем возврат.",
+      "Товар без следов установки и с документами можно вернуть в течение 14 дней. Пришлите номер заявки через обратную связь — согласуем возврат.",
   },
   {
     title: "Даёте ли гарантию на запчасти?",
@@ -93,16 +89,24 @@ export default function ForCustomersPage() {
   return (
     <Container className="py-5 sm:py-8">
       <Breadcrumbs
-        items={[{ label: "Главная", href: "/" }, { label: "Клиентам" }]}
+        items={[{ label: "Главная", href: "/" }, { label: "Оптовикам" }]}
       />
 
       <h1 className="mt-4 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-        Клиентам
+        Оптовикам
       </h1>
       <p className="mt-1.5 max-w-2xl text-sm text-muted">
-        Как получить заказ, чем оплатить и что делать, если деталь не подошла.
-        Условия одинаковы для розничных и оптовых покупателей.
+        Как получить заявку, чем оплатить и что делать, если деталь не подошла.
+        Работаем только с юридическими лицами и оптовыми покупателями —
+        розничной продажи нет.
       </p>
+      <div className="mt-4 flex items-start gap-2.5 rounded-card border border-brand/20 bg-brand-50 px-4 py-3 text-sm text-brand">
+        <Icon name="fileText" className="mt-0.5 size-4 shrink-0" />
+        <p>
+          Для оформления заявки нужны реквизиты компании. Счёт, накладные и
+          закрывающие документы предоставляем.
+        </p>
+      </div>
 
       <nav className="mt-4">
         <div className="flex flex-wrap gap-2">
@@ -119,9 +123,9 @@ export default function ForCustomersPage() {
       </nav>
 
       <section id="delivery" className="mt-8 scroll-mt-32">
-        <h2 className="text-lg font-bold text-ink sm:text-xl">Доставка</h2>
+        <h2 className="text-lg font-bold text-ink sm:text-xl">Получение</h2>
         <p className="mt-1 text-sm text-muted">
-          Заказы собираются на складе в Таразе. Срок зависит от наличия.
+          Заявки собираются на складе в Таразе. Срок зависит от наличия.
         </p>
         <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
           {deliveryOptions.map((option) => (
@@ -149,10 +153,10 @@ export default function ForCustomersPage() {
       <section id="payment" className="mt-8 scroll-mt-32">
         <h2 className="text-lg font-bold text-ink sm:text-xl">Оплата</h2>
         <p className="mt-1 text-sm text-muted">
-          Онлайн-оплата на сайте не подключена — выбирайте удобный способ при
-          получении или по счёту.
+          Онлайн-оплата на сайте не подключена. Работаем по счёту с
+          юридическими лицами; условия оплаты подтверждает менеджер.
         </p>
-        <div className="mt-4 grid gap-2.5 sm:grid-cols-3">
+        <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
           {paymentOptions.map((option) => (
             <div
               key={option.title}
@@ -183,7 +187,7 @@ export default function ForCustomersPage() {
               <h3 className="font-semibold text-ink">Возврат 14 дней</h3>
               <p className="mt-1 text-xs leading-relaxed">
                 Товар без следов установки, в оригинальной упаковке и с
-                документами. Пришлите номер заказа через обратную связь.
+                документами. Пришлите номер заявки через обратную связь.
               </p>
             </div>
             <div>

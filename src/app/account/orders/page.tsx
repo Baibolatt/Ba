@@ -5,8 +5,8 @@ import { getOrdersByUser } from "@/lib/data";
 import { requireUser } from "@/lib/auth";
 
 export const metadata: Metadata = {
-  title: "Заказы",
-  description: "История заказов и текущие статусы PartsHub.",
+  title: "Заявки",
+  description: "История заявок и текущие статусы PartsHub.",
 };
 
 export default async function OrdersPage() {
@@ -15,8 +15,8 @@ export default async function OrdersPage() {
 
   return (
     <AccountShell
-      title="Заказы"
-      description="История заказов и текущие статусы сборки."
+      title="Заявки"
+      description="История заявок и текущие статусы сборки."
     >
       <OrdersList orders={orders} />
     </AccountShell>

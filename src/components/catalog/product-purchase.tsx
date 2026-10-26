@@ -38,7 +38,7 @@ export function ProductPurchase({ product }: ProductPurchaseProps) {
       />
       <p className="flex items-center gap-1.5 pt-1 text-xs text-muted">
         <Icon name="truck" className="size-3.5" />
-        Со склада · самовывоз сегодня
+        Только опт · самовывоз со склада
       </p>
     </div>
   );

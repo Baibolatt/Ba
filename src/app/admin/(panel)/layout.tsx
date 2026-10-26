@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Container } from "@/components/layout/container";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { Button } from "@/components/ui/button";
+import { AdminNav } from "@/components/admin/admin-nav";
 import { logoutAdminAction } from "@/app/admin/actions";
 import { requireAdmin } from "@/lib/admin-auth";
 
@@ -33,8 +34,8 @@ export default async function AdminPanelLayout({
         items={[{ label: "Главная", href: "/" }, { label: "Админ-панель" }]}
       />
 
-      <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div>
+      <div className="mt-4 flex items-start justify-between gap-3">
+        <div className="min-w-0">
           <h1 className="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
             Админ-панель
           </h1>
@@ -42,12 +43,14 @@ export default async function AdminPanelLayout({
             Заказы, статусы сборки, цены и остатки товаров.
           </p>
         </div>
-        <form action={logoutAdminAction}>
+        <form action={logoutAdminAction} className="shrink-0">
           <Button type="submit" variant="secondary" size="sm">
             Выйти
           </Button>
         </form>
       </div>
+
+      <AdminNav />
 
       <div className="mt-5">{children}</div>
     </Container>

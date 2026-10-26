@@ -11,24 +11,24 @@ import { Icon, type IconName } from "@/components/ui/icon";
 import { getCategories, getProducts } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "Автозапчасти со склада",
+  title: "Оптовые автозапчасти со склада",
 };
 
 const advantages: Array<{ icon: IconName; title: string; text: string }> = [
   {
     icon: "box",
-    title: "Со склада",
-    text: "Ходовые позиции в наличии — забирайте в день заказа.",
+    title: "Отгрузка со склада",
+    text: "Ходовые позиции в наличии — отгружаем в день заявки.",
   },
   {
-    icon: "shield",
-    title: "Гарантия 12 месяцев",
-    text: "Проверенные поставщики и документы на каждую партию.",
+    icon: "truck",
+    title: "Оптовые поставки",
+    text: "Работаем с автосервисами, магазинами и автопарками.",
   },
   {
-    icon: "rotateCcw",
-    title: "Возврат 14 дней",
-    text: "Если деталь не подошла, примем её по условиям возврата.",
+    icon: "fileText",
+    title: "Документы для юрлиц",
+    text: "Счёт, накладные и закрывающие документы для бухгалтерии.",
   },
 ];
 
@@ -56,15 +56,16 @@ export default async function HomePage() {
             <div>
               <p className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/80">
                 <span className="size-1.5 rounded-full bg-white/70" />
-                Оптовый склад автозапчастей
+                Оптовый склад автозапчастей в Таразе
               </p>
               <h1 className="mt-3 text-2xl font-extrabold leading-tight tracking-tight sm:mt-4 sm:text-4xl lg:text-[42px]">
-                Запчасти, которые
-                <br className="hidden sm:block" /> уже на складе
+                Оптовые запчасти,
+                <br className="hidden sm:block" /> которые уже на складе
               </h1>
               <p className="mt-2.5 max-w-lg text-sm leading-relaxed text-white/75 sm:mt-3 sm:text-base">
-                Подберите деталь по категории или автомобилю. Покажем наличие,
-                цену и сроки самовывоза без лишних звонков.
+                Поставляем автозапчасти автосервисам, магазинам и автопаркам.
+                Работаем только с юридическими лицами и оптовыми покупателями —
+                розничной продажи нет.
               </p>
               <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 sm:mt-5 sm:gap-2.5">
                 <ButtonLink href="/catalog" variant="accent" size="lg">
@@ -75,21 +76,21 @@ export default async function HomePage() {
                   href="/for-customers"
                   className="inline-flex h-11 items-center gap-1.5 px-1 text-sm font-semibold text-white underline-offset-4 transition-colors hover:text-white/80 hover:underline sm:h-12 sm:px-2"
                 >
-                  Условия доставки
+                  Условия работы
                 </Link>
               </div>
               <div className="mt-4 hidden flex-wrap items-center gap-x-5 gap-y-2 text-xs text-white/70 sm:mt-5 sm:flex">
                 <span className="flex items-center gap-1.5">
                   <Icon name="check" className="size-3.5 text-white/70" />
-                  Со склада
+                  Оптовые цены
                 </span>
                 <span className="flex items-center gap-1.5">
                   <Icon name="check" className="size-3.5 text-white/70" />
-                  Самовывоз сегодня
+                  Документы для юрлиц
                 </span>
                 <span className="flex items-center gap-1.5">
                   <Icon name="check" className="size-3.5 text-white/70" />
-                  Оплата при получении
+                  Самовывоз со склада
                 </span>
               </div>
             </div>
@@ -102,6 +103,17 @@ export default async function HomePage() {
 
         <div className="mt-3 lg:hidden">
           <CarSelector />
+        </div>
+      </Container>
+
+      <Container className="mt-3">
+        <div className="flex items-start gap-2.5 rounded-card border border-brand/20 bg-brand-50 px-4 py-3 text-sm text-brand">
+          <Icon name="fileText" className="mt-0.5 size-4 shrink-0" />
+          <p>
+            <span className="font-bold">Только оптовые продажи.</span> Работаем
+            с юридическими лицами и оптовыми покупателями, розничной продажи
+            нет.
+          </p>
         </div>
       </Container>
 

@@ -5,8 +5,8 @@ import { Icon } from "@/components/ui/icon";
 const benefits = [
   "История заказов и статусы сборки",
   "Избранное и уведомления",
-  "Контактные данные для быстрого заказа",
-  "Повтор заказа в пару кликов",
+  "Контактные данные для быстрой заявки",
+  "Повтор заявки в пару кликов",
 ];
 
 type AuthLayoutProps = {
@@ -40,7 +40,7 @@ export function AuthLayout({
           </div>
 
           <h2 className="relative mt-10 text-2xl font-extrabold leading-tight">
-            Всё по заказам —<br /> в одном месте
+            Всё по заявкам —<br /> в одном месте
           </h2>
           <ul className="relative mt-6 space-y-3">
             {benefits.map((benefit) => (
@@ -59,8 +59,8 @@ export function AuthLayout({
           </ul>
 
           <p className="relative mt-auto pt-10 text-[11px] leading-relaxed text-white/50">
-            Демонстрационный проект PartsHub. Данные тестовые, реальная
-            авторизация появится на следующем этапе.
+            PartsHub — оптовый склад автозапчастей в Таразе. Вход по номеру
+            телефона.
           </p>
         </aside>
 

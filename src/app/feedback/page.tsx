@@ -4,6 +4,7 @@ import { Container } from "@/components/layout/container";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { FeedbackForm } from "@/components/feedback/feedback-form";
 import { Icon, type IconName } from "@/components/ui/icon";
+import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Обратная связь",
@@ -20,19 +21,19 @@ const contacts: Array<{
   {
     icon: "phone",
     title: "Телефон",
-    value: "+7 (700) 000-00-00",
-    href: "tel:+77000000000",
+    value: siteConfig.phoneDisplay,
+    href: `tel:${siteConfig.phoneHref}`,
   },
   {
     icon: "mail",
     title: "Почта",
-    value: "zakaz@partshub.kz",
-    href: "mailto:zakaz@partshub.kz",
+    value: siteConfig.email,
+    href: `mailto:${siteConfig.email}`,
   },
   {
     icon: "mapPin",
     title: "Склад",
-    value: "Тараз, ул. Жибек Жолы, 12",
+    value: siteConfig.pickupAddress,
   },
   {
     icon: "clock",

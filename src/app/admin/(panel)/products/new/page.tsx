@@ -24,8 +24,8 @@ export default async function NewProductPage() {
           title="Новый товар"
           description="Заполните карточку вручную. Бренд и категорию можно выбрать из списка или ввести новые."
         />
-        <ButtonLink href="/admin" variant="secondary" size="sm">
-          Назад в админку
+        <ButtonLink href="/admin/products" variant="secondary" size="sm">
+          К товарам
         </ButtonLink>
       </div>
 

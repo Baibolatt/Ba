@@ -6,8 +6,8 @@ import { getProducts } from "@/lib/data";
 import { getCurrentUser } from "@/lib/auth";
 
 export const metadata: Metadata = {
-  title: "Оформление заказа",
-  description: "Контакты, способ получения и оплаты заказа PartsHub.",
+  title: "Оформление заявки",
+  description: "Контакты, способ получения и оплаты оптовой заявки PartsHub.",
 };
 
 // Контакты подставляются из сессии, поэтому нужна проверка cookie.
@@ -24,16 +24,16 @@ export default async function CheckoutPage() {
       <Breadcrumbs
         items={[
           { label: "Главная", href: "/" },
-          { label: "Корзина", href: "/cart" },
+          { label: "Заявка", href: "/cart" },
           { label: "Оформление" },
         ]}
       />
       <h1 className="mt-4 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-        Оформление заказа
+        Оформление заявки
       </h1>
       <p className="mt-1.5 text-sm text-muted">
-        Три шага: контакты, получение и оплата. Данные можно изменить до
-        отправки.
+        Три шага: контакты, получение и оплата. Менеджер подтвердит наличие и
+        условия.
       </p>
 
       <div className="mt-5">

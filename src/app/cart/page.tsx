@@ -5,8 +5,8 @@ import { CartView } from "@/components/cart/cart-view";
 import { getProducts } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "Корзина",
-  description: "Выбранные автозапчасти, количество и итоговая сумма заказа.",
+  title: "Заявка",
+  description: "Выбранные автозапчасти, количество и итоговая сумма оптовой заявки.",
 };
 
 export default async function CartPage() {
@@ -15,13 +15,14 @@ export default async function CartPage() {
   return (
     <Container className="py-5 sm:py-8">
       <Breadcrumbs
-        items={[{ label: "Главная", href: "/" }, { label: "Корзина" }]}
+        items={[{ label: "Главная", href: "/" }, { label: "Заявка" }]}
       />
       <h1 className="mt-4 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-        Корзина
+        Заявка
       </h1>
       <p className="mt-1.5 text-sm text-muted">
-        Проверьте состав заказа, количество и способ получения.
+        Проверьте состав и количество. Менеджер подтвердит наличие, цену и
+        условия.
       </p>
 
       <div className="mt-5">

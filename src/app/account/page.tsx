@@ -9,7 +9,7 @@ import { notifications } from "@/lib/mock-data";
 
 export const metadata: Metadata = {
   title: "Личный кабинет",
-  description: "Обзор заказов, избранного и уведомлений PartsHub.",
+  description: "Обзор заявок, избранного и уведомлений PartsHub.",
 };
 
 type QuickLink = {
@@ -29,7 +29,7 @@ export default async function AccountPage() {
   const quickLinkMeta: QuickLink[] = [
     {
       href: "/account/orders",
-      title: "Заказы",
+      title: "Заявки",
       hint: "История и статусы",
       icon: "box",
       value: String(orders.length),
@@ -43,7 +43,7 @@ export default async function AccountPage() {
     {
       href: "/account/notifications",
       title: "Уведомления",
-      hint: "События по заказам",
+      hint: "События по заявкам",
       icon: "bell",
       value: String(unread),
     },
@@ -58,7 +58,7 @@ export default async function AccountPage() {
   return (
     <AccountShell
       title="Личный кабинет"
-      description="Заказы, избранное и контактные данные."
+      description="Заявки, избранное и контактные данные."
     >
       <section className="relative overflow-hidden rounded-card bg-ink p-4 text-white sm:p-5">
         <div
@@ -73,15 +73,15 @@ export default async function AccountPage() {
         </h2>
         <p className="mt-1.5 max-w-md text-sm text-white/70">
           {unread > 0
-            ? `У вас ${unread} новых уведомления и ${orders.length} заказа в истории.`
-            : `В истории ${orders.length} заказа. Новых уведомлений нет.`}
+            ? `У вас ${unread} новых уведомления. В истории заявок: ${orders.length}.`
+            : `В истории заявок: ${orders.length}. Новых уведомлений нет.`}
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
           <Link
             href="/account/orders"
             className="inline-flex h-11 items-center rounded-control bg-brand px-4 text-sm font-bold text-white transition-colors hover:bg-brand-800"
           >
-            Мои заказы
+            Мои заявки
           </Link>
           <Link
             href="/account/profile"
@@ -121,12 +121,12 @@ export default async function AccountPage() {
 
       <section className="mt-5">
         <div className="flex items-center justify-between gap-3">
-          <h2 className="text-base font-bold text-ink">Последние заказы</h2>
+          <h2 className="text-base font-bold text-ink">Последние заявки</h2>
           <Link
             href="/account/orders"
             className="flex items-center gap-1 text-xs font-semibold text-brand transition-colors hover:text-brand-700"
           >
-            Все заказы
+            Все заявки
             <Icon name="chevronRight" className="size-3.5" />
           </Link>
         </div>

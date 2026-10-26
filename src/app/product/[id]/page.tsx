@@ -68,8 +68,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
       <div className="mt-5 grid gap-6 lg:grid-cols-2 lg:gap-10">
         <div>
-          <ProductImage product={product} className="aspect-square w-full" />
-          <div className="mt-2.5 grid grid-cols-3 gap-2.5">
+          <ProductImage
+            product={product}
+            className="aspect-[4/3] w-full sm:aspect-square"
+          />
+          <div className="mt-2.5 hidden grid-cols-3 gap-2.5 sm:grid">
             {[0, 1, 2].map((index) => (
               <ProductImage
                 key={index}
@@ -83,7 +86,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             ))}
           </div>
           <p className="mt-2 text-[11px] text-muted">
-            Изображения — заглушки для демонстрации раскладки.
+            Фактический вид товара может отличаться от фото.
           </p>
         </div>
 
@@ -125,7 +128,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </span>
               ) : null}
             </div>
-            <p className="mt-1 text-xs text-muted">Цена за {product.unit}</p>
+            <p className="mt-1 text-xs text-muted">
+              Оптовая цена за {product.unit} · документы для юрлиц
+            </p>
 
             <div className="mt-4">
               <ProductPurchase product={product} />
@@ -137,7 +142,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <Icon name="box" className="mt-0.5 size-4 shrink-0 text-icon" />
               <span>
                 <span className="font-medium text-ink">Со склада.</span>{" "}
-                Самовывоз сегодня после подтверждения заказа.
+                Самовывоз сегодня после подтверждения заявки.
               </span>
             </li>
             <li className="flex items-start gap-2.5 text-sm text-muted">

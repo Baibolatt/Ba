@@ -16,6 +16,8 @@ import {
 import { Button, ButtonLink } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Icon } from "@/components/ui/icon";
+import { formatPrice } from "@/lib/format";
+import { siteConfig } from "@/lib/site";
 
 type Step = 1 | 2 | 3;
 type Delivery = "pickup" | "courier";
@@ -37,7 +39,7 @@ type FormState = {
 
 const steps: Array<{ n: Step; label: string }> = [
   { n: 1, label: "Контакты" },
-  { n: 2, label: "Доставка" },
+  { n: 2, label: "Получение" },
   { n: 3, label: "Оплата" },
 ];
 
@@ -64,7 +66,7 @@ export function CheckoutView({
     flat: "",
     comment: "",
     delivery: "pickup",
-    payment: "on-delivery",
+    payment: "invoice",
     consent: false,
   });
 
@@ -72,6 +74,11 @@ export function CheckoutView({
     const product = products.find((item) => item.id === line.productId);
     return product ? [{ product, qty: line.qty }] : [];
   });
+  const itemsCount = lines.reduce((sum, line) => sum + line.qty, 0);
+  const total = lines.reduce(
+    (sum, line) => sum + line.product.price * line.qty,
+    0,
+  );
 
   const update = <K extends keyof FormState>(key: K, value: FormState[K]) => {
     setForm((current) => ({ ...current, [key]: value }));
@@ -97,7 +104,7 @@ export function CheckoutView({
     }
 
     if (target === 3 && !form.consent) {
-      next.consent = "Без согласия на обработку данных нельзя оформить заказ";
+      next.consent = "Без согласия на обработку данных нельзя отправить заявку";
     }
 
     setErrors(next);
@@ -157,7 +164,7 @@ export function CheckoutView({
     return (
       <div className="flex flex-col items-center justify-center rounded-card border border-line bg-surface py-20 shadow-card">
         <span className="size-8 animate-spin rounded-full border-2 border-line border-t-brand" />
-        <p className="mt-4 text-sm font-medium text-ink">Оформляем заказ…</p>
+        <p className="mt-4 text-sm font-medium text-ink">Отправляем заявку…</p>
       </div>
     );
   }
@@ -166,8 +173,8 @@ export function CheckoutView({
     return (
       <EmptyState
         icon="cart"
-        title="Нечего оформлять"
-        description="Корзина пуста. Добавьте товары, чтобы перейти к оформлению заказа."
+        title="Заявка пуста"
+        description="Добавьте товары, чтобы отправить заявку на оптовую поставку."
         action={<ButtonLink href="/catalog">Перейти в каталог</ButtonLink>}
       />
     );
@@ -175,6 +182,14 @@ export function CheckoutView({
 
   return (
     <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-6">
+      <div className="flex items-center justify-between gap-3 rounded-card border border-line bg-surface px-4 py-3 shadow-card lg:hidden">
+        <p className="text-sm text-muted">
+          В заявке{" "}
+          <span className="font-semibold text-ink">{itemsCount} шт.</span>
+        </p>
+        <p className="text-base font-bold text-brand">{formatPrice(total)}</p>
+      </div>
+
       <form
         noValidate
         onSubmit={onSubmit}
@@ -230,7 +245,7 @@ export function CheckoutView({
                 Контактные данные
               </h2>
               <p className="mt-1 text-xs text-muted">
-                По ним свяжемся при сборке заказа.
+                По ним свяжемся при сборке заявки.
               </p>
               <div className="mt-4 grid gap-4 sm:grid-cols-2">
                 <TextField
@@ -289,10 +304,10 @@ export function CheckoutView({
                   />
                   <span>
                     <span className="block text-sm font-semibold text-ink">
-                      Самовывоз
+                      Самовывоз со склада
                     </span>
                     <span className="mt-0.5 block text-xs text-muted">
-                      Тараз, ул. Жибек Жолы, 12 · сегодня
+                      {siteConfig.pickupAddress} · после сборки
                     </span>
                   </span>
                 </label>
@@ -314,10 +329,10 @@ export function CheckoutView({
                   />
                   <span>
                     <span className="block text-sm font-semibold text-ink">
-                      Курьером
+                      Доставка по области
                     </span>
                     <span className="mt-0.5 block text-xs text-muted">
-                      Доставка по области после сборки
+                      Время и стоимость согласуем после сборки
                     </span>
                   </span>
                 </label>
@@ -360,15 +375,15 @@ export function CheckoutView({
                 <div className="mt-4 flex items-start gap-2.5 rounded-control bg-brand-50 p-3 text-xs text-brand">
                   <Icon name="mapPin" className="mt-0.5 size-4 shrink-0" />
                   <span>
-                    Заберите заказ по адресу: Тараз, ул. Жибек Жолы, 12. Пункт
-                    выдачи работает ежедневно с 9:00 до 20:00.
+                    Заберите заявку по адресу: {siteConfig.pickupAddress}.
+                    Склад работает {siteConfig.workingHours}.
                   </span>
                 </div>
               )}
 
               <div className="mt-4">
                 <TextareaField
-                  label="Комментарий к заказу"
+                  label="Комментарий к заявке"
                   name="comment"
                   value={form.comment}
                   onChange={(event) => update("comment", event.target.value)}
@@ -385,19 +400,14 @@ export function CheckoutView({
               <div className="mt-3 space-y-2">
                 {[
                   {
-                    value: "on-delivery" as Payment,
-                    title: "При получении",
-                    text: "Наличными или картой в пункте выдачи",
-                  },
-                  {
-                    value: "card-courier" as Payment,
-                    title: "Картой курьеру",
-                    text: "Оплата при доставке по адресу",
-                  },
-                  {
                     value: "invoice" as Payment,
                     title: "По счёту для юрлица",
-                    text: "Счёт и закрывающие документы",
+                    text: "Счёт, накладные и закрывающие документы",
+                  },
+                  {
+                    value: "on-delivery" as Payment,
+                    title: "По согласованию",
+                    text: "Условия оплаты подтвердит менеджер",
                   },
                 ].map((option) => (
                   <label
@@ -435,13 +445,14 @@ export function CheckoutView({
                   checked={form.consent}
                   onChange={(event) => update("consent", event.target.checked)}
                   error={errors.consent}
-                  label="Согласен на обработку персональных данных и принимаю условия заказа."
+                  label="Согласен на обработку персональных данных и условия оптовой заявки."
                 />
               </div>
 
               <p className="mt-4 rounded-control bg-page p-3 text-[11px] leading-relaxed text-muted">
-                Заказ сохранится в базе и появится в личном кабинете. Оплата не
-                проводится — менеджер подтвердит заказ по телефону.
+                Заявка сохранится в базе и появится в личном кабинете. Оплата
+                не проводится — менеджер подтвердит наличие, цену и условия по
+                телефону.
               </p>
             </div>
           ) : null}
@@ -480,7 +491,7 @@ export function CheckoutView({
               ) : (
                 <>
                   <Icon name="check" className="size-4" />
-                  Оформить заказ
+                  Отправить заявку
                 </>
               )}
             </Button>
@@ -488,10 +499,10 @@ export function CheckoutView({
         </div>
       </form>
 
-      <OrderSummary lines={lines} title="Ваш заказ">
+      <OrderSummary lines={lines} title="Ваша заявка">
         <p className="mt-3 text-[11px] leading-relaxed text-muted">
           {step === 3
-            ? "После оформления заказ появится в личном кабинете."
+            ? "После отправки заявка появится в личном кабинете."
             : "Способ оплаты выбирается на последнем шаге."}
         </p>
       </OrderSummary>

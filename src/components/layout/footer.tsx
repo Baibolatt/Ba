@@ -3,12 +3,13 @@ import type { Category } from "@/lib/types";
 import { Container } from "@/components/layout/container";
 import { Icon } from "@/components/ui/icon";
 import { Logo } from "@/components/layout/logo";
+import { siteConfig } from "@/lib/site";
 
 const customerLinks = [
-  { href: "/for-customers", label: "Доставка и оплата" },
+  { href: "/for-customers", label: "Условия для оптовиков" },
   { href: "/for-customers#returns", label: "Возврат и гарантия" },
   { href: "/feedback", label: "Обратная связь" },
-  { href: "/account/orders", label: "Мои заказы" },
+  { href: "/account/orders", label: "Мои заявки" },
 ];
 
 const companyLinks = [
@@ -26,12 +27,12 @@ export function Footer({ categories }: { categories: Category[] }) {
           <div className="sm:col-span-2 lg:col-span-1">
             <Logo />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">
-              Оптовый склад автозапчастей: подбор по каталогу, самовывоз в день
-              заказа и доставка по области.
+              Оптовый склад автозапчастей для автосервисов, магазинов и
+              автопарков. Работаем с юридическими лицами.
             </p>
             <p className="mt-4 flex items-center gap-1.5 text-xs font-medium text-muted">
               <span className="size-1.5 rounded-full bg-muted" />
-              Со склада · самовывоз сегодня
+              Только опт · документы для юрлиц
             </p>
           </div>
 
@@ -52,7 +53,7 @@ export function Footer({ categories }: { categories: Category[] }) {
           </div>
 
           <div>
-            <h2 className="text-sm font-bold text-ink">Клиентам</h2>
+            <h2 className="text-sm font-bold text-ink">Оптовикам</h2>
             <ul className="mt-3 space-y-2 text-sm text-muted">
               {customerLinks.map((link) => (
                 <li key={link.label}>
@@ -82,25 +83,25 @@ export function Footer({ categories }: { categories: Category[] }) {
               ))}
             </ul>
             <a
-              href="tel:+77000000000"
+              href={`tel:${siteConfig.phoneHref}`}
               className="mt-4 flex items-center gap-2 text-sm font-semibold text-ink"
             >
               <Icon name="phone" className="size-4 text-icon" />
-              +7 (700) 000-00-00
+              {siteConfig.phoneDisplay}
             </a>
             <a
-              href="mailto:zakaz@partshub.kz"
+              href={`mailto:${siteConfig.email}`}
               className="mt-2 flex items-center gap-2 text-sm text-muted transition-colors hover:text-ink"
             >
               <Icon name="mail" className="size-4" />
-              zakaz@partshub.kz
+              {siteConfig.email}
             </a>
           </div>
         </div>
 
         <div className="mt-10 flex flex-col gap-3 border-t border-line pt-5 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 PartsHub. Демонстрационный проект, данные тестовые.</p>
-          <p>Оплата при получении · картой курьеру · по счёту для юрлиц</p>
+          <p>© 2026 PartsHub. Оптовый склад автозапчастей.</p>
+          <p>Оплата по счёту · документы для бухгалтерии</p>
         </div>
       </Container>
     </footer>

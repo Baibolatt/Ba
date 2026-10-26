@@ -279,7 +279,15 @@ export function AssistantWidget() {
     setInput("");
   };
 
-  if (pathname.startsWith("/admin")) return null;
+  // В оформлении заказа и корзине важнее кнопка оплаты, поэтому консультант
+  // не перекрывает итоговую панель.
+  if (
+    pathname.startsWith("/admin") ||
+    pathname === "/cart" ||
+    pathname.startsWith("/checkout")
+  ) {
+    return null;
+  }
 
   if (!open) {
     return (
@@ -287,10 +295,10 @@ export function AssistantWidget() {
         type="button"
         onClick={() => setOpen(true)}
         aria-label="Открыть ИИ-консультанта по подбору запчастей"
-        className="fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom))] right-4 z-50 flex h-12 items-center gap-2 whitespace-nowrap rounded-full bg-brand px-4 text-sm font-semibold text-white shadow-float transition-colors hover:bg-brand-800 lg:bottom-6 lg:right-6"
+        className="fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom))] right-4 z-50 flex h-12 w-12 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-brand px-0 text-sm font-semibold text-white shadow-float transition-colors hover:bg-brand-800 sm:w-auto sm:px-4 lg:bottom-6 lg:right-6"
       >
         <Icon name="sparkles" className="size-5" />
-        Подобрать с ИИ
+        <span className="hidden sm:inline">Подобрать с ИИ</span>
       </button>
     );
   }

@@ -103,10 +103,10 @@ export default async function CatalogPage() {
           <Icon name="truck" className="size-5" />
         </span>
         <div>
-          <h2 className="text-sm font-bold text-ink">Со склада</h2>
+          <h2 className="text-sm font-bold text-ink">Только опт</h2>
           <p className="mt-1 text-xs leading-relaxed text-muted">
-            Наличие обновляется по данным склада. Самовывоз — сегодня, доставка
-            курьером — на следующий день после сборки заказа.
+            Наличие обновляется по данным склада. Отгрузка со склада или
+            доставка по области после подтверждения заявки.
           </p>
         </div>
       </div>

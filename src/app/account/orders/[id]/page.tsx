@@ -16,7 +16,7 @@ type OrderPageProps = {
 
 const timeline = [
   {
-    title: "Заказ принят",
+    title: "Заявка принята",
     text: "Менеджер подтвердил состав и наличие.",
   },
   {
@@ -25,11 +25,11 @@ const timeline = [
   },
   {
     title: "Готов к выдаче",
-    text: "Можно забрать или передать курьеру.",
+    text: "Можно забрать со склада или получить доставкой по области.",
   },
   {
     title: "Получен",
-    text: "Заказ закрыт, документы переданы.",
+    text: "Заявка закрыта, документы переданы.",
   },
 ];
 
@@ -40,11 +40,11 @@ export async function generateMetadata({
   const user = await getCurrentUser();
   const order = user ? await getOrderForUser(id, user.id) : null;
 
-  if (!order) return { title: "Заказ не найден" };
+  if (!order) return { title: "Заявка не найдена" };
 
   return {
-    title: `Заказ ${order.number}`,
-    description: `Детали заказа ${order.number} от ${order.date}.`,
+    title: `Заявка ${order.number}`,
+    description: `Детали заявки ${order.number} от ${order.date}.`,
   };
 }
 
@@ -66,7 +66,7 @@ export default async function OrderPage({ params }: OrderPageProps) {
 
   return (
     <AccountShell
-      title={`Заказ ${order.number}`}
+      title={`Заявка ${order.number}`}
       description={`${order.date} · ${orderItemsCount(order)} шт.`}
     >
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -76,12 +76,12 @@ export default async function OrderPage({ params }: OrderPageProps) {
           className="flex items-center gap-1 text-xs font-semibold text-brand transition-colors hover:text-brand-700"
         >
           <Icon name="arrowLeft" className="size-3.5" />
-          Ко всем заказам
+          Ко всем заявкам
         </Link>
       </div>
 
       <section className="mt-4 rounded-card border border-line bg-surface p-4 shadow-card sm:p-5">
-        <h2 className="text-base font-bold text-ink">Статус заказа</h2>
+        <h2 className="text-base font-bold text-ink">Статус заявки</h2>
         <ol className="mt-4 space-y-4">
           {timeline.map((item, index) => {
             const done = index < completed;
@@ -126,7 +126,7 @@ export default async function OrderPage({ params }: OrderPageProps) {
         <section className="min-w-0 rounded-card border border-line bg-surface shadow-card">
           <div className="border-b border-line px-4 py-3">
             <h2 className="text-sm font-bold text-ink">
-              Состав заказа{" "}
+              Состав заявки{" "}
               <span className="font-normal text-muted">
                 · {orderItemsCount(order)} шт.
               </span>

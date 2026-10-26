@@ -9,7 +9,7 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { Icon, type IconName } from "@/components/ui/icon";
 
 function notificationIcon(item: NotificationItem): IconName {
-  if (item.title.startsWith("Заказ")) return "box";
+  if (item.title.startsWith("Заявка")) return "box";
   if (item.href?.startsWith("/product")) return "box";
   return "bell";
 }
@@ -41,7 +41,7 @@ export function NotificationsView({
       <EmptyState
         icon="bell"
         title="Уведомлений нет"
-        description="Здесь появятся события по заказам и наличию товаров."
+        description="Здесь появятся события по заявкам и наличию товаров."
       />
     );
   }

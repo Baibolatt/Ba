@@ -13,7 +13,7 @@ import type { Category } from "@/lib/types";
 
 const navItems = [
   { href: "/catalog", label: "Каталог" },
-  { href: "/for-customers", label: "Клиентам" },
+  { href: "/for-customers", label: "Оптовикам" },
   { href: "/company", label: "Компания" },
   { href: "/feedback", label: "Обратная связь" },
 ];
@@ -123,7 +123,7 @@ export function Header({ categories }: { categories: Category[] }) {
               </Link>
               <Link
                 href="/cart"
-                aria-label={`Корзина, товаров: ${cartCount}`}
+                aria-label={`Заявка, позиций: ${cartCount}`}
                 className="relative flex size-11 items-center justify-center rounded-control text-icon transition-colors hover:bg-brand-50"
               >
                 <Icon name="cart" className="size-5" />

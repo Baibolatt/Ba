@@ -9,7 +9,7 @@ import { logoutAction } from "@/lib/auth-actions";
 const links: Array<{ href: string; label: string; icon: IconName; exact?: boolean }> = [
   { href: "/account", label: "Обзор", icon: "grid", exact: true },
   { href: "/account/profile", label: "Профиль", icon: "user" },
-  { href: "/account/orders", label: "Заказы", icon: "box" },
+  { href: "/account/orders", label: "Заявки", icon: "box" },
   { href: "/account/favorites", label: "Избранное", icon: "heart" },
   { href: "/account/notifications", label: "Уведомления", icon: "bell" },
 ];

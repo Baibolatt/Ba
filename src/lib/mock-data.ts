@@ -3,8 +3,8 @@ import type { NotificationItem } from "@/lib/types";
 export const notifications: NotificationItem[] = [
   {
     id: "n-1",
-    title: "Заказ PH-241024-02 принят",
-    text: "Мы собираем товары на складе. Уведомим, когда заказ будет готов.",
+    title: "Заявка PH-241024-02 принята",
+    text: "Мы собираем товары на складе. Уведомим, когда заявка будет готова.",
     date: "24 октября, 14:20",
     read: false,
     href: "/account/orders/ph-241024-02",
@@ -12,15 +12,15 @@ export const notifications: NotificationItem[] = [
   {
     id: "n-2",
     title: "Товар снова в наличии",
-    text: "Масляный фильтр ГрандФильтр GF-1042 доступен для заказа.",
+    text: "Масляный фильтр ГрандФильтр GF-1042 доступен для заявки.",
     date: "23 октября, 09:05",
     read: false,
     href: "/product/gf-1042",
   },
   {
     id: "n-3",
-    title: "Заказ PH-241022-01 собран",
-    text: "Заказ ждёт вас в пункте выдачи «Жибек Жолы, 12».",
+    title: "Заявка PH-241022-01 собрана",
+    text: "Заявка ждёт вас в пункте выдачи «Жибек Жолы, 12».",
     date: "22 октября, 18:40",
     read: true,
     href: "/account/orders/ph-241022-01",

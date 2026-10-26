@@ -186,7 +186,7 @@ export function FeedbackForm() {
       <TextareaField
         label="Сообщение"
         name="message"
-        placeholder="Номер заказа, деталь или вопрос — чем подробнее, тем быстрее ответим"
+        placeholder="Номер заявки, деталь или вопрос — чем подробнее, тем быстрее ответим"
         wrapperClassName="mt-4"
         value={values.message}
         error={errors.message}

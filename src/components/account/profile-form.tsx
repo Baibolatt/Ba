@@ -25,7 +25,7 @@ export function ProfileForm({ user }: { user: CurrentUser }) {
       <section className="rounded-card border border-line bg-surface p-4 shadow-card sm:p-5">
         <h2 className="text-base font-bold text-ink">Контактные данные</h2>
         <p className="mt-1 text-xs text-muted">
-          Используются для связи по заказам.
+          Используются для связи по заявкам.
         </p>
 
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -53,7 +53,7 @@ export function ProfileForm({ user }: { user: CurrentUser }) {
       <section className="rounded-card border border-line bg-surface p-4 shadow-card sm:p-5">
         <h2 className="text-base font-bold text-ink">Адрес по умолчанию</h2>
         <p className="mt-1 text-xs text-muted">
-          Подставим при оформлении доставки курьером.
+          Подставим при оформлении доставки по области.
         </p>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           <TextField
@@ -84,7 +84,7 @@ export function ProfileForm({ user }: { user: CurrentUser }) {
         >
           {state.status === "error"
             ? state.message
-            : "Данные хранятся в базе и используются только для заказов."}
+            : "Данные хранятся в базе и используются только для заявок."}
         </p>
         <div className="flex items-center gap-3">
           {state.status === "success" ? (

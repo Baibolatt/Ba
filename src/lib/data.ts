@@ -121,8 +121,11 @@ function toOrder(record: OrderWithItems): Order {
     items,
     total: items.reduce((sum, item) => sum + item.price * item.qty, 0),
     address: record.address ?? "Самовывоз со склада, Тараз",
-    delivery: record.deliveryMethod === "pickup" ? "Самовывоз" : "Курьером",
-    payment: record.payment ?? "При получении",
+    delivery:
+      record.deliveryMethod === "pickup"
+        ? "Самовывоз со склада"
+        : "Доставка по области",
+    payment: record.payment ?? "По согласованию",
     customerName: record.customerName,
     phone: record.phone,
     email: record.email ?? undefined,

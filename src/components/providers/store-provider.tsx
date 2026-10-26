@@ -209,7 +209,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         }
         return [...current, { productId, qty }];
       });
-      notify("Товар добавлен в корзину");
+      notify("Товар добавлен в заявку");
     },
     [notify],
   );

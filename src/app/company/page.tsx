@@ -4,6 +4,7 @@ import { Container } from "@/components/layout/container";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { ButtonLink } from "@/components/ui/button";
 import { Icon, type IconName } from "@/components/ui/icon";
+import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Компания",
@@ -22,7 +23,7 @@ const advantages: Array<{ icon: IconName; title: string; text: string }> = [
   {
     icon: "box",
     title: "Собственный склад",
-    text: "Ходовые позиции хранятся в Таразе — самовывоз в день заказа.",
+    text: "Ходовые позиции хранятся в Таразе — самовывоз в день заявки.",
   },
   {
     icon: "shield",
@@ -36,11 +37,15 @@ const advantages: Array<{ icon: IconName; title: string; text: string }> = [
   },
 ];
 
+const workingHours =
+  siteConfig.workingHours.charAt(0).toUpperCase() +
+  siteConfig.workingHours.slice(1);
+
 const requisites = [
-  { label: "Наименование", value: "ТОО «PartsHub»" },
+  { label: "Наименование", value: siteConfig.legalName },
   { label: "БИН", value: "000000000000" },
   { label: "Кбе", value: "17" },
-  { label: "Юридический адрес", value: "Тараз, ул. Жибек Жолы, 12" },
+  { label: "Юридический адрес", value: siteConfig.pickupAddress },
 ];
 
 export default function CompanyPage() {
@@ -64,9 +69,9 @@ export default function CompanyPage() {
             тормозную систему, фильтры, масла, двигатель, подвеску и электрику.
           </p>
           <p className="mt-3 text-sm leading-relaxed text-muted">
-            Работаем с розничными покупателями и юрлицами. На сайте показываем
-            наличие и цену, а комплектацию и документы подтверждаем при сборке
-            заказа.
+            Работаем только с юридическими лицами и оптовыми покупателями. На
+            сайте показываем наличие и цену, а комплектацию и документы
+            подтверждаем при сборке заявки.
           </p>
           <div className="mt-5 flex flex-wrap gap-2.5">
             <ButtonLink href="/catalog" variant="accent">
@@ -94,14 +99,14 @@ export default function CompanyPage() {
                 <Icon name="mapPin" className="size-3.5" />
                 Адрес
               </dt>
-              <dd className="text-ink">Тараз, ул. Жибек Жолы, 12</dd>
+              <dd className="text-ink">{siteConfig.pickupAddress}</dd>
             </div>
             <div className="flex items-start gap-3">
               <dt className="flex w-24 shrink-0 items-center gap-1.5 text-muted">
                 <Icon name="clock" className="size-3.5" />
                 Часы
               </dt>
-              <dd className="text-ink">Ежедневно, 9:00–20:00</dd>
+              <dd className="text-ink">{workingHours}</dd>
             </div>
             <div className="flex items-start gap-3">
               <dt className="flex w-24 shrink-0 items-center gap-1.5 text-muted">
@@ -110,10 +115,10 @@ export default function CompanyPage() {
               </dt>
               <dd>
                 <a
-                  href="tel:+77000000000"
+                  href={`tel:${siteConfig.phoneHref}`}
                   className="font-medium text-ink hover:text-brand-700"
                 >
-                  +7 (700) 000-00-00
+                  {siteConfig.phoneDisplay}
                 </a>
               </dd>
             </div>
@@ -124,10 +129,10 @@ export default function CompanyPage() {
               </dt>
               <dd>
                 <a
-                  href="mailto:zakaz@partshub.kz"
+                  href={`mailto:${siteConfig.email}`}
                   className="font-medium text-ink hover:text-brand-700"
                 >
-                  zakaz@partshub.kz
+                  {siteConfig.email}
                 </a>
               </dd>
             </div>
@@ -193,7 +198,7 @@ export default function CompanyPage() {
             ))}
           </dl>
           <p className="mt-3 text-[11px] text-muted">
-            Реквизиты демонстрационные и не относятся к реальной организации.
+            Реквизиты уточняйте у менеджера при оформлении заявки.
           </p>
         </div>
       </section>
@@ -203,9 +208,12 @@ export default function CompanyPage() {
           <div>
             <h2 className="text-sm font-bold text-ink">Контакты</h2>
             <p className="mt-1 text-xs text-muted">
-              Тараз, ул. Жибек Жолы, 12 · ежедневно 9:00–20:00 ·{" "}
-              <a href="tel:+77000000000" className="font-medium text-ink">
-                +7 (700) 000-00-00
+              {siteConfig.pickupAddress} · {siteConfig.workingHours} ·{" "}
+              <a
+                href={`tel:${siteConfig.phoneHref}`}
+                className="font-medium text-ink"
+              >
+                {siteConfig.phoneDisplay}
               </a>
             </p>
           </div>

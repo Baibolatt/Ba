@@ -17,7 +17,7 @@ type OrderSummaryProps = {
 
 export function OrderSummary({
   lines,
-  title = "Ваш заказ",
+  title = "Ваша заявка",
   children,
 }: OrderSummaryProps) {
   const linePrice = (line: SummaryLine) => line.price ?? line.product.price;
@@ -52,12 +52,12 @@ export function OrderSummary({
 
       <dl className="mt-4 space-y-2 border-t border-line pt-4 text-sm">
         <div className="flex items-center justify-between gap-3">
-          <dt className="text-muted">Товары ({count})</dt>
+          <dt className="text-muted">Позиции ({count})</dt>
           <dd className="font-medium text-ink">{formatPrice(total)}</dd>
         </div>
         <div className="flex items-center justify-between gap-3">
-          <dt className="text-muted">Доставка</dt>
-          <dd className="font-medium text-ink">По области</dd>
+          <dt className="text-muted">Получение</dt>
+          <dd className="font-medium text-ink">Со склада или по области</dd>
         </div>
         <div className="flex items-center justify-between gap-3 border-t border-line pt-3 text-base">
           <dt className="font-bold text-ink">Итого</dt>

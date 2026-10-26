@@ -33,7 +33,7 @@ export function AddToCartButton({
         )}
       >
         <Icon name="cart" className="size-4" />
-        {disabled ? "Нет в наличии" : "В корзину"}
+        {disabled ? "Нет в наличии" : "В заявку"}
       </button>
     );
   }
@@ -43,7 +43,7 @@ export function AddToCartButton({
       type="button"
       disabled={disabled}
       onClick={() => addToCart(productId, qty)}
-      aria-label="Добавить в корзину"
+      aria-label="Добавить в заявку"
       className={cn(
         "flex size-11 shrink-0 items-center justify-center rounded-control bg-brand text-white transition-colors hover:bg-brand-800 disabled:pointer-events-none disabled:bg-page disabled:text-muted",
         className,

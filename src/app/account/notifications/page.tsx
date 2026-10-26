@@ -5,14 +5,14 @@ import { notifications } from "@/lib/mock-data";
 
 export const metadata: Metadata = {
   title: "Уведомления",
-  description: "События по заказам и наличию товаров PartsHub.",
+  description: "События по заявкам и наличию товаров PartsHub.",
 };
 
 export default function NotificationsPage() {
   return (
     <AccountShell
       title="Уведомления"
-      description="Статусы заказов и события по сохранённым товарам."
+      description="Статусы заявок и события по сохранённым товарам."
     >
       <NotificationsView initialItems={notifications} />
     </AccountShell>
