@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 import "./globals.css";
 import { StoreProvider } from "@/components/providers/store-provider";
 import { Header } from "@/components/layout/header";
@@ -31,12 +31,24 @@ export default async function RootLayout({
           >
             Перейти к содержимому
           </a>
-          <Header categories={categories} />
+          <Suspense
+            fallback={
+              <div className="h-[7.25rem] border-b border-line bg-surface lg:h-[72px]" />
+            }
+          >
+            <Header categories={categories} />
+          </Suspense>
           <main id="content" className="flex-1">
             {children}
           </main>
           <Footer categories={categories} />
-          <BottomNav />
+          <Suspense
+            fallback={
+              <div className="h-16 border-t border-line bg-surface lg:hidden" />
+            }
+          >
+            <BottomNav />
+          </Suspense>
         </StoreProvider>
       </body>
     </html>

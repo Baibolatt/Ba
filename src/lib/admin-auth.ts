@@ -5,6 +5,7 @@ import {
 } from "node:crypto";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { connection } from "next/server";
 
 export const ADMIN_COOKIE_NAME = "partshub_admin";
 export const ADMIN_SESSION_MAX_AGE = 60 * 60 * 8;
@@ -84,6 +85,10 @@ export async function isAdminAuthenticated(): Promise<boolean> {
  * до срабатывания redirect из layout.
  */
 export async function requireAdmin(): Promise<void> {
+  // Явно отмечаем запрос как динамический: проверка подписи использует
+  // Date.now(), а при prerender это значение запрещено.
+  await connection();
+
   if (!(await isAdminAuthenticated())) {
     redirect("/admin/login");
   }
