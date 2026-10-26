@@ -116,13 +116,18 @@ export default async function AdminPage() {
             title="Товары"
             description="Цена в тенге и остаток на складе. Ноль остатка означает «Нет в наличии»."
             action={
-              <ButtonLink
-                href="/admin/import"
-                variant="secondary"
-                size="sm"
-              >
-                Импорт из Excel/CSV
-              </ButtonLink>
+              <div className="flex flex-wrap justify-end gap-2">
+                <ButtonLink href="/admin/products/new" size="sm">
+                  Добавить товар
+                </ButtonLink>
+                <ButtonLink
+                  href="/admin/import"
+                  variant="secondary"
+                  size="sm"
+                >
+                  Импорт из Excel/CSV
+                </ButtonLink>
+              </div>
             }
           />
         </div>
@@ -153,11 +158,20 @@ export default async function AdminPage() {
                     </div>
                   </div>
 
-                  <ProductStockForm
-                    productId={product.id}
-                    price={product.price}
-                    quantity={product.quantity}
-                  />
+                  <div className="flex flex-col items-stretch gap-2 lg:items-end">
+                    <ButtonLink
+                      href={`/admin/products/${product.id}`}
+                      variant="secondary"
+                      size="sm"
+                    >
+                      Редактировать
+                    </ButtonLink>
+                    <ProductStockForm
+                      productId={product.id}
+                      price={product.price}
+                      quantity={product.quantity}
+                    />
+                  </div>
                 </div>
               </li>
             ))}

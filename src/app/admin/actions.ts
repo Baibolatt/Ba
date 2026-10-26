@@ -14,6 +14,10 @@ import {
 } from "@/lib/admin-auth";
 import { changeOrderStatus } from "@/lib/orders";
 import {
+  deleteProduct,
+  saveProduct,
+} from "@/lib/product-admin";
+import {
   deleteProductImage,
   saveProductImage,
 } from "@/lib/product-image";
@@ -162,6 +166,71 @@ export async function updateProductAction(
   revalidatePath("/admin");
 
   return { status: "success", message: "Цена и остаток обновлены" };
+}
+
+export async function saveProductAction(
+  _previous: AdminActionState,
+  formData: FormData,
+): Promise<AdminActionState> {
+  if (!(await isAdminAuthenticated())) {
+    redirect("/admin/login");
+  }
+
+  const productId = String(formData.get("productId") ?? "").trim();
+
+  const result = await saveProduct(
+    {
+      article: formData.get("article"),
+      name: formData.get("name"),
+      brandName: formData.get("brandName"),
+      categoryName: formData.get("categoryName"),
+      price: formData.get("price"),
+      oldPrice: formData.get("oldPrice"),
+      quantity: formData.get("quantity"),
+      unit: formData.get("unit"),
+      description: formData.get("description"),
+      compatibility: formData.get("compatibility"),
+      badge: formData.get("badge"),
+    },
+    productId || undefined,
+  );
+
+  if (!result.ok) {
+    return { status: "error", message: result.error };
+  }
+
+  revalidatePath("/", "layout");
+  revalidatePath("/admin");
+
+  if (result.created) {
+    redirect(`/admin/products/${result.id}?created=1`);
+  }
+
+  return { status: "success", message: result.message };
+}
+
+export async function deleteProductAction(
+  _previous: AdminActionState,
+  formData: FormData,
+): Promise<AdminActionState> {
+  if (!(await isAdminAuthenticated())) {
+    redirect("/admin/login");
+  }
+
+  const productId = String(formData.get("productId") ?? "").trim();
+  if (!productId) {
+    return { status: "error", message: "Товар не найден" };
+  }
+
+  const result = await deleteProduct(productId);
+  if (!result.ok) {
+    return { status: "error", message: result.error };
+  }
+
+  revalidatePath("/", "layout");
+  revalidatePath("/admin");
+
+  redirect("/admin");
 }
 
 export async function uploadProductImageAction(
