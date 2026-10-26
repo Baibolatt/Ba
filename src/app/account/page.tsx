@@ -3,8 +3,9 @@ import Link from "next/link";
 import { AccountShell } from "@/components/account/account-shell";
 import { OrderRow } from "@/components/account/order-row";
 import { Icon, type IconName } from "@/components/ui/icon";
-import { getOrders } from "@/lib/data";
-import { notifications, profile } from "@/lib/mock-data";
+import { getOrdersByUser } from "@/lib/data";
+import { requireUser } from "@/lib/auth";
+import { notifications } from "@/lib/mock-data";
 
 export const metadata: Metadata = {
   title: "Личный кабинет",
@@ -20,7 +21,8 @@ type QuickLink = {
 };
 
 export default async function AccountPage() {
-  const orders = await getOrders();
+  const user = await requireUser();
+  const orders = await getOrdersByUser(user.id);
   const unread = notifications.filter((item) => !item.read).length;
   const recentOrders = orders.slice(0, 2);
 
@@ -67,7 +69,7 @@ export default async function AccountPage() {
           С возвращением
         </p>
         <h2 className="mt-1 text-xl font-bold">
-          Здравствуйте, {profile.name}!
+          Здравствуйте, {user.name}!
         </h2>
         <p className="mt-1.5 max-w-md text-sm text-white/70">
           {unread > 0

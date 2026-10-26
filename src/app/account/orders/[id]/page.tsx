@@ -5,8 +5,10 @@ import { AccountShell } from "@/components/account/account-shell";
 import { CartItem } from "@/components/cart/cart-item";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Icon } from "@/components/ui/icon";
-import { getOrder, getOrderIds } from "@/lib/data";
+import { getOrderForUser } from "@/lib/data";
+import { getCurrentUser, requireUser } from "@/lib/auth";
 import { formatPrice, orderItemsCount } from "@/lib/format";
+import { formatPhone } from "@/lib/phone";
 
 type OrderPageProps = {
   params: Promise<{ id: string }>;
@@ -31,17 +33,12 @@ const timeline = [
   },
 ];
 
-export async function generateStaticParams() {
-  const ids = await getOrderIds();
-
-  return ids.map((id) => ({ id }));
-}
-
 export async function generateMetadata({
   params,
 }: OrderPageProps): Promise<Metadata> {
   const { id } = await params;
-  const order = await getOrder(id);
+  const user = await getCurrentUser();
+  const order = user ? await getOrderForUser(id, user.id) : null;
 
   if (!order) return { title: "Заказ не найден" };
 
@@ -53,7 +50,8 @@ export async function generateMetadata({
 
 export default async function OrderPage({ params }: OrderPageProps) {
   const { id } = await params;
-  const order = await getOrder(id);
+  const user = await requireUser();
+  const order = await getOrderForUser(id, user.id);
 
   if (!order) notFound();
 
@@ -168,8 +166,20 @@ export default async function OrderPage({ params }: OrderPageProps) {
             </div>
             <div className="flex items-start justify-between gap-3">
               <dt className="text-muted">Телефон</dt>
-              <dd className="max-w-[60%] text-right text-ink">{order.phone}</dd>
+              <dd className="max-w-[60%] text-right text-ink">
+                {formatPhone(order.phone)}
+              </dd>
             </div>
+            {order.email ? (
+              <div className="flex items-start justify-between gap-3">
+                <dt className="text-muted">Email</dt>
+                <dd className="max-w-[60%] break-all text-right text-ink">
+                  <a className="hover:text-brand" href={`mailto:${order.email}`}>
+                    {order.email}
+                  </a>
+                </dd>
+              </div>
+            ) : null}
             <div className="flex items-start justify-between gap-3">
               <dt className="text-muted">Получение</dt>
               <dd className="max-w-[60%] text-right text-ink">

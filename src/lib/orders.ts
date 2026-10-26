@@ -36,6 +36,9 @@ const paymentLabels: Record<PaymentMethod, string> = {
 
 const pickupAddress = "Тараз, пункт выдачи «Жибек Жолы, 12»";
 
+// Ожидаемая ошибка транзакции с понятным для клиента текстом.
+class OrderConflictError extends Error {}
+
 function text(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
 }
@@ -180,6 +183,7 @@ async function nextOrderNumber(
 
 export async function createOrder(
   input: CreateOrderInput,
+  userId: string | null = null,
 ): Promise<CreateOrderResult> {
   const { fieldErrors, items } = validateInput(input);
 
@@ -194,6 +198,7 @@ export async function createOrder(
 
   const customerName = text(input.customerName);
   const phone = text(input.phone);
+  const email = text(input.email);
   const comment = text(input.comment);
   const address =
     input.deliveryMethod === "pickup"
@@ -264,7 +269,7 @@ export async function createOrder(
         });
 
         if (updated.count === 0) {
-          throw new Error(
+          throw new OrderConflictError(
             "Остаток товара изменился. Обновите корзину и попробуйте снова.",
           );
         }
@@ -275,9 +280,11 @@ export async function createOrder(
 
       const order = await tx.order.create({
         data: {
+          userId,
           number,
           customerName,
           phone,
+          email: email || null,
           address,
           deliveryMethod: input.deliveryMethod,
           comment: comment || null,
@@ -297,14 +304,15 @@ export async function createOrder(
       return { ok: true, orderId: order.id, number: order.number };
     });
   } catch (error) {
+    if (error instanceof OrderConflictError) {
+      return { ok: false, error: error.message, step: 3 };
+    }
+
     console.error("Не удалось создать заказ", error);
 
     return {
       ok: false,
-      error:
-        error instanceof Error
-          ? error.message
-          : "Не удалось создать заказ. Попробуйте ещё раз.",
+      error: "Не удалось создать заказ. Попробуйте ещё раз.",
       step: 3,
     };
   }

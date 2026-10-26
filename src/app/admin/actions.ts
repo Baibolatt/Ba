@@ -12,6 +12,11 @@ import {
   isAdminAuthenticated,
   isValidAdminPassword,
 } from "@/lib/admin-auth";
+import {
+  checkRateLimit,
+  clientAddress,
+  tooManyAttemptsMessage,
+} from "@/lib/rate-limit";
 import type { OrderStatus } from "@/lib/types";
 
 export type AdminActionState = {
@@ -35,6 +40,15 @@ export async function loginAdminAction(
 ): Promise<AdminLoginState> {
   if (!hasAdminPassword()) {
     return { error: "ADMIN_PASSWORD не задан в .env" };
+  }
+
+  const limit = checkRateLimit(
+    `admin-login:${await clientAddress()}`,
+    10,
+    15 * 60 * 1000,
+  );
+  if (!limit.allowed) {
+    return { error: tooManyAttemptsMessage(limit.retryAfterSeconds) };
   }
 
   const password = String(formData.get("password") ?? "");

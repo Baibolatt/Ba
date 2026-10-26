@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Fragment, useState, type FormEvent } from "react";
 import { cn } from "@/lib/cn";
-import { profile } from "@/lib/mock-data";
+import type { CurrentUser } from "@/lib/auth";
 import type { Product } from "@/lib/types";
 import { createOrderAction } from "@/app/checkout/actions";
 import { useStore } from "@/components/providers/store-provider";
@@ -41,7 +41,13 @@ const steps: Array<{ n: Step; label: string }> = [
   { n: 3, label: "Оплата" },
 ];
 
-export function CheckoutView({ products }: { products: Product[] }) {
+export function CheckoutView({
+  products,
+  customer,
+}: {
+  products: Product[];
+  customer: CurrentUser | null;
+}) {
   const router = useRouter();
   const { cart, clearCart } = useStore();
   const [step, setStep] = useState<Step>(1);
@@ -49,13 +55,13 @@ export function CheckoutView({ products }: { products: Product[] }) {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [serverError, setServerError] = useState("");
   const [form, setForm] = useState<FormState>({
-    name: `${profile.name} ${profile.lastName}`,
-    phone: profile.phone,
-    email: profile.email,
-    city: profile.city,
-    street: "ул. Жибек Жолы",
-    house: "12",
-    flat: "45",
+    name: customer?.name ?? "",
+    phone: customer?.phone ?? "",
+    email: customer?.email ?? "",
+    city: customer?.city ?? "",
+    street: customer?.address ?? "",
+    house: "",
+    flat: "",
     comment: "",
     delivery: "pickup",
     payment: "on-delivery",

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { AccountShell } from "@/components/account/account-shell";
 import { OrdersList } from "@/components/account/orders-list";
-import { getOrders } from "@/lib/data";
+import { getOrdersByUser } from "@/lib/data";
+import { requireUser } from "@/lib/auth";
 
 export const metadata: Metadata = {
   title: "Заказы",
@@ -9,7 +10,8 @@ export const metadata: Metadata = {
 };
 
 export default async function OrdersPage() {
-  const orders = await getOrders();
+  const user = await requireUser();
+  const orders = await getOrdersByUser(user.id);
 
   return (
     <AccountShell

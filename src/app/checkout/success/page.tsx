@@ -5,13 +5,18 @@ import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { ButtonLink } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { OrderSummary } from "@/components/cart/order-summary";
-import { getOrder } from "@/lib/data";
+import { getOrderForViewer } from "@/lib/data";
+import { getCurrentUser } from "@/lib/auth";
 import { orderStatusLabels } from "@/lib/format";
+import { formatPhone } from "@/lib/phone";
 
 export const metadata: Metadata = {
   title: "Заказ оформлен",
   description: "Подтверждение заказа PartsHub.",
 };
+
+// Заказ показывается только гостю-автору ссылки или владельцу сессии.
+export const instant = false;
 
 const nextSteps = [
   {
@@ -35,7 +40,10 @@ type CheckoutSuccessPageProps = {
 async function SuccessContent({ searchParams }: CheckoutSuccessPageProps) {
   const { order: orderParam } = await searchParams;
   const orderId = typeof orderParam === "string" ? orderParam : "";
-  const order = orderId ? await getOrder(orderId) : null;
+  const viewer = await getCurrentUser();
+  const order = orderId
+    ? await getOrderForViewer(orderId, viewer?.id ?? null)
+    : null;
 
   if (!order) {
     return (
@@ -85,7 +93,7 @@ async function SuccessContent({ searchParams }: CheckoutSuccessPageProps) {
               {order.number}
             </span>
             . Заказ сохранён. Мы свяжемся с вами по телефону{" "}
-            {order.phone}, чтобы подтвердить состав и время получения.
+            {formatPhone(order.phone)}, чтобы подтвердить состав и время получения.
           </p>
 
           <div className="mt-6 grid gap-2 sm:grid-cols-3">

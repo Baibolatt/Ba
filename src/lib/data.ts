@@ -3,6 +3,7 @@ import type {
   Category as CategoryRecord,
   Order as OrderRecord,
   OrderItem as OrderItemRecord,
+  Prisma,
   Product as ProductRecord,
   ProductSpec as ProductSpecRecord,
 } from "@/generated/prisma/client";
@@ -122,6 +123,7 @@ function toOrder(record: OrderWithItems): Order {
     payment: record.payment ?? "При получении",
     customerName: record.customerName,
     phone: record.phone,
+    email: record.email ?? undefined,
     comment: record.comment ?? undefined,
   };
 }
@@ -261,9 +263,22 @@ export async function getOrders(): Promise<Order[]> {
   return records.map(toOrder);
 }
 
-export async function getOrder(id: string): Promise<OrderDetail | null> {
-  const record = await prisma.order.findUnique({
-    where: { id },
+/** Заказы конкретного клиента — единственный источник для личного кабинета. */
+export async function getOrdersByUser(userId: string): Promise<Order[]> {
+  const records = await prisma.order.findMany({
+    where: { userId },
+    include: { items: true },
+    orderBy: { createdAt: "desc" },
+  });
+
+  return records.map(toOrder);
+}
+
+async function findOrderDetail(
+  where: Prisma.OrderWhereInput,
+): Promise<OrderDetail | null> {
+  const record = await prisma.order.findFirst({
+    where,
     include: {
       items: {
         include: { product: { include: productInclude } },
@@ -284,11 +299,25 @@ export async function getOrder(id: string): Promise<OrderDetail | null> {
   };
 }
 
-export async function getOrderIds(): Promise<string[]> {
-  const records = await prisma.order.findMany({
-    select: { id: true },
-    orderBy: { createdAt: "desc" },
-  });
+/** Заказ доступен только владельцу. */
+export async function getOrderForUser(
+  id: string,
+  userId: string,
+): Promise<OrderDetail | null> {
+  return findOrderDetail({ id, userId });
+}
 
-  return records.map((record) => record.id);
+/**
+ * Заказ для страницы подтверждения: гость видит только заказы без владельца,
+ * клиент — свои. Чужие заказы недоступны даже по прямой ссылке.
+ */
+export async function getOrderForViewer(
+  id: string,
+  viewerId: string | null,
+): Promise<OrderDetail | null> {
+  return findOrderDetail(
+    viewerId
+      ? { id, OR: [{ userId: null }, { userId: viewerId }] }
+      : { id, userId: null },
+  );
 }

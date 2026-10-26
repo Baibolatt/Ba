@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { formatPrice, orderItemsCount } from "@/lib/format";
+import { formatPhone } from "@/lib/phone";
 import type { Order } from "@/lib/types";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Icon } from "@/components/ui/icon";
@@ -22,6 +23,10 @@ export function OrderRow({ order }: OrderRowProps) {
           <p className="text-sm font-semibold text-ink">{order.number}</p>
           <p className="mt-0.5 text-xs text-muted">
             {order.date} · {orderItemsCount(order)} шт.
+          </p>
+          <p className="mt-0.5 flex items-center gap-1 text-xs text-muted">
+            <Icon name="phone" className="size-3" />
+            {formatPhone(order.phone)}
           </p>
         </div>
       </div>

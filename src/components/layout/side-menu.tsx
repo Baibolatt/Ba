@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import { cn } from "@/lib/cn";
-import { profile } from "@/lib/mock-data";
 import type { Category } from "@/lib/types";
 import { Icon, type IconName } from "@/components/ui/icon";
 import { Logo } from "@/components/layout/logo";
@@ -95,7 +94,7 @@ export function SideMenu({ open, onClose, categories }: SideMenuProps) {
           <div className="mb-4 flex items-center gap-2.5 rounded-control bg-tint px-2.5 py-2.5">
             <Icon name="mapPin" className="size-4 shrink-0 text-icon" />
             <div className="min-w-0">
-              <p className="text-sm font-semibold text-ink">{profile.city}</p>
+              <p className="text-sm font-semibold text-ink">Тараз</p>
               <p className="text-[11px] text-muted">Доставка по области</p>
             </div>
           </div>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/cn";
 import { Icon, type IconName } from "@/components/ui/icon";
+import { logoutAction } from "@/lib/auth-actions";
 
 const links: Array<{ href: string; label: string; icon: IconName; exact?: boolean }> = [
   { href: "/account", label: "Обзор", icon: "grid", exact: true },
@@ -46,13 +47,15 @@ export function AccountNav() {
         })}
       </nav>
 
-      <Link
-        href="/login"
-        className="mt-2 hidden items-center gap-2 border-t border-line px-3 pb-1 pt-3 text-sm font-medium text-muted transition-colors hover:text-ink lg:flex"
-      >
-        <Icon name="logOut" className="size-4" />
-        Выйти
-      </Link>
+      <form action={logoutAction} className="hidden lg:block">
+        <button
+          type="submit"
+          className="mt-2 flex w-full items-center gap-2 border-t border-line px-3 pb-1 pt-3 text-sm font-medium text-muted transition-colors hover:text-ink"
+        >
+          <Icon name="logOut" className="size-4" />
+          Выйти
+        </button>
+      </form>
     </div>
   );
 }

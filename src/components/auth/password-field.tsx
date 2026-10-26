@@ -8,8 +8,9 @@ import { Icon } from "@/components/ui/icon";
 type PasswordFieldProps = {
   label: string;
   name: string;
-  value: string;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  defaultValue?: string;
   error?: string;
   hint?: string;
   autoComplete?: string;
@@ -21,6 +22,7 @@ export function PasswordField({
   name,
   value,
   onChange,
+  defaultValue,
   error,
   hint,
   autoComplete = "current-password",
@@ -40,6 +42,7 @@ export function PasswordField({
           name={name}
           type={visible ? "text" : "password"}
           value={value}
+          defaultValue={defaultValue}
           onChange={onChange}
           autoComplete={autoComplete}
           aria-invalid={error ? true : undefined}

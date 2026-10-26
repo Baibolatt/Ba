@@ -1,52 +1,36 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState, type FormEvent } from "react";
+import { useActionState } from "react";
 import { TextField, CheckboxField } from "@/components/ui/form-fields";
 import { PasswordField } from "@/components/auth/password-field";
 import { Button } from "@/components/ui/button";
+import { Icon } from "@/components/ui/icon";
+import { loginAction, type AuthActionState } from "@/lib/auth-actions";
+
+const initialState: AuthActionState = {};
 
 export function LoginForm() {
-  const router = useRouter();
-  const [email, setEmail] = useState("alexey@example.kz");
-  const [password, setPassword] = useState("");
-  const [remember, setRemember] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const next: Record<string, string> = {};
-
-    if (!/^\S+@\S+\.\S+$/.test(email)) next.email = "Введите корректный email";
-    if (password.length < 6) next.password = "Минимум 6 символов";
-
-    setErrors(next);
-    if (Object.keys(next).length > 0) return;
-
-    setLoading(true);
-    router.push("/account");
-  };
+  const [state, formAction, pending] = useActionState(
+    loginAction,
+    initialState,
+  );
 
   return (
-    <form noValidate onSubmit={onSubmit} className="space-y-4">
+    <form noValidate action={formAction} className="space-y-4">
       <TextField
-        label="Email"
-        name="email"
-        type="email"
-        value={email}
-        onChange={(event) => setEmail(event.target.value)}
-        error={errors.email}
-        autoComplete="email"
+        label="Телефон"
+        name="phone"
+        type="tel"
+        placeholder="+7 (700) 000-00-00"
+        error={state.fieldErrors?.phone}
+        autoComplete="tel"
         required
       />
       <PasswordField
         label="Пароль"
         name="password"
-        value={password}
-        onChange={(event) => setPassword(event.target.value)}
-        error={errors.password}
+        error={state.fieldErrors?.password}
         autoComplete="current-password"
         required
       />
@@ -54,8 +38,7 @@ export function LoginForm() {
       <div className="flex items-center justify-between gap-3">
         <CheckboxField
           name="remember"
-          checked={remember}
-          onChange={(event) => setRemember(event.target.checked)}
+          defaultChecked
           label="Запомнить меня"
         />
         <Link
@@ -66,14 +49,16 @@ export function LoginForm() {
         </Link>
       </div>
 
-      <Button type="submit" variant="accent" className="w-full">
-        {loading ? "Входим…" : "Войти"}
-      </Button>
+      {state.error ? (
+        <p className="flex items-start gap-2 rounded-control bg-danger-soft p-3 text-xs font-medium text-danger">
+          <Icon name="alertCircle" className="mt-0.5 size-4 shrink-0" />
+          {state.error}
+        </p>
+      ) : null}
 
-      <p className="rounded-control bg-page p-3 text-[11px] leading-relaxed text-muted">
-        Демо-режим: подойдёт любой email и пароль от 6 символов. Данные никуда
-        не отправляются.
-      </p>
+      <Button type="submit" variant="accent" className="w-full" disabled={pending}>
+        {pending ? "Входим…" : "Войти"}
+      </Button>
     </form>
   );
 }

@@ -11,6 +11,7 @@ import {
   orderItemsCount,
   stockLevel,
 } from "@/lib/format";
+import { formatPhone } from "@/lib/phone";
 
 export const metadata: Metadata = {
   title: "Заказы и товары",
@@ -80,7 +81,10 @@ export default async function AdminPage() {
                     <p className="mt-2 text-sm font-medium text-ink">
                       {order.customerName}
                     </p>
-                    <p className="text-xs text-muted">{order.phone}</p>
+                    <p className="text-xs text-muted">
+                      {formatPhone(order.phone)}
+                      {order.email ? ` · ${order.email}` : ""}
+                    </p>
                     <p className="mt-1 text-xs text-muted">
                       {order.delivery} · {order.address}
                     </p>

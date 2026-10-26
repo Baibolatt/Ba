@@ -115,8 +115,8 @@ export function Header({ categories }: { categories: Category[] }) {
                 <Icon name="heart" className="size-5" />
               </Link>
               <Link
-                href="/login"
-                aria-label="Вход и регистрация"
+                href="/account"
+                aria-label="Личный кабинет"
                 className="hidden size-11 items-center justify-center rounded-control text-icon transition-colors hover:bg-brand-50 lg:flex"
               >
                 <Icon name="user" className="size-5" />

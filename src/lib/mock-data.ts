@@ -1,13 +1,4 @@
-import type { NotificationItem, Profile } from "@/lib/types";
-
-export const profile: Profile = {
-  name: "Алексей",
-  lastName: "Смирнов",
-  email: "alexey@example.kz",
-  phone: "+7 (700) 000-00-00",
-  city: "Тараз",
-  address: "ул. Жибек Жолы, 12, кв. 45",
-};
+import type { NotificationItem } from "@/lib/types";
 
 export const notifications: NotificationItem[] = [
   {

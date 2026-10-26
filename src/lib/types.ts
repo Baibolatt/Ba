@@ -66,6 +66,7 @@ export type Order = {
   payment: string;
   customerName: string;
   phone: string;
+  email?: string;
   comment?: string;
 };
 
@@ -88,11 +89,3 @@ export type NotificationItem = {
   href?: string;
 };
 
-export type Profile = {
-  name: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  city: string;
-  address: string;
-};

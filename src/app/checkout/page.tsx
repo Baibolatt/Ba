@@ -3,14 +3,21 @@ import { Container } from "@/components/layout/container";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { CheckoutView } from "@/components/checkout/checkout-view";
 import { getProducts } from "@/lib/data";
+import { getCurrentUser } from "@/lib/auth";
 
 export const metadata: Metadata = {
   title: "Оформление заказа",
   description: "Контакты, способ получения и оплаты заказа PartsHub.",
 };
 
+// Контакты подставляются из сессии, поэтому нужна проверка cookie.
+export const instant = false;
+
 export default async function CheckoutPage() {
-  const products = await getProducts();
+  const [products, customer] = await Promise.all([
+    getProducts(),
+    getCurrentUser(),
+  ]);
 
   return (
     <Container className="py-5 sm:py-8">
@@ -30,7 +37,7 @@ export default async function CheckoutPage() {
       </p>
 
       <div className="mt-5">
-        <CheckoutView products={products} />
+        <CheckoutView products={products} customer={customer} />
       </div>
     </Container>
   );
