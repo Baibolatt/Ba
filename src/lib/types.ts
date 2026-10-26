@@ -50,6 +50,17 @@ export type Product = {
   badge?: "Хит" | "Новинка";
 };
 
+/** Короткая карточка товара, которую ИИ-консультант возвращает в чат. */
+export type AssistantProduct = {
+  id: string;
+  article: string;
+  name: string;
+  brand: string;
+  price: number;
+  inStock: boolean;
+  quantity: number;
+};
+
 export type StockLevel = "in" | "low" | "out";
 
 export type OrderStatus = "new" | "in_progress" | "done" | "cancelled";

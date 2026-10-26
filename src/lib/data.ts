@@ -14,7 +14,7 @@ import {
   type CatalogSort,
 } from "@/lib/catalog-query";
 import { categoryIcons } from "@/lib/category-icons";
-import { normalizeArticle } from "@/lib/import/clean";
+import { findProductHits, selectResults } from "@/lib/search-match";
 import type {
   BrandSummary,
   Category,
@@ -320,37 +320,11 @@ export async function getRelatedProducts(
 }
 
 export async function searchProducts(query: string): Promise<Product[]> {
-  const normalized = query.trim().toLowerCase();
-  if (!normalized) return [];
-
-  // Артикул ищем без учёта регистра, пробелов и дефисов: «abc123» найдёт «ABC-123».
-  const normalizedArticleQuery = normalizeArticle(query);
-
-  // SQLite не умеет регистронезависимый поиск по кириллице,
-  // поэтому фильтруем небольшой каталог после чтения из базы.
+  // SQLite не умеет регистронезависимый поиск по кириллице и опечаткам,
+  // поэтому небольшой каталог дофильтровывается в приложении.
   const products = await getProducts();
 
-  return products.filter((product) => {
-    const haystack = [
-      product.name,
-      product.article,
-      product.brand,
-      product.categoryName,
-      product.description,
-      product.compatibility,
-      ...product.specs.map((spec) => `${spec.label} ${spec.value}`),
-    ]
-      .join(" ")
-      .toLowerCase();
-
-    if (haystack.includes(normalized)) return true;
-
-    if (!normalizedArticleQuery) return false;
-
-    return normalizeArticle(product.article).includes(
-      normalizedArticleQuery,
-    );
-  });
+  return selectResults(findProductHits(products, query));
 }
 
 export async function getOrders(): Promise<Order[]> {

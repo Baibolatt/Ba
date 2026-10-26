@@ -5,6 +5,7 @@ import { StoreProvider } from "@/components/providers/store-provider";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { BottomNav } from "@/components/layout/bottom-nav";
+import { AssistantWidget } from "@/components/assistant/assistant-widget";
 import { getCategories } from "@/lib/data";
 
 export const metadata: Metadata = {
@@ -48,6 +49,9 @@ export default async function RootLayout({
             }
           >
             <BottomNav />
+          </Suspense>
+          <Suspense fallback={null}>
+            <AssistantWidget />
           </Suspense>
         </StoreProvider>
       </body>

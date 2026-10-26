@@ -20,9 +20,11 @@ const quickQueries = [
 export function SearchView({
   query: initialQuery,
   results,
+  aiCorrected = false,
 }: {
   query: string;
   results: Product[];
+  aiCorrected?: boolean;
 }) {
   const router = useRouter();
   const [query, setQuery] = useState(initialQuery);
@@ -135,6 +137,11 @@ export function SearchView({
                   : "товаров"}
             </span>
           </div>
+          {aiCorrected ? (
+            <p className="mt-1.5 text-xs leading-relaxed text-muted">
+              Умный поиск исправил запрос и подобрал подходящие товары.
+            </p>
+          ) : null}
           <div className="mt-4 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
             {results.map((product) => (
               <ProductCard key={product.id} product={product} />

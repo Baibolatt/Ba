@@ -13,7 +13,10 @@
     "db:seed": "prisma db seed",
     "db:studio": "prisma studio",
     "generate:samples": "tsx scripts/generate-sample-imports.ts",
-    "test:import": "tsx scripts/test-import.ts"
+    "test:import": "tsx scripts/test-import.ts",
+    "test:search": "tsx scripts/test-search.ts",
+    "test:assistant": "tsx scripts/test-assistant.ts",
+    "test": "npm run test:import && npm run test:search && npm run test:assistant"
   },
   "dependencies": {
     "@prisma/adapter-better-sqlite3": "^7.10.1",

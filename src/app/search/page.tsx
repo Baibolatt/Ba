@@ -3,11 +3,13 @@ import { Suspense } from "react";
 import { Container } from "@/components/layout/container";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { SearchView } from "@/components/search/search-view";
-import { searchProducts } from "@/lib/data";
+import { clientAddress } from "@/lib/rate-limit";
+import { searchProductsSmart } from "@/lib/search";
 
 export const metadata: Metadata = {
   title: "Поиск",
-  description: "Поиск автозапчастей по названию, артикулу и бренду.",
+  description:
+    "Поиск автозапчастей по названию, артикулу и бренду. Умный подбор исправляет опечатки.",
 };
 
 type SearchPageProps = {
@@ -17,9 +19,16 @@ type SearchPageProps = {
 async function SearchResults({ searchParams }: SearchPageProps) {
   const { q } = await searchParams;
   const query = typeof q === "string" ? q.trim() : "";
-  const results = await searchProducts(query);
+  const address = query ? await clientAddress() : "";
+  const result = await searchProductsSmart(query, address);
 
-  return <SearchView query={query} results={results} />;
+  return (
+    <SearchView
+      query={query}
+      results={result.products}
+      aiCorrected={result.usedAi}
+    />
+  );
 }
 
 export default function SearchPage({ searchParams }: SearchPageProps) {

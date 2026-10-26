@@ -186,6 +186,19 @@ const icons = {
       <path d="M21 10v4M7 10v4M11 10v4" />
     </>
   ),
+  sparkles: (
+    <>
+      <path d="m12 3 1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6L12 3Z" />
+      <path d="m18.5 14 .9 2.6 2.6.9-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9.9-2.6Z" />
+      <path d="m5 14 .6 1.8 1.8.6-1.8.6L5 20l-.6-3-1.8-.6 1.8-.6L5 14Z" />
+    </>
+  ),
+  send: (
+    <>
+      <path d="m22 2-7 20-4-9-9-4Z" />
+      <path d="M22 2 11 13" />
+    </>
+  ),
 } satisfies Record<string, ReactNode>;
 
 export type IconName = keyof typeof icons;
