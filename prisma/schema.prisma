@@ -69,6 +69,22 @@ model ProductSpec {
   @@index([productId])
 }
 
+// История импорта прайс-листов: последний завершённый импорт нужен,
+// чтобы обнулять остатки у товаров, которых не было в файле.
+model ImportRun {
+  id           String   @id @default(cuid())
+  fileName     String
+  totalRows    Int
+  createdCount Int      @default(0)
+  updatedCount Int      @default(0)
+  // JSON-массив нормализованных артикулов из файла.
+  articleKeys  String   @default("[]")
+  completed    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  @@index([completed, createdAt])
+}
+
 model Order {
   id             String      @id @default(cuid())
   number         String      @unique

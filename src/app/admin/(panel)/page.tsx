@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ButtonLink } from "@/components/ui/button";
 import { OrderStatusForm } from "@/components/admin/order-status-form";
 import { ProductStockForm } from "@/components/admin/product-stock-form";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -106,6 +107,15 @@ export default async function AdminPage() {
           <SectionHeading
             title="Товары"
             description="Цена в тенге и остаток на складе. Ноль остатка означает «Нет в наличии»."
+            action={
+              <ButtonLink
+                href="/admin/import"
+                variant="secondary"
+                size="sm"
+              >
+                Импорт из Excel/CSV
+              </ButtonLink>
+            }
           />
         </div>
 

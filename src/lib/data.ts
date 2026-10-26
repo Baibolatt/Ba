@@ -7,6 +7,7 @@ import type {
   ProductSpec as ProductSpecRecord,
 } from "@/generated/prisma/client";
 import { prisma } from "@/lib/db";
+import { normalizeArticle } from "@/lib/import/clean";
 import type {
   Category,
   CategoryIcon,
@@ -229,16 +230,26 @@ export async function searchProducts(query: string): Promise<Product[]> {
   const normalized = query.trim().toLowerCase();
   if (!normalized) return [];
 
+  // Артикул ищем без учёта регистра, пробелов и дефисов: «abc123» найдёт «ABC-123».
+  const normalizedArticleQuery = normalizeArticle(query);
+
   // SQLite не умеет регистронезависимый поиск по кириллице,
   // поэтому фильтруем небольшой каталог после чтения из базы.
   const products = await getProducts();
 
-  return products.filter((product) =>
-    [product.name, product.article, product.brand]
+  return products.filter((product) => {
+    const haystack = [product.name, product.article, product.brand]
       .join(" ")
-      .toLowerCase()
-      .includes(normalized),
-  );
+      .toLowerCase();
+
+    if (haystack.includes(normalized)) return true;
+
+    if (!normalizedArticleQuery) return false;
+
+    return normalizeArticle(product.article).includes(
+      normalizedArticleQuery,
+    );
+  });
 }
 
 export async function getOrders(): Promise<Order[]> {

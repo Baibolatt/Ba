@@ -11,15 +11,19 @@
     "db:migrate": "prisma migrate dev",
     "db:setup": "prisma migrate deploy && prisma db seed",
     "db:seed": "prisma db seed",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "generate:samples": "tsx scripts/generate-sample-imports.ts",
+    "test:import": "tsx scripts/test-import.ts"
   },
   "dependencies": {
     "@prisma/adapter-better-sqlite3": "^7.10.1",
     "@prisma/client": "^7.10.1",
     "better-sqlite3": "^13.0.3",
+    "iconv-lite": "^0.6.3",
     "next": "16.4.3",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",

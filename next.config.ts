@@ -10,8 +10,11 @@ const nextConfig: NextConfig = {
         "*.app.github.dev",
         "*.githubpreview.dev",
       ],
+      // Прайс-листы до 25 МБ приходят в Server Action файлом.
+      bodySizeLimit: "30mb",
     },
   },
+  serverExternalPackages: ["xlsx"],
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {
