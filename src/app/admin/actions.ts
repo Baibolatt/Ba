@@ -1,0 +1,144 @@
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { prisma } from "@/lib/db";
+import {
+  ADMIN_COOKIE_NAME,
+  ADMIN_SESSION_MAX_AGE,
+  createAdminSessionToken,
+  hasAdminPassword,
+  isAdminAuthenticated,
+  isValidAdminPassword,
+} from "@/lib/admin-auth";
+import type { OrderStatus } from "@/lib/types";
+
+export type AdminActionState = {
+  status: "idle" | "success" | "error";
+  message?: string;
+};
+
+export type AdminLoginState = {
+  error?: string;
+};
+
+const orderStatuses: OrderStatus[] = ["new", "in_progress", "done"];
+
+function isOrderStatus(value: string): value is OrderStatus {
+  return orderStatuses.some((status) => status === value);
+}
+
+export async function loginAdminAction(
+  _previous: AdminLoginState,
+  formData: FormData,
+): Promise<AdminLoginState> {
+  if (!hasAdminPassword()) {
+    return { error: "ADMIN_PASSWORD не задан в .env" };
+  }
+
+  const password = String(formData.get("password") ?? "");
+
+  if (!isValidAdminPassword(password)) {
+    return { error: "Неверный пароль" };
+  }
+
+  const store = await cookies();
+  store.set(ADMIN_COOKIE_NAME, createAdminSessionToken(), {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/admin",
+    maxAge: ADMIN_SESSION_MAX_AGE,
+  });
+
+  redirect("/admin");
+}
+
+export async function logoutAdminAction(): Promise<void> {
+  const store = await cookies();
+  store.set(ADMIN_COOKIE_NAME, "", {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/admin",
+    maxAge: 0,
+  });
+
+  redirect("/admin/login");
+}
+
+export async function updateOrderStatusAction(
+  _previous: AdminActionState,
+  formData: FormData,
+): Promise<AdminActionState> {
+  if (!(await isAdminAuthenticated())) {
+    redirect("/admin/login");
+  }
+
+  const orderId = String(formData.get("orderId") ?? "").trim();
+  const status = String(formData.get("status") ?? "");
+
+  if (!orderId || !isOrderStatus(status)) {
+    return { status: "error", message: "Некорректный статус заказа" };
+  }
+
+  const updated = await prisma.order.updateMany({
+    where: { id: orderId },
+    data: { status },
+  });
+
+  if (updated.count === 0) {
+    return { status: "error", message: "Заказ не найден" };
+  }
+
+  revalidatePath("/", "layout");
+  revalidatePath("/admin");
+
+  return { status: "success", message: "Статус обновлён" };
+}
+
+export async function updateProductAction(
+  _previous: AdminActionState,
+  formData: FormData,
+): Promise<AdminActionState> {
+  if (!(await isAdminAuthenticated())) {
+    redirect("/admin/login");
+  }
+
+  const productId = String(formData.get("productId") ?? "").trim();
+  const price = Number(String(formData.get("price") ?? "").trim());
+  const quantity = Number(String(formData.get("quantity") ?? "").trim());
+
+  if (!productId) {
+    return { status: "error", message: "Товар не найден" };
+  }
+
+  if (!Number.isInteger(price) || price < 0 || price > 100_000_000) {
+    return {
+      status: "error",
+      message: "Цена должна быть целым неотрицательным числом",
+    };
+  }
+
+  if (!Number.isInteger(quantity) || quantity < 0 || quantity > 1_000_000) {
+    return {
+      status: "error",
+      message: "Остаток должен быть целым неотрицательным числом",
+    };
+  }
+
+  const updated = await prisma.product.updateMany({
+    where: { id: productId },
+    data: { price, quantity },
+  });
+
+  if (updated.count === 0) {
+    return { status: "error", message: "Товар не найден" };
+  }
+
+  revalidatePath("/", "layout");
+  revalidatePath("/admin");
+
+  return { status: "success", message: "Цена и остаток обновлены" };
+}
