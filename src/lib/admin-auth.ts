@@ -4,6 +4,7 @@ import {
   timingSafeEqual,
 } from "node:crypto";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export const ADMIN_COOKIE_NAME = "partshub_admin";
 export const ADMIN_SESSION_MAX_AGE = 60 * 60 * 8;
@@ -75,4 +76,15 @@ export async function isAdminAuthenticated(): Promise<boolean> {
   const token = store.get(ADMIN_COOKIE_NAME)?.value;
 
   return token ? isValidAdminSessionToken(token) : false;
+}
+
+/**
+ * Проверка внутри самой страницы, а не только в layout: layout и page
+ * рендерятся параллельно, поэтому данные страницы могли попасть в поток
+ * до срабатывания redirect из layout.
+ */
+export async function requireAdmin(): Promise<void> {
+  if (!(await isAdminAuthenticated())) {
+    redirect("/admin/login");
+  }
 }

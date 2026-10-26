@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ImportWizard } from "@/components/admin/import-wizard";
 import { ButtonLink } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { requireAdmin } from "@/lib/admin-auth";
 import { prisma } from "@/lib/db";
 import type { ImportRunSummary } from "@/lib/import/types";
 
@@ -10,6 +11,8 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminImportPage() {
+  await requireAdmin();
+
   const run = await prisma.importRun.findFirst({
     where: { completed: true },
     orderBy: { createdAt: "desc" },

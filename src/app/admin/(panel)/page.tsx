@@ -6,6 +6,7 @@ import { ProductStockForm } from "@/components/admin/product-stock-form";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { StockBadge } from "@/components/ui/stock-badge";
+import { requireAdmin } from "@/lib/admin-auth";
 import { getOrders, getProducts } from "@/lib/data";
 import {
   formatPrice,
@@ -19,6 +20,8 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminPage() {
+  await requireAdmin();
+
   const [orders, products] = await Promise.all([getOrders(), getProducts()]);
 
   const newOrders = orders.filter((order) => order.status === "new").length;

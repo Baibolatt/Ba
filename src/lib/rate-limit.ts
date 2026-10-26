@@ -20,6 +20,13 @@ function prune(now: number): void {
   for (const [key, bucket] of buckets) {
     if (bucket.resetAt <= now) buckets.delete(key);
   }
+
+  // Если все счётчики ещё активны, вытесняем самые старые: иначе карта
+  // растёт без предела при переборе с множества адресов.
+  for (const key of buckets.keys()) {
+    if (buckets.size <= MAX_BUCKETS) break;
+    buckets.delete(key);
+  }
 }
 
 export function checkRateLimit(

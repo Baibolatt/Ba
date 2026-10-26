@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { redirect } from "next/navigation";
 import { Container } from "@/components/layout/container";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { Button } from "@/components/ui/button";
 import { logoutAdminAction } from "@/app/admin/actions";
-import { isAdminAuthenticated } from "@/lib/admin-auth";
+import { requireAdmin } from "@/lib/admin-auth";
 
 export const metadata: Metadata = {
   title: {
@@ -26,9 +25,7 @@ export default async function AdminPanelLayout({
 }: {
   children: ReactNode;
 }) {
-  if (!(await isAdminAuthenticated())) {
-    redirect("/admin/login");
-  }
+  await requireAdmin();
 
   return (
     <Container className="py-5 sm:py-8">
