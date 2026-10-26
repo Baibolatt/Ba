@@ -8,14 +8,20 @@ import { CatalogView } from "@/components/catalog/catalog-view";
 import { Icon } from "@/components/ui/icon";
 import { cn } from "@/lib/cn";
 import {
+  getBrands,
+  getCatalog,
   getCategories,
   getCategory,
-  getProductsByCategory,
 } from "@/lib/data";
+import {
+  parseCatalogQuery,
+  type RawSearchParams,
+} from "@/lib/catalog-query";
 import { productCountLabel } from "@/lib/format";
 
 type CategoryPageProps = {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<RawSearchParams>;
 };
 
 export async function generateStaticParams() {
@@ -48,18 +54,27 @@ export async function generateMetadata({
   };
 }
 
-export default async function CategoryPage({ params }: CategoryPageProps) {
-  const { slug } = await params;
+export default async function CategoryPage({
+  params,
+  searchParams,
+}: CategoryPageProps) {
+  const [{ slug }, rawSearchParams] = await Promise.all([
+    params,
+    searchParams,
+  ]);
 
-  const [categories, category, items] = await Promise.all([
+  const [categories, category, brandNames] = await Promise.all([
     getCategories(),
     slug === "all" ? Promise.resolve(null) : getCategory(slug),
-    getProductsByCategory(slug),
+    getBrands(),
   ]);
 
   if (slug !== "all" && !category) {
     notFound();
   }
+
+  const query = parseCatalogQuery(rawSearchParams, brandNames);
+  const result = await getCatalog(slug, query);
 
   const title = category?.name ?? "Все товары";
   const description =
@@ -85,7 +100,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             {title}
           </h1>
           <p className="mt-1.5 text-sm text-muted">
-            {description} · {productCountLabel(items.length)}
+            {description} · {productCountLabel(result.total)}
           </p>
         </div>
       </div>
@@ -126,7 +141,14 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
       <div className="mt-5">
         <CatalogView
-          products={items}
+          products={result.products}
+          total={result.total}
+          page={result.page}
+          pages={result.pages}
+          brands={result.brands}
+          filters={query.filters}
+          sort={query.sort}
+          view={query.view}
           emptyTitle={
             slug === "all"
               ? "В каталоге пока нет подходящих товаров"

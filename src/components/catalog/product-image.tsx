@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { cn } from "@/lib/cn";
 import { Icon } from "@/components/ui/icon";
 import type { Product } from "@/lib/types";
@@ -15,14 +16,26 @@ export function ProductImage({ product, className }: ProductImageProps) {
         className,
       )}
     >
-      <Icon
-        name={product.categoryIcon}
-        className="size-1/3 max-h-20 min-h-8 text-muted/40"
-        strokeWidth={1.2}
-      />
-      <span className="absolute bottom-2 right-2.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-muted/50">
-        PartsHub
-      </span>
+      {product.imageUrl ? (
+        <Image
+          src={product.imageUrl}
+          alt={product.name}
+          fill
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 300px"
+          className="object-cover"
+        />
+      ) : (
+        <>
+          <Icon
+            name={product.categoryIcon}
+            className="size-1/3 max-h-20 min-h-8 text-muted/40"
+            strokeWidth={1.2}
+          />
+          <span className="absolute bottom-2 right-2.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-muted/50">
+            PartsHub
+          </span>
+        </>
+      )}
     </div>
   );
 }

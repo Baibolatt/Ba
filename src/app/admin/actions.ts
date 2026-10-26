@@ -14,6 +14,10 @@ import {
 } from "@/lib/admin-auth";
 import { changeOrderStatus } from "@/lib/orders";
 import {
+  deleteProductImage,
+  saveProductImage,
+} from "@/lib/product-image";
+import {
   checkRateLimit,
   clientAddress,
   tooManyAttemptsMessage,
@@ -158,4 +162,95 @@ export async function updateProductAction(
   revalidatePath("/admin");
 
   return { status: "success", message: "Цена и остаток обновлены" };
+}
+
+export async function uploadProductImageAction(
+  _previous: AdminActionState,
+  formData: FormData,
+): Promise<AdminActionState> {
+  if (!(await isAdminAuthenticated())) {
+    redirect("/admin/login");
+  }
+
+  const productId = String(formData.get("productId") ?? "").trim();
+  const file = formData.get("image");
+
+  if (!productId) {
+    return { status: "error", message: "Товар не найден" };
+  }
+
+  if (!(file instanceof File)) {
+    return { status: "error", message: "Выберите файл изображения" };
+  }
+
+  const product = await prisma.product.findUnique({
+    where: { id: productId },
+    select: { imageUrl: true },
+  });
+
+  if (!product) {
+    return { status: "error", message: "Товар не найден" };
+  }
+
+  const saved = await saveProductImage(file);
+  if (!saved.ok) {
+    return { status: "error", message: saved.error };
+  }
+
+  const updated = await prisma.product.updateMany({
+    where: { id: productId },
+    data: { imageUrl: saved.url },
+  });
+
+  if (updated.count === 0) {
+    await deleteProductImage(saved.url);
+    return { status: "error", message: "Товар не найден" };
+  }
+
+  await deleteProductImage(product.imageUrl);
+
+  revalidatePath("/", "layout");
+  revalidatePath("/admin");
+
+  return { status: "success", message: "Фото загружено" };
+}
+
+export async function removeProductImageAction(
+  _previous: AdminActionState,
+  formData: FormData,
+): Promise<AdminActionState> {
+  if (!(await isAdminAuthenticated())) {
+    redirect("/admin/login");
+  }
+
+  const productId = String(formData.get("productId") ?? "").trim();
+
+  if (!productId) {
+    return { status: "error", message: "Товар не найден" };
+  }
+
+  const product = await prisma.product.findUnique({
+    where: { id: productId },
+    select: { imageUrl: true },
+  });
+
+  if (!product) {
+    return { status: "error", message: "Товар не найден" };
+  }
+
+  const updated = await prisma.product.updateMany({
+    where: { id: productId },
+    data: { imageUrl: null },
+  });
+
+  if (updated.count === 0) {
+    return { status: "error", message: "Товар не найден" };
+  }
+
+  await deleteProductImage(product.imageUrl);
+
+  revalidatePath("/", "layout");
+  revalidatePath("/admin");
+
+  return { status: "success", message: "Фото удалено" };
 }

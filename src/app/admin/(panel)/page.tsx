@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ButtonLink } from "@/components/ui/button";
 import { OrderStatusForm } from "@/components/admin/order-status-form";
+import { ProductImageForm } from "@/components/admin/product-image-form";
 import { ProductStockForm } from "@/components/admin/product-stock-form";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -144,6 +145,9 @@ export default async function AdminPage() {
                       {product.article} · {product.brand} ·{" "}
                       {product.categoryName}
                     </p>
+                    <div className="mt-3">
+                      <ProductImageForm product={product} />
+                    </div>
                   </div>
 
                   <ProductStockForm

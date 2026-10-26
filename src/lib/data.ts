@@ -8,6 +8,11 @@ import type {
   ProductSpec as ProductSpecRecord,
 } from "@/generated/prisma/client";
 import { prisma } from "@/lib/db";
+import {
+  CATALOG_PAGE_SIZE,
+  type CatalogQuery,
+  type CatalogSort,
+} from "@/lib/catalog-query";
 import { normalizeArticle } from "@/lib/import/clean";
 import type {
   Category,
@@ -169,16 +174,92 @@ export async function getProducts(): Promise<Product[]> {
   return records.map(toProduct);
 }
 
-export async function getProductsByCategory(slug: string): Promise<Product[]> {
-  if (slug === "all") return getProducts();
+function catalogOrderBy(
+  sort: CatalogSort,
+): Prisma.ProductOrderByWithRelationInput[] {
+  if (sort === "price-asc") return [{ price: "asc" }, { sortOrder: "asc" }];
+  if (sort === "price-desc") return [{ price: "desc" }, { sortOrder: "asc" }];
+  if (sort === "name") return [{ name: "asc" }, { sortOrder: "asc" }];
+  return [{ sortOrder: "asc" }, { name: "asc" }];
+}
 
-  const records = await prisma.product.findMany({
-    where: { category: { slug } },
-    include: productInclude,
-    orderBy: { sortOrder: "asc" },
-  });
+export type CatalogBrandFacet = {
+  name: string;
+  count: number;
+};
 
-  return records.map(toProduct);
+export type CatalogResult = {
+  products: Product[];
+  total: number;
+  page: number;
+  pages: number;
+  brands: CatalogBrandFacet[];
+};
+
+export async function getCatalog(
+  categorySlug: string,
+  query: CatalogQuery,
+): Promise<CatalogResult> {
+  const baseWhere: Prisma.ProductWhereInput =
+    categorySlug && categorySlug !== "all"
+      ? { category: { slug: categorySlug } }
+      : {};
+
+  const where: Prisma.ProductWhereInput = { ...baseWhere };
+
+  if (query.filters.brands.length > 0) {
+    where.brand = { name: { in: query.filters.brands } };
+  }
+
+  if (query.filters.minPrice !== null || query.filters.maxPrice !== null) {
+    where.price = {
+      ...(query.filters.minPrice !== null
+        ? { gte: query.filters.minPrice }
+        : {}),
+      ...(query.filters.maxPrice !== null
+        ? { lte: query.filters.maxPrice }
+        : {}),
+    };
+  }
+
+  if (query.filters.inStockOnly) {
+    where.quantity = { gt: 0 };
+  }
+
+  const total = await prisma.product.count({ where });
+  const pages = Math.max(1, Math.ceil(total / CATALOG_PAGE_SIZE));
+  const page = Math.min(query.page, pages);
+
+  const [records, brandRecords] = await Promise.all([
+    prisma.product.findMany({
+      where,
+      include: productInclude,
+      orderBy: catalogOrderBy(query.sort),
+      skip: (page - 1) * CATALOG_PAGE_SIZE,
+      take: CATALOG_PAGE_SIZE,
+    }),
+    prisma.brand.findMany({
+      where: { products: { some: baseWhere } },
+      select: {
+        name: true,
+        _count: { select: { products: { where: baseWhere } } },
+      },
+      orderBy: { name: "asc" },
+    }),
+  ]);
+
+  return {
+    products: records.map(toProduct),
+    total,
+    page,
+    pages,
+    brands: brandRecords
+      .map((brand) => ({
+        name: brand.name,
+        count: brand._count.products,
+      }))
+      .filter((brand) => brand.count > 0),
+  };
 }
 
 export async function getProduct(id: string): Promise<Product | null> {
@@ -243,7 +324,15 @@ export async function searchProducts(query: string): Promise<Product[]> {
   const products = await getProducts();
 
   return products.filter((product) => {
-    const haystack = [product.name, product.article, product.brand]
+    const haystack = [
+      product.name,
+      product.article,
+      product.brand,
+      product.categoryName,
+      product.description,
+      product.compatibility,
+      ...product.specs.map((spec) => `${spec.label} ${spec.value}`),
+    ]
       .join(" ")
       .toLowerCase();
 

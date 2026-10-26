@@ -1,14 +1,20 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/cn";
-import { stockLevel } from "@/lib/format";
+import {
+  catalogFiltersKey,
+  catalogHref,
+  type CatalogFilters,
+  type CatalogSort,
+  type CatalogViewMode,
+} from "@/lib/catalog-query";
 import type { Product } from "@/lib/types";
 import { ProductCard } from "@/components/catalog/product-card";
 import { ProductTable } from "@/components/catalog/product-table";
 import {
   activeFiltersCount,
-  emptyFilters,
   FilterSheet,
   FilterSidebar,
   FiltersPanel,
@@ -19,99 +25,131 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { Icon } from "@/components/ui/icon";
 import { Pagination } from "@/components/ui/pagination";
 
-type SortKey = "popular" | "price-asc" | "price-desc" | "name";
-type ViewMode = "grid" | "table";
-
-const PAGE_SIZE = 8;
-
-const sortOptions: Array<{ value: SortKey; label: string }> = [
+const sortOptions: Array<{ value: CatalogSort; label: string }> = [
   { value: "popular", label: "Сначала популярные" },
   { value: "price-asc", label: "Сначала дешёвые" },
   { value: "price-desc", label: "Сначала дорогие" },
   { value: "name", label: "По названию" },
 ];
 
+type BrandFacet = {
+  name: string;
+  count: number;
+};
+
 type CatalogViewProps = {
   products: Product[];
+  total: number;
+  page: number;
+  pages: number;
+  brands: BrandFacet[];
+  filters: CatalogFilters;
+  sort: CatalogSort;
+  view: CatalogViewMode;
   emptyTitle?: string;
 };
 
+function priceToNumber(value: string): number | null {
+  const trimmed = value.trim();
+  if (!/^\d+$/.test(trimmed)) return null;
+  return Number(trimmed);
+}
+
+function toFiltersValue(filters: CatalogFilters): FiltersValue {
+  return {
+    brands: filters.brands,
+    minPrice: filters.minPrice === null ? "" : String(filters.minPrice),
+    maxPrice: filters.maxPrice === null ? "" : String(filters.maxPrice),
+    inStockOnly: filters.inStockOnly,
+  };
+}
+
 export function CatalogView({
   products,
+  total,
+  page,
+  pages,
+  brands,
+  filters,
+  sort,
+  view,
   emptyTitle = "Ничего не найдено",
 }: CatalogViewProps) {
-  const [view, setView] = useState<ViewMode>("grid");
-  const [sort, setSort] = useState<SortKey>("popular");
-  const [filters, setFilters] = useState<FiltersValue>(emptyFilters);
-  const [page, setPage] = useState(1);
+  const router = useRouter();
+  const pathname = usePathname();
   const [sheetOpen, setSheetOpen] = useState(false);
 
-  const brandOptions = useMemo(() => {
-    const counts = new Map<string, number>();
-    for (const product of products) {
-      counts.set(product.brand, (counts.get(product.brand) ?? 0) + 1);
-    }
-    return Array.from(counts, ([name, count]) => ({ name, count })).sort(
-      (a, b) => a.name.localeCompare(b.name, "ru"),
+  const filtersValue = toFiltersValue(filters);
+  const activeCount = activeFiltersCount(filtersValue);
+  const filtersKey = catalogFiltersKey(filters);
+
+  const applyQuery = (
+    next: Partial<{
+      filters: CatalogFilters;
+      sort: CatalogSort;
+      view: CatalogViewMode;
+      page: number;
+    }>,
+    scroll = false,
+  ) => {
+    router.push(
+      catalogHref(pathname, {
+        filters,
+        sort,
+        view,
+        page,
+        ...next,
+      }),
+      { scroll },
     );
-  }, [products]);
+  };
 
-  const filtered = useMemo(() => {
-    const min = filters.minPrice ? Number(filters.minPrice) : null;
-    const max = filters.maxPrice ? Number(filters.maxPrice) : null;
+  const commitFilters = (value: FiltersValue) => {
+    let minPrice = priceToNumber(value.minPrice);
+    let maxPrice = priceToNumber(value.maxPrice);
 
-    const result = products.filter((product) => {
-      if (filters.brands.length && !filters.brands.includes(product.brand)) {
-        return false;
-      }
-      if (min !== null && product.price < min) return false;
-      if (max !== null && product.price > max) return false;
-      if (filters.inStockOnly && stockLevel(product) === "out") return false;
-      return true;
-    });
-
-    const sorted = [...result];
-    if (sort === "price-asc") sorted.sort((a, b) => a.price - b.price);
-    if (sort === "price-desc") sorted.sort((a, b) => b.price - a.price);
-    if (sort === "name") {
-      sorted.sort((a, b) => a.name.localeCompare(b.name, "ru"));
+    if (minPrice !== null && maxPrice !== null && minPrice > maxPrice) {
+      [minPrice, maxPrice] = [maxPrice, minPrice];
     }
-    return sorted;
-  }, [products, filters, sort]);
 
-  const pages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
-  const currentPage = Math.min(page, pages);
-  const visible = filtered.slice(
-    (currentPage - 1) * PAGE_SIZE,
-    currentPage * PAGE_SIZE,
-  );
-  const activeCount = activeFiltersCount(filters);
-
-  const handleFilters = (next: FiltersValue) => {
-    setFilters(next);
-    setPage(1);
+    applyQuery({
+      filters: {
+        brands: value.brands,
+        minPrice,
+        maxPrice,
+        inStockOnly: value.inStockOnly,
+      },
+      page: 1,
+    });
   };
 
   const resetFilters = () => {
-    setFilters(emptyFilters);
-    setPage(1);
+    applyQuery({
+      filters: {
+        brands: [],
+        minPrice: null,
+        maxPrice: null,
+        inStockOnly: false,
+      },
+      page: 1,
+    });
   };
 
   return (
     <div className="lg:grid lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-6">
       <FilterSidebar
-        brands={brandOptions}
-        value={filters}
-        onChange={handleFilters}
+        key={`sidebar-${filtersKey}`}
+        brands={brands}
+        value={filtersValue}
+        onChange={commitFilters}
         onReset={resetFilters}
       />
 
       <div className="min-w-0">
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-card border border-line bg-surface px-3 py-2.5 shadow-card sm:px-4">
           <p className="text-xs text-muted sm:text-sm">
-            Найдено{" "}
-            <span className="font-semibold text-ink">{filtered.length}</span>{" "}
-            {filtered.length === 1 ? "товар" : "товаров"}
+            Найдено <span className="font-semibold text-ink">{total}</span>{" "}
+            {total === 1 ? "товар" : "товаров"}
           </p>
 
           <div className="flex items-center gap-2">
@@ -135,10 +173,12 @@ export function CatalogView({
             <select
               id="catalog-sort"
               value={sort}
-              onChange={(event) => {
-                setSort(event.target.value as SortKey);
-                setPage(1);
-              }}
+              onChange={(event) =>
+                applyQuery({
+                  sort: event.target.value as CatalogSort,
+                  page: 1,
+                })
+              }
               className="h-11 rounded-control border border-line-strong bg-surface pl-3 pr-7 text-xs font-medium text-ink focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
             >
               {sortOptions.map((option) => (
@@ -151,7 +191,7 @@ export function CatalogView({
             <div className="hidden items-center rounded-control border border-line-strong bg-surface p-0.5 sm:flex">
               <button
                 type="button"
-                onClick={() => setView("grid")}
+                onClick={() => applyQuery({ view: "grid" })}
                 aria-label="Показать карточками"
                 aria-pressed={view === "grid"}
                 className={cn(
@@ -165,7 +205,7 @@ export function CatalogView({
               </button>
               <button
                 type="button"
-                onClick={() => setView("table")}
+                onClick={() => applyQuery({ view: "table" })}
                 aria-label="Показать таблицей"
                 aria-pressed={view === "table"}
                 className={cn(
@@ -188,9 +228,12 @@ export function CatalogView({
                 key={brand}
                 type="button"
                 onClick={() =>
-                  handleFilters({
-                    ...filters,
-                    brands: filters.brands.filter((item) => item !== brand),
+                  applyQuery({
+                    filters: {
+                      ...filters,
+                      brands: filters.brands.filter((item) => item !== brand),
+                    },
+                    page: 1,
                   })
                 }
                 className="inline-flex min-h-11 items-center gap-1 rounded-full bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand"
@@ -199,15 +242,22 @@ export function CatalogView({
                 <Icon name="close" className="size-3" />
               </button>
             ))}
-            {filters.minPrice || filters.maxPrice ? (
+            {filters.minPrice !== null || filters.maxPrice !== null ? (
               <button
                 type="button"
                 onClick={() =>
-                  handleFilters({ ...filters, minPrice: "", maxPrice: "" })
+                  applyQuery({
+                    filters: {
+                      ...filters,
+                      minPrice: null,
+                      maxPrice: null,
+                    },
+                    page: 1,
+                  })
                 }
                 className="inline-flex min-h-11 items-center gap-1 rounded-full bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand"
               >
-                Цена {filters.minPrice || "0"}—{filters.maxPrice || "∞"}
+                Цена {filters.minPrice ?? "0"}—{filters.maxPrice ?? "∞"}
                 <Icon name="close" className="size-3" />
               </button>
             ) : null}
@@ -215,7 +265,10 @@ export function CatalogView({
               <button
                 type="button"
                 onClick={() =>
-                  handleFilters({ ...filters, inStockOnly: false })
+                  applyQuery({
+                    filters: { ...filters, inStockOnly: false },
+                    page: 1,
+                  })
                 }
                 className="inline-flex min-h-11 items-center gap-1 rounded-full bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand"
               >
@@ -226,7 +279,7 @@ export function CatalogView({
           </div>
         ) : null}
 
-        {visible.length === 0 ? (
+        {products.length === 0 ? (
           <div className="mt-4">
             <EmptyState
               icon="search"
@@ -241,7 +294,7 @@ export function CatalogView({
           </div>
         ) : view === "grid" ? (
           <div className="mt-4 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
-            {visible.map((product) => (
+            {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
@@ -249,21 +302,21 @@ export function CatalogView({
           <div className="mt-4">
             {/* На мобильных таблица заменяется карточками: без горизонтального скролла. */}
             <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:hidden">
-              {visible.map((product) => (
+              {products.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
             <div className="hidden lg:block">
-              <ProductTable products={visible} />
+              <ProductTable products={products} />
             </div>
           </div>
         )}
 
         <div className="mt-6">
           <Pagination
-            page={currentPage}
+            page={page}
             pages={pages}
-            onPageChange={setPage}
+            onPageChange={(nextPage) => applyQuery({ page: nextPage }, true)}
           />
         </div>
       </div>
@@ -277,14 +330,15 @@ export function CatalogView({
             className="w-full"
             onClick={() => setSheetOpen(false)}
           >
-            Показать {filtered.length}
+            Показать {total}
           </Button>
         }
       >
         <FiltersPanel
-          brands={brandOptions}
-          value={filters}
-          onChange={handleFilters}
+          key={`sheet-${filtersKey}`}
+          brands={brands}
+          value={filtersValue}
+          onChange={commitFilters}
           onReset={resetFilters}
         />
       </FilterSheet>

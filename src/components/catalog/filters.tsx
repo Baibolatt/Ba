@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { Icon } from "@/components/ui/icon";
 
@@ -46,11 +46,34 @@ export function FiltersPanel({
   onReset,
   className,
 }: FiltersPanelProps) {
+  // Цена вводится локально и применяется по Enter или потере фокуса,
+  // чтобы не отправлять запрос на каждую цифру.
+  const [price, setPrice] = useState({
+    min: value.minPrice,
+    max: value.maxPrice,
+  });
+
+  const currentValue: FiltersValue = {
+    ...value,
+    minPrice: price.min,
+    maxPrice: price.max,
+  };
+
   const toggleBrand = (brand: string) => {
     const selected = value.brands.includes(brand)
       ? value.brands.filter((item) => item !== brand)
       : [...value.brands, brand];
-    onChange({ ...value, brands: selected });
+    onChange({ ...currentValue, brands: selected });
+  };
+
+  const applyPrice = () => {
+    if (price.min === value.minPrice && price.max === value.maxPrice) return;
+    onChange(currentValue);
+  };
+
+  const reset = () => {
+    setPrice({ min: "", max: "" });
+    onReset();
   };
 
   return (
@@ -59,7 +82,7 @@ export function FiltersPanel({
         <h2 className="text-sm font-bold text-ink">Фильтры</h2>
         <button
           type="button"
-          onClick={onReset}
+          onClick={reset}
           className="text-xs font-medium text-muted underline-offset-2 transition-colors hover:text-brand hover:underline"
         >
           Сбросить
@@ -102,10 +125,17 @@ export function FiltersPanel({
             min={0}
             placeholder="От"
             aria-label="Цена от"
-            value={value.minPrice}
+            value={price.min}
             onChange={(event) =>
-              onChange({ ...value, minPrice: event.target.value })
+              setPrice((current) => ({
+                ...current,
+                min: event.target.value,
+              }))
             }
+            onBlur={applyPrice}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") event.currentTarget.blur();
+            }}
             className="h-11 w-full rounded-control border border-line-strong bg-surface px-3 text-sm text-ink placeholder:text-muted/70 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
           />
           <span className="text-muted">—</span>
@@ -115,10 +145,17 @@ export function FiltersPanel({
             min={0}
             placeholder="До"
             aria-label="Цена до"
-            value={value.maxPrice}
+            value={price.max}
             onChange={(event) =>
-              onChange({ ...value, maxPrice: event.target.value })
+              setPrice((current) => ({
+                ...current,
+                max: event.target.value,
+              }))
             }
+            onBlur={applyPrice}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") event.currentTarget.blur();
+            }}
             className="h-11 w-full rounded-control border border-line-strong bg-surface px-3 text-sm text-ink placeholder:text-muted/70 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
           />
         </div>
@@ -133,7 +170,10 @@ export function FiltersPanel({
             type="checkbox"
             checked={value.inStockOnly}
             onChange={(event) =>
-              onChange({ ...value, inStockOnly: event.target.checked })
+              onChange({
+                ...currentValue,
+                inStockOnly: event.target.checked,
+              })
             }
             className="size-4 rounded border-line-strong accent-brand"
           />

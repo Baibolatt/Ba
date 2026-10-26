@@ -49,3 +49,6 @@ next-env.d.ts
 
 # prisma generated client
 /src/generated/prisma
+
+# user-uploaded product photos
+/storage/products/
