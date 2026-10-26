@@ -45,7 +45,7 @@ export type Product = {
 
 export type StockLevel = "in" | "low" | "out";
 
-export type OrderStatus = "new" | "in_progress" | "done";
+export type OrderStatus = "new" | "in_progress" | "done" | "cancelled";
 
 export type OrderItem = {
   productId: string;

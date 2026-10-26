@@ -12,6 +12,7 @@ import {
   isAdminAuthenticated,
   isValidAdminPassword,
 } from "@/lib/admin-auth";
+import { changeOrderStatus } from "@/lib/orders";
 import {
   checkRateLimit,
   clientAddress,
@@ -28,7 +29,12 @@ export type AdminLoginState = {
   error?: string;
 };
 
-const orderStatuses: OrderStatus[] = ["new", "in_progress", "done"];
+const orderStatuses: OrderStatus[] = [
+  "new",
+  "in_progress",
+  "done",
+  "cancelled",
+];
 
 function isOrderStatus(value: string): value is OrderStatus {
   return orderStatuses.some((status) => status === value);
@@ -97,19 +103,16 @@ export async function updateOrderStatusAction(
     return { status: "error", message: "Некорректный статус заказа" };
   }
 
-  const updated = await prisma.order.updateMany({
-    where: { id: orderId },
-    data: { status },
-  });
+  const result = await changeOrderStatus(orderId, status);
 
-  if (updated.count === 0) {
-    return { status: "error", message: "Заказ не найден" };
+  if (!result.ok) {
+    return { status: "error", message: result.error };
   }
 
   revalidatePath("/", "layout");
   revalidatePath("/admin");
 
-  return { status: "success", message: "Статус обновлён" };
+  return { status: "success", message: result.message };
 }
 
 export async function updateProductAction(

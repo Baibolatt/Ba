@@ -11,6 +11,7 @@ const styles: Record<OrderStatus, string> = {
   new: "bg-brand-50 text-brand",
   in_progress: "bg-tint text-ink",
   done: "bg-ink text-white",
+  cancelled: "bg-danger-soft text-danger",
 };
 
 export function StatusBadge({ status, className }: StatusBadgeProps) {

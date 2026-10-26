@@ -91,7 +91,10 @@ function toCategory(record: CategoryRecord, productCount: number): Category {
 }
 
 function toOrderStatus(value: string): OrderStatus {
-  return value === "new" || value === "in_progress" || value === "done"
+  return value === "new" ||
+    value === "in_progress" ||
+    value === "done" ||
+    value === "cancelled"
     ? value
     : "new";
 }

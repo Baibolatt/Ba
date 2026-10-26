@@ -4,6 +4,7 @@ export const orderStatusLabels: Record<OrderStatus, string> = {
   new: "Новая",
   in_progress: "В работе",
   done: "Выполнена",
+  cancelled: "Отменена",
 };
 
 export function formatPrice(value: number): string {

@@ -13,7 +13,7 @@ import type { OrderStatus } from "@/lib/types";
 
 const initialState: AdminActionState = { status: "idle" };
 
-const statuses: OrderStatus[] = ["new", "in_progress", "done"];
+const statuses: OrderStatus[] = ["new", "in_progress", "done", "cancelled"];
 
 type OrderStatusFormProps = {
   orderId: string;

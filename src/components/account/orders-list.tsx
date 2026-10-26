@@ -7,41 +7,37 @@ import { OrderRow } from "@/components/account/order-row";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ButtonLink } from "@/components/ui/button";
 
-type OrdersFilter = "all" | "active" | "done";
+type OrdersFilter = "all" | "active" | "done" | "cancelled";
 
 const tabs: Array<{ value: OrdersFilter; label: string }> = [
   { value: "all", label: "Все" },
   { value: "active", label: "Активные" },
   { value: "done", label: "Завершённые" },
+  { value: "cancelled", label: "Отменённые" },
 ];
+
+function matchesFilter(order: Order, filter: OrdersFilter): boolean {
+  if (filter === "active") {
+    return order.status === "new" || order.status === "in_progress";
+  }
+  if (filter === "done" || filter === "cancelled") {
+    return order.status === filter;
+  }
+  return true;
+}
 
 export function OrdersList({ orders }: { orders: Order[] }) {
   const [filter, setFilter] = useState<OrdersFilter>("all");
 
-  const visible = orders.filter((order) => {
-    if (filter === "active") {
-      return order.status === "new" || order.status === "in_progress";
-    }
-    if (filter === "done") {
-      return order.status === "done";
-    }
-    return true;
-  });
+  const visible = orders.filter((order) => matchesFilter(order, filter));
 
   return (
     <div>
       <div className="flex flex-wrap gap-1 pb-1">
         {tabs.map((tab) => {
-          const count =
-            tab.value === "all"
-              ? orders.length
-              : tab.value === "active"
-                ? orders.filter(
-                    (order) =>
-                      order.status === "new" ||
-                      order.status === "in_progress",
-                  ).length
-                : orders.filter((order) => order.status === "done").length;
+          const count = orders.filter((order) =>
+            matchesFilter(order, tab.value),
+          ).length;
 
           return (
             <button

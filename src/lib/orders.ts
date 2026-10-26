@@ -1,5 +1,6 @@
 import type { Prisma } from "@/generated/prisma/client";
 import { prisma } from "@/lib/db";
+import type { OrderStatus } from "@/lib/types";
 
 export type DeliveryMethod = "pickup" | "courier";
 export type PaymentMethod = "on-delivery" | "card-courier" | "invoice";
@@ -314,6 +315,102 @@ export async function createOrder(
       ok: false,
       error: "Не удалось создать заказ. Попробуйте ещё раз.",
       step: 3,
+    };
+  }
+}
+
+export type ChangeOrderStatusResult =
+  | { ok: true; message: string }
+  | { ok: false; error: string };
+
+class OrderStatusConflictError extends Error {}
+
+/**
+ * Меняет статус заказа и синхронно правит остатки: отмена возвращает товар
+ * на склад, возврат отменённого заказа в работу снова его списывает.
+ */
+export async function changeOrderStatus(
+  orderId: string,
+  status: OrderStatus,
+): Promise<ChangeOrderStatusResult> {
+  try {
+    return await prisma.$transaction(async (tx) => {
+      const order = await tx.order.findUnique({
+        where: { id: orderId },
+        select: {
+          status: true,
+          items: {
+            select: {
+              productId: true,
+              quantity: true,
+              product: { select: { name: true } },
+            },
+          },
+        },
+      });
+
+      if (!order) {
+        return { ok: false, error: "Заказ не найден" };
+      }
+
+      if (order.status === status) {
+        return { ok: true, message: "Статус не изменился" };
+      }
+
+      if (status === "cancelled") {
+        for (const item of order.items) {
+          await tx.product.update({
+            where: { id: item.productId },
+            data: { quantity: { increment: item.quantity } },
+          });
+        }
+      } else if (order.status === "cancelled") {
+        for (const item of order.items) {
+          const reserved = await tx.product.updateMany({
+            where: {
+              id: item.productId,
+              quantity: { gte: item.quantity },
+            },
+            data: { quantity: { decrement: item.quantity } },
+          });
+
+          if (reserved.count === 0) {
+            throw new OrderStatusConflictError(
+              `Недостаточно товара «${item.product.name}» на складе, чтобы вернуть заказ в работу`,
+            );
+          }
+        }
+      }
+
+      const updated = await tx.order.updateMany({
+        where: { id: orderId, status: order.status },
+        data: { status },
+      });
+
+      if (updated.count === 0) {
+        throw new OrderStatusConflictError(
+          "Статус заказа уже изменился. Обновите страницу.",
+        );
+      }
+
+      return {
+        ok: true,
+        message:
+          status === "cancelled"
+            ? "Заказ отменён, остатки возвращены на склад"
+            : "Статус обновлён",
+      };
+    });
+  } catch (error) {
+    if (error instanceof OrderStatusConflictError) {
+      return { ok: false, error: error.message };
+    }
+
+    console.error("Не удалось обновить статус заказа", error);
+
+    return {
+      ok: false,
+      error: "Не удалось обновить статус заказа",
     };
   }
 }
